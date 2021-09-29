@@ -1,0 +1,8 @@
+报错：Access to XMLHttpRequest at------------------------是浏览器的跨越问题
+解决：
+	1、把谷歌浏览器设置成允许跨域就行了，但这个不是最终解决办法！
+	2、在 web server 上设置跨域 header ...
+	3、同二，在nginx或者apache里面写就行
+	
+看板娘访模型问路径控制：waifu-tips.js第202行
+	

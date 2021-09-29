@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boke.boke.mapper.UserdatainfoMapper" >
+  <resultMap id="BaseResultMap" type="boke.boke.entity.Userdatainfo" >
+    <id column="UserInfo_id" property="userinfoId" jdbcType="INTEGER" />
+    <result column="User_Id" property="userId" jdbcType="INTEGER" />
+    <result column="User_time" property="userTime" jdbcType="TIMESTAMP" />
+    <result column="User_BirthdayDate" property="userBirthdaydate" jdbcType="TIMESTAMP" />
+    <result column="User_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="User_relevance" property="userRelevance" jdbcType="VARCHAR" />
+    <result column="User_Intro" property="userIntro" jdbcType="VARCHAR" />
+    <result column="User_Image" property="userImage" jdbcType="VARCHAR" />
+    <result column="User_boki" property="userBoki" jdbcType="VARCHAR" />
+    <result column="User_Name" property="userdatanames" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UserInfo_id, User_Id, User_time, User_BirthdayDate, User_email, User_relevance, User_Intro, 
+    User_Image, User_boki
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.UserdatainfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userdatainfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from userdatainfo
+    where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userdatainfo
+    where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="boke.boke.entity.UserdatainfoExample" >
+    delete from userdatainfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="boke.boke.entity.Userdatainfo" >
+    insert into userdatainfo (UserInfo_id, User_Id, User_time, 
+      User_BirthdayDate, User_email, User_relevance, 
+      User_Intro, User_Image, User_boki
+      )
+    values (#{userinfoId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userTime,jdbcType=TIMESTAMP}, 
+      #{userBirthdaydate,jdbcType=TIMESTAMP}, #{userEmail,jdbcType=VARCHAR}, #{userRelevance,jdbcType=VARCHAR}, 
+      #{userIntro,jdbcType=VARCHAR}, #{userImage,jdbcType=VARCHAR}, #{userBoki,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="boke.boke.entity.Userdatainfo" >
+    insert into userdatainfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userinfoId != null" >
+        UserInfo_id,
+      </if>
+      <if test="userId != null" >
+        User_Id,
+      </if>
+      <if test="userTime != null" >
+        User_time,
+      </if>
+      <if test="userBirthdaydate != null" >
+        User_BirthdayDate,
+      </if>
+      <if test="userEmail != null" >
+        User_email,
+      </if>
+      <if test="userRelevance != null" >
+        User_relevance,
+      </if>
+      <if test="userIntro != null" >
+        User_Intro,
+      </if>
+      <if test="userImage != null" >
+        User_Image,
+      </if>
+      <if test="userBoki != null" >
+        User_boki,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userinfoId != null" >
+        #{userinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userTime != null" >
+        #{userTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userBirthdaydate != null" >
+        #{userBirthdaydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userRelevance != null" >
+        #{userRelevance,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntro != null" >
+        #{userIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="userImage != null" >
+        #{userImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userBoki != null" >
+        #{userBoki,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="boke.boke.entity.UserdatainfoExample" resultType="java.lang.Integer" >
+    select count(*) from userdatainfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userdatainfo
+    <set >
+      <if test="record.userinfoId != null" >
+        UserInfo_id = #{record.userinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        User_Id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userTime != null" >
+        User_time = #{record.userTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userBirthdaydate != null" >
+        User_BirthdayDate = #{record.userBirthdaydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEmail != null" >
+        User_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userRelevance != null" >
+        User_relevance = #{record.userRelevance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIntro != null" >
+        User_Intro = #{record.userIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userImage != null" >
+        User_Image = #{record.userImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userBoki != null" >
+        User_boki = #{record.userBoki,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userdatainfo
+    set UserInfo_id = #{record.userinfoId,jdbcType=INTEGER},
+      User_Id = #{record.userId,jdbcType=INTEGER},
+      User_time = #{record.userTime,jdbcType=TIMESTAMP},
+      User_BirthdayDate = #{record.userBirthdaydate,jdbcType=TIMESTAMP},
+      User_email = #{record.userEmail,jdbcType=VARCHAR},
+      User_relevance = #{record.userRelevance,jdbcType=VARCHAR},
+      User_Intro = #{record.userIntro,jdbcType=VARCHAR},
+      User_Image = #{record.userImage,jdbcType=VARCHAR},
+      User_boki = #{record.userBoki,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="boke.boke.entity.Userdatainfo" >
+    update userdatainfo
+    <set >
+      <if test="userId != null" >
+        User_Id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userTime != null" >
+        User_time = #{userTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userBirthdaydate != null" >
+        User_BirthdayDate = #{userBirthdaydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEmail != null" >
+        User_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userRelevance != null" >
+        User_relevance = #{userRelevance,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntro != null" >
+        User_Intro = #{userIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="userImage != null" >
+        User_Image = #{userImage,jdbcType=VARCHAR},
+      </if>
+      <if test="userBoki != null" >
+        User_boki = #{userBoki,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="boke.boke.entity.Userdatainfo" >
+    update userdatainfo
+    set User_Id = #{userId,jdbcType=INTEGER},
+      User_time = #{userTime,jdbcType=TIMESTAMP},
+      User_BirthdayDate = #{userBirthdaydate,jdbcType=TIMESTAMP},
+      User_email = #{userEmail,jdbcType=VARCHAR},
+      User_relevance = #{userRelevance,jdbcType=VARCHAR},
+      User_Intro = #{userIntro,jdbcType=VARCHAR},
+      User_Image = #{userImage,jdbcType=VARCHAR},
+      User_boki = #{userBoki,jdbcType=VARCHAR}
+    where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
+  </update>
+
+  <!--关联查询带用户名的-->
+  <select id="selectByusernamePrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    *
+    from userdatainfo userdata
+    LEFT join user uses
+    on userdata.User_Id = uses.User_Id
+    where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
+  </select>
+
+</mapper>

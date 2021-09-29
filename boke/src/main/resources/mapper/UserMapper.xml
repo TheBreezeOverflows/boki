@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boke.boke.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="boke.boke.entity.User" >
+    <id column="User_Id" property="userId" jdbcType="INTEGER" />
+    <result column="User_Name" property="userName" jdbcType="VARCHAR" />
+    <result column="User_User_Password" property="userUserPassword" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    User_Id, User_Name, User_User_Password, permission
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where User_Id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where User_Id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="boke.boke.entity.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="boke.boke.entity.User" >
+    insert into user (User_Id, User_Name, User_User_Password, 
+      permission)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userUserPassword,jdbcType=VARCHAR}, 
+      #{permission,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="boke.boke.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        User_Id,
+      </if>
+      <if test="userName != null" >
+        User_Name,
+      </if>
+      <if test="userUserPassword != null" >
+        User_User_Password,
+      </if>
+      <if test="permission != null" >
+        permission,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userUserPassword != null" >
+        #{userUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        #{permission,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="boke.boke.entity.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userId != null" >
+        User_Id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        User_Name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userUserPassword != null" >
+        User_User_Password = #{record.userUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permission != null" >
+        permission = #{record.permission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set User_Id = #{record.userId,jdbcType=INTEGER},
+      User_Name = #{record.userName,jdbcType=VARCHAR},
+      User_User_Password = #{record.userUserPassword,jdbcType=VARCHAR},
+      permission = #{record.permission,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="boke.boke.entity.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        User_Name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userUserPassword != null" >
+        User_User_Password = #{userUserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where User_Id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="boke.boke.entity.User" >
+    update user
+    set User_Name = #{userName,jdbcType=VARCHAR},
+      User_User_Password = #{userUserPassword,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR}
+    where User_Id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="getPassword" parameterType="String" resultType="String">
+        SELECT User_User_Password
+        FROM user
+        WHERE User_Name = #{userName}
+    </select>
+
+  <select id="getRole" parameterType="String" resultType="String">
+        SELECT permission
+        FROM user
+        WHERE User_Name = #{userName}
+    </select>
+  <select id="getpwd" parameterType="String" resultType="String">
+        SELECT User_User_Password
+        FROM user
+        WHERE User_Name = #{userName}
+    </select>
+</mapper>

@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:insert="~{common::header('')}">
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans" class="theme-darling">
+<div id="brandView">
+    <div class="container sidebar-position-right page-home">
+        <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+            <div class="header-inner">
+                <!--头部栏-->
+                <!--<header class="site-header no-select" role="banner">-->
+                <div class="site-header no-select  site-top">
+                    <div class="site-branding"><span class="site-title"> <span class="logolink moe-mashiro"> <a
+                            href="#" alt="墨白"> <ruby><span class="sakuraso" style="font-family: 仿宋">墨白</span>
+                        <span class="no" style="font-family: 楷体">沉墨</span><span class="shironeko"
+                                                                                style="font-family: 楷体">满纸</span>
+                        <rp style="padding-bottom: 100px"></rp>
+                        <rt class="chinese-font">一笑若白</rt>
+                        <rp></rp></ruby> </a> </span> </span></div>
+                    <div class="lower-cantiner">
+                        <div class="lower">
+                            <div id="show-nav" class="showNav mobile-fit">
+                                <div class="line line1"></div>
+                                <div class="line line2"></div>
+                                <div class="line line3"></div>
+                            </div>
+                            <!--选择栏-->
+                            <nav class="mobile-fit-control hide">
+                                <ul id="menu-new" class="menu">
+                                    <li style="margin-right: 32px;margin-left: 90px">
+                                        <a href="index"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-meteor" aria-hidden="true"></i> 首页
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="#"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="#"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-mars-stroke" aria-hidden="true"></i> 个人项目
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="#"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-magic" aria-hidden="true"></i> 留言板
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="#" aria-current="page">
+                                            <span class="faa-parent animated-hover">
+                                                <i class="menu-item-icon fas fa-child" aria-hidden="true"></i> 友人帐
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-heartbeat" aria-hidden="true"></i>关于我
+                                        </span></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--用户登录-->
+                    <div class="header-user-avatar">
+                        <a href="login">
+                            <img class="faa-shake animated-hover"
+                            src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/none.png" width="30"
+                            height="30"> </a>
+                        <div class="header-user-menu">
+                            <div class="herder-user-name no-logged">Whether to <a href="https://2heng.xin/login/"
+                                                                                  target="_blank"
+                                                                                  style="color:#333;font-weight:bold;text-decoration:none">log
+                                in</a> now?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+                </div>
+
+
+                <!--原来头部-->
+                <div class="site-brand-wrapper">
+                    <!--头部背景-->
+                    <div class="site-brand-bg">
+                        <picture>
+                            <img loading="lazy" src="style/images/header-gyx.png"></picture>
+                    </div>
+                    <div class="site-meta">
+                        <div class="custom-logo-site-title">
+                            <div class="brand"><span class="logo-line-before"><i></i></span>
+                                <div class="site-title">
+                                    <!--头部显示内容-->
+                                    <div class="site-master">
+                                        <h1 class="post-title  index force-normal">
+                                        <span class="brand">
+                                            <span>
+                                                墨白
+                                                <!--<svg>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-1"> 墨白 </text>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-2"> 墨白 </text>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-3"> 墨白 </text>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-4"> 墨白 </text>
+                                                </svg>-->
+                                            </span>
+                                        </span><br>
+                                        </h1>
+                                        <span>
+                                                <h2 class="site-master-description scaleup" itemprop="description"><!--沉墨满纸,一笑若白--></h2>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="logo-line-after"><i></i></span></div>
+                        </div>
+                        <p class="site-subtitle"></p></div>
+                    <div class="site-nav-toggle">
+                        <button><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main id="main" class="main">
+            <div class="main-inner">
+                <div class="content-wrap">
+                    <div id="content" class="content">
+                        <section id="posts" class="posts-expand">
+                            <!--显示内容模块-->
+                            <article v-for="brand in searchResult.list" style="background-color:#ffffff"  class=" post post-list-thumb post-list-show">
+                                <!--文章内容图片展示-->
+                                <div class="post-thumb"><a href="https://www.servicemesher.com/" style="height:200px" >
+                                    <img class="lazyload" id="post-th-4491"
+                                         v-bind:src="brand.blogsarticleImage"
+                                         onerror="imgError(this,3)"
+                                         v-bind:data-src="brand.blogsarticleImage"> </a>
+                                </div>
+                                <div class="post-content-wrap">
+                                    <div class="post-datelazy">🕓发布于 {{brand.blogsarticleDate}}</div>
+                                    <a v-bind:href="brand.blogsarticleInformation" class="post-title">
+                                        <h3>{{brand.blogsarticleHeadline}}</h3>
+                                    </a>
+                                    <div class="post-meta"><span><i class="iconfont icon-attention"></i>{{brand.accessnumber}}热度</span>
+                                        <span class="comments-number"><i class="iconfont icon-mark"></i><a
+                                                href="#">{{brand.commentnumber}}条评论</a></span>
+                                        <span><i class="iconfont icon-file"></i><a
+                                                href="#">作者:{{brand.bloagUserNames}}</a> </span></div>
+                                    <div class="float-content">
+                                        <p>
+                                            {{brand.blogsarticleContent}}
+                                        </p>
+                                        <div class="post-bottom"><a
+                                                href="#"
+                                                class="button-normal"><i class="iconfont icon-caidan"></i></a></div>
+                                    </div>
+                                </div>
+                            </article>
+                            <span class="posts post-list-thumbs"></span>
+                        </section>
+                        <!--页面选择栏-->
+                        <p align="center">
+                            <paginate :container-class="'pagination'" :page-count="pageCount"
+                                      :click-handler="findPage" :prev-text="'《'" :next-text="'》'"
+                                      :first-last-button="false" v-model="searchParam.pageNum">
+                        </p>
+                    </div>
+                </div>
+                <div class="sidebar-toggle">
+                    <div class="sidebar-toggle-line-wrap"><span
+                            class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span
+                            class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span
+                            class="sidebar-toggle-line sidebar-toggle-line-last"></span></div>
+                </div>
+                <!--右边个人信息展示栏-->
+                <aside id="sidebar" class="sidebar">
+                    <div class="sidebar-inner">
+                        <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+                            <div class="site-overview">
+                                <div class="site-author motion-element" itemprop="author" itemscope
+                                     itemtype="http://schema.org/Person">
+                                    <picture>
+                                        <source srcset="style/images/13c71a8d6b4822df.png"
+                                                type="image/webp">
+                                        <img loading="lazy" class="site-author-image" itemprop="image"
+                                             src="style/images/13c71a8d6b4822df.png"
+                                             alt=""></picture>
+                                    <p class="site-description motion-element" style="" itemprop="description">{{userinfodata.userdatanames}}</p>
+                                </div>
+                                <div class="links-of-author motion-element">
+                                    <ul v-for="item in userinfodata.userRelevance">
+                                        <span class="links-of-author-item scaleup">
+                                                <a v-bind:href="item.url" target="_blank" v-bind:title="item.name">
+                                                    <i  style="color:#191717">
+                                                    <img v-bind:src="item.image">
+                                                        <span  v-bind:text="item.name">{{item.name}}</span>
+                                                    </i>
+                                                </a>
+                                            </span>
+                                    </ul>
+                                </div>
+                                <details>
+                                    <summary class="views-top-name">技术列表</summary>
+                                        <ul>
+                                            <li style="margin: 20px" v-for="item in classifybase">
+                                                <span v-on:click="finByBlogClassID(item.classifyId)">◆{{item.classifyName}}</span>
+                                            </li>
+                                        </ul>
+                                </details>
+                            </div>
+                        </section>
+                    </div>
+                </aside>
+            </div>
+        </main>
+        <footer id="footer" class="footer">
+            <div class="footer-image">
+                <picture>
+                    <source srcset="style/images/footer.webp"
+                            type="image/webp">
+                    <img loading="lazy" src="style/images/footer.png"></picture>
+            </div>
+            <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白. 由 <a href="https://hexo.io/" target="_blank"
+                                                                                 class="external" rel="nofollow">Hexo</a>
+                    强力驱动. Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external"
+                                      rel="nofollow">Sagiri</a> v1.0 <a href="/sitemap.xml" target="_blank">站点地图</a>.</p>
+                <p>Made with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
+                                                                                               itemprop="copyrightHolder">墨白</span>.
+                </p></div>
+        </footer>
+
+    </div>
+</div>
+<!--右侧长条线图片-->
+<div class="back-to-top">
+    <picture>
+        <source srcset="https://cdn.jsdelivr.net/gh/DIYgod/hexo-theme-sagiri/source/images/scroll.webp"
+                type="image/webp">
+        <img loading="lazy" src="style/images/scroll.png"></picture>
+</div>
+<canvas id="evanyou"></canvas>
+<!--看板娘-->
+<div class="waifu">
+
+    <!-- 提示框 -->
+    <div class="waifu-tips"></div>
+
+    <!-- 看板娘画布 -->
+    <canvas id="live2d" class="live2d"></canvas>
+
+    <!-- 工具栏 -->
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+
+</div>
+<!-- 初始化看板娘，加载 waifu-tips.json -->
+<script type="text/javascript">
+    /* 可直接修改部分参数 */
+    live2d_settings['modelId'] = 6;                  // 默认模型 ID
+    live2d_settings['modelTexturesId'] = 4;         // 默认材质 ID
+    live2d_settings['modelStorage'] = false;         // 不储存模型 ID
+    live2d_settings['canCloseLive2d'] = false;       // 隐藏 关闭看板娘 按钮
+    live2d_settings['canTurnToHomePage'] = false;    // 隐藏 返回首页 按钮
+    live2d_settings['waifuSize'] = '280x250';        // 看板娘大小
+    live2d_settings['waifuTipsSize'] = '220x100';    // 提示框大小
+    live2d_settings['waifuFontSize'] = '30px';       // 提示框字体
+    live2d_settings['waifuToolFont'] = '36px';       // 工具栏字体
+    live2d_settings['waifuToolLine'] = '50px';       // 工具栏行高
+    live2d_settings['waifuToolTop'] = '-60px';       // 工具栏顶部边距
+    live2d_settings['waifuDraggable'] = 'axis-x';    // 拖拽样式
+    /* 在 initModel 前添加 */
+    initModel("assets/waifu-tips.json?v=1.4.2")
+</script>
+<script type="text/javascript" src="style/js/sagiri.min.js"></script>
+</body>
+<script th:src="@{/brand/js/pages/brandController.js}"></script>
+</html>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boke.boke.mapper.AdtvsMapper" >
+  <resultMap id="BaseResultMap" type="boke.boke.entity.Adtvs" >
+    <id column="Advts_id" property="advtsId" jdbcType="INTEGER" />
+    <result column="Advts_imagePath" property="advtsImagepath" jdbcType="VARCHAR" />
+    <result column="Adtvs_Path" property="adtvsPath" jdbcType="VARCHAR" />
+    <result column="Adtvs_Introduced" property="adtvsIntroduced" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Advts_id, Advts_imagePath, Adtvs_Path, Adtvs_Introduced
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.AdtvsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from adtvs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from adtvs
+    where Advts_id = #{advtsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from adtvs
+    where Advts_id = #{advtsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="boke.boke.entity.AdtvsExample" >
+    delete from adtvs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="boke.boke.entity.Adtvs" >
+    insert into adtvs (Advts_id, Advts_imagePath, Adtvs_Path, 
+      Adtvs_Introduced)
+    values (#{advtsId,jdbcType=INTEGER}, #{advtsImagepath,jdbcType=VARCHAR}, #{adtvsPath,jdbcType=VARCHAR}, 
+      #{adtvsIntroduced,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="boke.boke.entity.Adtvs" >
+    insert into adtvs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advtsId != null" >
+        Advts_id,
+      </if>
+      <if test="advtsImagepath != null" >
+        Advts_imagePath,
+      </if>
+      <if test="adtvsPath != null" >
+        Adtvs_Path,
+      </if>
+      <if test="adtvsIntroduced != null" >
+        Adtvs_Introduced,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advtsId != null" >
+        #{advtsId,jdbcType=INTEGER},
+      </if>
+      <if test="advtsImagepath != null" >
+        #{advtsImagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="adtvsPath != null" >
+        #{adtvsPath,jdbcType=VARCHAR},
+      </if>
+      <if test="adtvsIntroduced != null" >
+        #{adtvsIntroduced,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="boke.boke.entity.AdtvsExample" resultType="java.lang.Integer" >
+    select count(*) from adtvs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update adtvs
+    <set >
+      <if test="record.advtsId != null" >
+        Advts_id = #{record.advtsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.advtsImagepath != null" >
+        Advts_imagePath = #{record.advtsImagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adtvsPath != null" >
+        Adtvs_Path = #{record.adtvsPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adtvsIntroduced != null" >
+        Adtvs_Introduced = #{record.adtvsIntroduced,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update adtvs
+    set Advts_id = #{record.advtsId,jdbcType=INTEGER},
+      Advts_imagePath = #{record.advtsImagepath,jdbcType=VARCHAR},
+      Adtvs_Path = #{record.adtvsPath,jdbcType=VARCHAR},
+      Adtvs_Introduced = #{record.adtvsIntroduced,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="boke.boke.entity.Adtvs" >
+    update adtvs
+    <set >
+      <if test="advtsImagepath != null" >
+        Advts_imagePath = #{advtsImagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="adtvsPath != null" >
+        Adtvs_Path = #{adtvsPath,jdbcType=VARCHAR},
+      </if>
+      <if test="adtvsIntroduced != null" >
+        Adtvs_Introduced = #{adtvsIntroduced,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Advts_id = #{advtsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="boke.boke.entity.Adtvs" >
+    update adtvs
+    set Advts_imagePath = #{advtsImagepath,jdbcType=VARCHAR},
+      Adtvs_Path = #{adtvsPath,jdbcType=VARCHAR},
+      Adtvs_Introduced = #{adtvsIntroduced,jdbcType=VARCHAR}
+    where Advts_id = #{advtsId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,56 @@
+spring:
+  application:
+    #应用名
+    name: boke
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/boki?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    #数据库为mysql
+    platform: mysql
+    #启动时初始化5个连接
+    initialSize: 5
+    #最小空闲连接5个
+    minIdle: 5
+    #最大连接数20
+    maxActive: 20
+    #获取连接等待时间60秒
+    maxWait: 60000
+    #每60秒执行一次连接回收器
+    timeBetweenEvictionRunsMillis: 60000
+    #5分钟内没有任何操作的空闲连接会被回收
+    minEvictableIdleTimeMillis: 300000
+    #验证连接有效性的SQL
+    validationQuery: SELECT 1
+    #空闲时校验，建议开启
+    testWhileIdle: true
+    #使用中是否验证有效性，建议关闭
+    testOnBorrow: false
+    #归还连接时验证有效性，建议关闭
+    testOnReturn: false
+    #设置过滤器，stat拥有接收状态，wall用于防止SQL注入，logback表示使用logback日志输出
+    filters: stat,wall,slf4j
+    #设置日志中是否显示SQL
+    logSlowSql: true
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+  mvc:
+    format:
+      #前端接收的字符串日期转换成日期类型
+      date: yyyy-MM-dd
+server:
+  #配置别名，扫描实体类
+  port: 81
+  servlet:
+    session:
+      timeout: 1440m
+mybatis:
+  #配置别名，扫描实体类
+  type-aliases-package: boke.boke.entity
+  #配置mapper.xml，扫描所在包
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
