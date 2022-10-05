@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
-    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
-    <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>后台管理</title>
-    <link rel="stylesheet" href="../../css/element.css">
-    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../font-blog/css/element.css">
+    <link rel="stylesheet" href="../font-blog/css/base.css">
     <style>
 
     </style>
@@ -20,7 +18,7 @@
             <div style="background-color: black; height: 60px; line-height: 60px; text-align: center;
                 color: white; font-size: 20px;">
                 <transition name="el-fade-in-linear">
-                    <span name="fade" v-show="!isCollapse"><a href="/page/end/frame.html">博客管理系统</a></span>
+                    <span name="fade" v-show="!isCollapse"><a href="/font-blog/end/frame">博客管理系统</a></span>
                 </transition>
             </div>
             <!-- 菜单 -->
@@ -62,7 +60,7 @@
                     <el-col :span="2" :offset="20" style="text-align: right">
                         <span style="color: white; margin-right: 10px">{{user.nickName}}</span>
                         <el-dropdown>
-                            <img :src=`/files/${user.avatar}`
+                            <img :src=`../style/images/none.png`
                                  style="width: 40px; height: 40px; margin-right: 10px; border-radius: 50%">
                             <el-dropdown-menu slot="dropdown" style="color: black; cursor: pointer; text-align: center;">
                                 <span @click="handleSelect('person')" style="display:inline-block; padding: 10px 0; width: 100px; ">个人信息</span>
@@ -75,7 +73,7 @@
             <!-- 主体区域 -->
             <el-main>
 
-                <iframe id="myiframe" :src="src + '.html?new=' + Math.random()" frameborder="0" scrolling="no"
+                <iframe id="myiframe" :src="src + '?new=' + Math.random()" frameborder="0" scrolling="no"
                         style="width: 100%"></iframe>
 
             </el-main>
@@ -83,10 +81,9 @@
     </el-container>
 </div>
 
-<script src="../../js/jquery.min.js"></script>
-<script src="../../js/vue.min.js"></script>
-<script src="../../js/element.js"></script>
-
+<script src="../font-blog/js/jquery.min.js"></script>
+<script src="../font-blog/js/vue.min.js"></script>
+<script src="../font-blog/js/element.js"></script>
 
 <script>
     function call() {
@@ -143,10 +140,10 @@
             logout() {
                 $.get("/api/user/logout");
                 sessionStorage.removeItem("user");
-                location.href = "/page/end/login.html";
+                location.href = "../login";
             },
             enterIndex() {
-                location.href = "/page/front/index.html";
+                location.href = "../index";
             }
         }
     });

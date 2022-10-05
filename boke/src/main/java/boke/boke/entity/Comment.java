@@ -3,21 +3,25 @@ package boke.boke.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 评论管理
+ */
 public class Comment implements Serializable {
+    //评论id
     private Integer commentId;
-
+    //评论名称
     private String messageName;
-
+    //评论人名称
     private String messageEmail;
-
+    //评论人个人站点
     private String directSite;
-
+    //评论时间
     private Date commentDate;
-
+    //留言信息
     private String voiceMessage;
-
+    //博客文章id
     private Integer blogsarticleId;
-
+    //回复信息id(上级id)
     private Integer messageReply;
 
     private static final long serialVersionUID = 1L;

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>新闻信息</title>
-    <link rel="stylesheet" href="../../css/element.css">
-    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../font-blog/css/element.css">
+    <link rel="stylesheet" href="../font-blog/css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
@@ -22,26 +23,26 @@
 
     <el-card style="margin-top: 20px; margin-bottom: 50px">
         <div style="text-align: center">
-            <div style="color: #888; font-size: 20px;">{{entity.title}}</div>
+            <div style="color: #040405; font-size: 20px;">{{entity.blogsarticleHeadline}}</div>
         </div>
         <div style="text-align: center; margin-top: 10px">
-            <div style="color: #888; font-size: 10px;">
-                作者：{{entity.author}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                时间：{{entity.time}}</div>
+            <div style="color: #040405; font-size: 10px;">
+                作者：{{entity.bloagUserNames}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                时间：{{entity.blogsarticleDate}}</div>
         </div>
         <!--                    分割线-->
         <div style="height: 1px; margin: 10px 0; background-color: #ccc"></div>
 
-        <div style="padding: 20px; color: #888" id="view-notice-body">
+        <div style="padding: 20px; color: #040405" id="view-notice-body">
 
         </div>
     </el-card>
 </div>
 
-<script src="../../js/jquery.min.js"></script>
-<script src="../../js/vue.min.js"></script>
-<script src="../../js/element.js"></script>
-<script src="../../js/tinymce/tinymce.min.js"></script>
+<script src="../font-blog/js/jquery.min.js"></script>
+<script src="../font-blog/js/vue.min.js"></script>
+<script src="../font-blog/js/element.js"></script>
+<script src="../font-blog/js/tinymce/tinymce.min.js"></script>
 
 
 <script>
@@ -55,14 +56,14 @@
             isCollapse: false,
         },
         mounted() {
-            this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
-
+            var self = this;
             let id = location.search.split("=")[1];
             if (id) {
-                $.get("/api/blog/" + id).then(res => {
-                    this.entity = res.data;
-                    console.log(this.entity);
-                    $('#view-notice-body').html(res.data.content);
+                $.get("/boke/blog/Classnameid",{ids:id}).then(function (res) {
+                    console.log(res);
+                    self.entity = res;
+                    console.log(self.entity);
+                    $('#view-notice-body').html(res.blogsarticleDetailedinformation);
                 })
             }
         },
@@ -74,7 +75,7 @@
                 // 请求退出接口
                 $.get("/api/user/logout");
                 localStorage.removeItem("user");
-                location.href = "/page/end/login.html";
+                location.href = "/login";
             }
         }
     })

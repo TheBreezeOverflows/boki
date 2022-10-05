@@ -4,9 +4,9 @@ spring:
     name: boke
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/boki?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/boki?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: 123
     #数据库为mysql
     platform: mysql
     #启动时初始化5个连接
@@ -33,6 +33,10 @@ spring:
     filters: stat,wall,slf4j
     #设置日志中是否显示SQL
     logSlowSql: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   jackson:
     date-format: yyyy-MM-dd
     time-zone: GMT+8

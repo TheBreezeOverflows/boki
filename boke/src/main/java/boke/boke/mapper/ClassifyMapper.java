@@ -1,5 +1,6 @@
 package boke.boke.mapper;
 
+import boke.boke.entity.Blogandclassify;
 import boke.boke.entity.Classify;
 import boke.boke.entity.ClassifyExample;
 import java.util.List;
@@ -29,4 +30,8 @@ public interface ClassifyMapper {
     int updateByPrimaryKey(Classify record);
     //查询状态为零的数据
     List<Classify> selectByPrimarydatakey();
+    //查询当前文章的标签id
+    Classify selectByByPrimaryClassname(int id);
+    //根据当前文章名称查询标签id
+    Classify selectByByClassname(@Param("classname") String name);
 }

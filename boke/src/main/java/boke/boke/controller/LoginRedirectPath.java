@@ -19,4 +19,5 @@ public class LoginRedirectPath {
     public String redirec(){
         return "redirect:/index";
     }
+
 }

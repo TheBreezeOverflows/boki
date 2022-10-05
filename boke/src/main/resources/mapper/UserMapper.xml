@@ -104,6 +104,12 @@
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userUserPassword,jdbcType=VARCHAR}, 
       #{permission,jdbcType=VARCHAR})
   </insert>
+  <insert id="insertstr" parameterType="boke.boke.entity.User" useGeneratedKeys="true" keyProperty="userId">
+    insert into user (User_Id, User_Name, User_User_Password,
+                      permission)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userUserPassword,jdbcType=VARCHAR},
+            #{permission,jdbcType=VARCHAR})
+  </insert>
   <insert id="insertSelective" parameterType="boke.boke.entity.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -201,11 +207,6 @@
 
   <select id="getRole" parameterType="String" resultType="String">
         SELECT permission
-        FROM user
-        WHERE User_Name = #{userName}
-    </select>
-  <select id="getpwd" parameterType="String" resultType="String">
-        SELECT User_User_Password
         FROM user
         WHERE User_Name = #{userName}
     </select>

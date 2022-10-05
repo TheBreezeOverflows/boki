@@ -9,7 +9,7 @@
 <body style="background:url('style/images/blhx.png') no-repeat; background-size: cover;">
 <div id="wrapper">
     <div style="width: 400px; margin: 150px auto; background-color:rgba(237,116,113,0.5); border-radius: 10px">
-        <div style="width: 100%; height: 100px; font-size: 30px;line-height: 100px; text-align: center; color: #eee">欢迎登录本站点博客系统</div>
+        <div style="width: 100%; height: 100px; font-size: 30px;line-height: 100px; text-align: center; color: #eee">欢迎登录墨白的博客系统</div>
         <div style="margin-top: 25px; width: 100%; height: 320px;">
             <div style="width: 60%; margin: 0 auto">
                 <input v-model="user.username" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 100%" placeholder="请输入账号">
@@ -19,7 +19,7 @@
                 <!--                        <div id="picyzm" style="display: inline-block; height: 35px; vertical-align: middle;"></div>-->
                 <!--                    </div>-->
 
-                <button @click="login" style="height: 40px; padding: 10px; width: 100%; margin-top: 25px; background-color: mediumseagreen; color: white">登录</button>
+                <input type="button" @click="login" id="log" style="height: 40px; padding: 10px; width: 100%; margin-top: 25px; background-color: mediumseagreen; color: white" value="登录">
                 <a style="width: 100%; text-align: right; display: inline-block; margin-top: 25px; color: #eee" href="register">还没账号？去注册</a>
             </div>
 
@@ -51,17 +51,11 @@
         methods: {
             login() {
                 if (!this.user.username) {
-                    this.$message({
-                        message: "请输入用户名",
-                        type: "error"
-                    });
+                    alert("请输入用户名");
                     return;
                 }
                 if (!this.user.password) {
-                    this.$message({
-                        message: "请输入密码",
-                        type: "error"
-                    });
+                    alert("请输入密码");
                     return;
                 }
                 // if (!this.user.code) {
@@ -82,19 +76,20 @@
                 var params =new FormData();
                 params.append('username',this.user.username);
                 params.append('password',this.user.password);
+                $("#log").attr("disabled",true);
                 axios.post("/user/login",params).then(function (res) {
-                    //设置总页数
                     if (res.data.code==200) {
                         setTimeout(function(){
-                            location.href= "/redirec/";
+                                $("#log").removeAttr("disabled");
+                            /*location.href= "/redirec/";*/
                             const token = res.data.message;
-                            console.log("token:"+token);
                             /*将token设置到localStorage本地存储*/
-                            /*window.localStorage.setItem('user-Token', token);
-                            window.location.pathname = '/';*/
+                            window.localStorage.setItem('user-Token', token);
+                            window.location.pathname = '/redirec/';
                     }, 1000)
                     } else if(res.data.code==401){
                         alert(res.data.message);
+                        location.reload();
                     } else{
                         alert("登录异常；请重新登录");
                     }

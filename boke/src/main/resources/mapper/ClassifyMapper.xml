@@ -201,5 +201,17 @@
     from classify
     where Superclass_id=0
   </select>
+  <!--查询当前文章的标签id-->
+  <select id="selectByByPrimaryClassname" resultMap="BaseResultMap">
+    select *
+    from classify
+    where Classify_id = (select Classify_id from blogandclassify WHERE BlogsArticle_Id = #{blogsarticleId,jdbcType=INTEGER});
+  </select>
+<!--根据当前文章名称查询标签id-->
+  <select id="selectByByClassname" resultMap="BaseResultMap">
+    select *
+    from classify
+    where Classify_Name =#{classname,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

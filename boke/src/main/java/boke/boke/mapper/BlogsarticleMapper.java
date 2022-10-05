@@ -1,5 +1,6 @@
 package boke.boke.mapper;
 
+import boke.boke.entity.Blogandclassify;
 import boke.boke.entity.Blogsarticle;
 import boke.boke.entity.BlogsarticleExample;
 import java.util.List;
@@ -22,6 +23,8 @@ public interface BlogsarticleMapper {
     List<Blogsarticle> selectByExampleusername(BlogsarticleExample example);
     //根据列表id查询文章信息集合
     List<Blogsarticle> selectByClassifExample(Integer blogsarticleId);
+    //根据文章名称查询文章信息集合
+    List<Blogsarticle> selectByNameifExample(String name);
 
     Blogsarticle selectByPrimaryKey(Integer blogsarticleId);
 
@@ -32,4 +35,12 @@ public interface BlogsarticleMapper {
     int updateByPrimaryKeySelective(Blogsarticle record);
 
     int updateByPrimaryKey(Blogsarticle record);
+
+    int insertstr(Blogsarticle record);
+    //根据文章id查询文章信息
+    Blogsarticle selectByblogclasscontent(@Param("blogid") Integer blogid);
+    //给文章添加一次浏览次数
+    int AddBlogAccessnumber(@Param("blogid") int id);
+    //给文章点赞
+    int AddBlogcommentnumber(@Param("blogid") int id);
 }

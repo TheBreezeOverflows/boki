@@ -8,6 +8,9 @@
     <title>注册</title>
     <link rel="stylesheet" href="font-blog/css/base.css">
     <link rel="stylesheet" href="font-blog/css/element.css">
+    <link rel="stylesheet" href="dist/css/flexDate.css">
+<!--    <link href="dist/js/prettify.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="dist/css/flexDate.css">
 </head>
 <body style="background:url('style/images/blhx.png') no-repeat; background-size: cover;">
 <div id="wrapper">
@@ -17,19 +20,23 @@
             <input v-model="user.username" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%" placeholder="请输入账号">
             <input v-model="user.password" type="password" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%; margin-top: 20px" placeholder="请输入密码">
             <input v-model="user.email" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%;  margin-top: 20px" placeholder="请输入邮箱">
-            <input v-model="user.phone" type="text" style="border: 1px solid #ccc; height: 40px; padding: 10px; width: 60%;  margin-top: 20px" placeholder="请输入电话">
+            <p><br></p>
+            <input  id="birthday" type="text"  readonly class="textBox flexDate" placeholder="请填写出生日期">
             <button @click="register" style="height: 40px; padding: 10px; width: 60%; margin-top: 25px; background-color: steelblue; color: white">注册</button>
             <div style="margin-top: 25px">
-                <a style="width: 60%; text-align: right; display: inline-block; color: #eee" href="login.html">已有账号，去登录</a>
+                <a style="width: 60%; text-align: right; display: inline-block; color: #eee" href="login">已有账号，去登录</a>
             </div>
         </div>
     </div>
 </div>
 
-<script src="../../js/jquery.min.js"></script>
-<script src="../../js/vue.min.js"></script>
-<script src="../../js/element.js"></script>
-
+<script src="font-blog/js/jquery.min.js"></script>
+<script th:src="@{/plugins/vue/vue.js}"></script>
+<script th:src="@{/plugins/vue/vuejs-paginate.js}"></script>
+<script th:src="@{/plugins/vue/vue-select.js}"></script>
+<script th:src="@{/plugins/axios/axios.js}"></script>
+<script src="dist/js/prettify.min.js"></script>
+<script src="dist/js/flexDate.js"></script>
 <script>
     new Vue({
         el: "#wrapper",
@@ -39,42 +46,79 @@
         methods: {
             register() {
                 if (!this.user.username) {
-                    this.$message({
-                        message: "请输入用户名",
-                        type: "error"
-                    });
+                    alert("请输入用户名");
                     return;
                 }
                 if (!this.user.password) {
-                    this.$message({
-                        message: "请输入密码",
-                        type: "error"
-                    });
+                    alert("请输入密码");
                     return;
                 }
-                $.ajax({
-                    url: "/api/user/register",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(this.user)
-                }).then(res => {
-                    if (res.code === '0') {
-                        this.$message({
-                            message: "注册成功",
-                            type: "success"
-                        });
-                        sessionStorage.setItem("user", JSON.stringify(res.data));
-                        setTimeout(() => {
-                            location.href= "/page/end/login.html"
+                if (!this.user.email) {
+                    alert("请输入邮箱");
+                    return;
+                }
+                var birthday = document.getElementById("birthday").value;
+                    if (!birthday){
+                        alert("请输入出生日期");
+                        return;
+                    }
+                var params =new FormData();
+                params.append('username',this.user.username);
+                params.append('password',this.user.password);
+                params.append('email',this.user.email);
+                params.append('birthday',birthday);
+                axios.post("/user/register",params).then(function (res) {
+                    if (res.data.code==200) {
+                        setTimeout(function(){
+                            location.href= "/login";
+                            const token = res.data.message;
+                            console.log("token:"+token);
+                            /*将token设置到elocalStorag本地存储*/
+                            /*window.localStorage.setItem('user-Token', token);
+                            window.location.pathname = '/';*/
                         }, 1000)
-                    } else {
-                        this.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
+                    } else if(res.data.code==401){
+                        alert(res.data.message);
+                    } else{
+                        alert("注册异常请重新尝试");
                     }
                 })
             }
+        }
+    })
+</script>
+<script>
+    var image = new Image();
+    $('.prettyprint').each(function (i) {
+        var code=$.trim($(this).html());
+        $('<pre class="code linenums prettyprint"></pre>').replaceAll(this).text(code).parent().css('animation', 'flexDate_fadeInUp 0.5s ' + (i * 0.2) + 's forwards');
+    });
+    if (!(image.style.animation == '' || image.style.webkitAnimation == '')) {
+        $('.block').css('opacity', 1);
+    }
+    PR.prettyPrint();
+    FlexDate.setSkin('#ff8000');
+    var resetDate = new FlexDate({
+        e: '.resetDate',
+        value: new Date()
+    });
+    var singleDate = new FlexDate({
+        e: '.single',
+        bindClick: false
+    });
+    $('.wrapper>span').click(function () {
+        singleDate.show();
+    });
+    var minDate = new FlexDate({
+        e: '.minDate',
+        confirm: function (value) {
+            maxDate.setMin(value);
+        }
+    });
+    var maxDate = new FlexDate({
+        e: '.maxDate',
+        confirm: function (value) {
+            minDate.setMax(value);
         }
     })
 </script>

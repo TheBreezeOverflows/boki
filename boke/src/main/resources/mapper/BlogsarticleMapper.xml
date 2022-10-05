@@ -112,12 +112,12 @@
       BlogsArticle_Headline, BlogsArticle_Date, BlogsArticle_image, 
       BlogsArticle_Content, BlogsArticle_Information, 
       BlogsArticle_DetailedInformation, AccessNumber, 
-      CommentNumber)
+      CommentNumber,BloagUserNames)
     values (#{blogsarticleId,jdbcType=INTEGER}, #{blogsarticleUserId,jdbcType=INTEGER}, 
       #{blogsarticleHeadline,jdbcType=VARCHAR}, #{blogsarticleDate,jdbcType=DATE}, #{blogsarticleImage,jdbcType=VARCHAR}, 
       #{blogsarticleContent,jdbcType=VARCHAR}, #{blogsarticleInformation,jdbcType=VARCHAR}, 
       #{blogsarticleDetailedinformation,jdbcType=VARCHAR}, #{accessnumber,jdbcType=INTEGER}, 
-      #{commentnumber,jdbcType=INTEGER})
+      #{commentnumber,jdbcType=INTEGER},#{bloagUserNames,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="boke.boke.entity.Blogsarticle" >
     insert into blogsarticle
@@ -301,7 +301,7 @@
       AccessNumber, CommentNumber,
       User_Name
     from user uses
-    LEFT join blogsarticle blog
+    inner join blogsarticle blog
     on blog.BlogsArticle_User_id = uses.User_Id
   </select>
 
@@ -314,4 +314,49 @@
     WHERE BlogsArticle_Id
     in (SELECT BlogsArticle_Id from blogandclassify WHERE Classify_id= #{blogsarticleId,jdbcType=INTEGER})
   </select>
+  <select id="selectByNameifExample" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    BlogsArticle_Id, BlogsArticle_User_id, BlogsArticle_Headline, BlogsArticle_Date,
+    BlogsArticle_image, BlogsArticle_Content, BlogsArticle_Information, BlogsArticle_DetailedInformation,
+    AccessNumber, CommentNumber,
+    User_Name
+    from user uses
+    inner join blogsarticle blog
+    on blog.BlogsArticle_User_id = uses.User_Id
+    WHERE
+    1=1
+    <if test="name != null" >
+     and blog.BlogsArticle_Headline like concat( '%' , '${name}', '%')
+    </if>
+  </select>
+  <insert id="insertstr" parameterType="boke.boke.entity.Blogsarticle"  useGeneratedKeys="true" keyProperty="blogsarticleId">
+    insert into blogsarticle (BlogsArticle_Id, BlogsArticle_User_id,
+                              BlogsArticle_Headline, BlogsArticle_Date, BlogsArticle_image,
+                              BlogsArticle_Content, BlogsArticle_Information,
+                              BlogsArticle_DetailedInformation, AccessNumber,
+                              CommentNumber,BloagUserNames)
+    values (#{blogsarticleId,jdbcType=INTEGER}, #{blogsarticleUserId,jdbcType=INTEGER},
+            #{blogsarticleHeadline,jdbcType=VARCHAR}, #{blogsarticleDate,jdbcType=DATE}, #{blogsarticleImage,jdbcType=VARCHAR},
+            #{blogsarticleContent,jdbcType=VARCHAR}, #{blogsarticleInformation,jdbcType=VARCHAR},
+            #{blogsarticleDetailedinformation,jdbcType=VARCHAR}, #{accessnumber,jdbcType=INTEGER},
+            #{commentnumber,jdbcType=INTEGER},#{bloagUserNames,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectByblogclasscontent" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from blogsarticle blog,
+         user users
+    where blog.BlogsArticle_User_id = users.User_Id
+      and blog.BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </select>
+  <update id="AddBlogAccessnumber" parameterType="map" >
+    update blogsarticle
+    set AccessNumber=AccessNumber+1
+    where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </update>
+  <update id="AddBlogcommentnumber" parameterType="map" >
+    update blogsarticle
+    set CommentNumber=CommentNumber+1
+    where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </update>
 </mapper>

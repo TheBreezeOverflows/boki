@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
-<head th:insert="~{common::header('')}">
+<head th:insert="~{common::header('首页')}">
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans" class="theme-darling">
 <div id="brandView">
@@ -9,7 +9,7 @@
         <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
             <div class="header-inner">
                 <!--头部栏-->
-                <!--<header class="site-header no-select" role="banner">-->
+<!--                <header class="site-header no-select" role="banner">-->
                 <div class="site-header no-select  site-top">
                     <div class="site-branding"><span class="site-title"> <span class="logolink moe-mashiro"> <a
                             href="#" alt="墨白"> <ruby><span class="sakuraso" style="font-family: 仿宋">墨白</span>
@@ -40,7 +40,7 @@
                                     </li>
                                     <li style="margin-right: 32px">
                                         <a href="#"><span class="faa-parent animated-hover">
-                                            <i class="menu-item-icon fas fa-mars-stroke" aria-hidden="true"></i> 个人项目
+                                            <i class="menu-item-icon fas fa-mars-stroke" aria-hidden="true"></i> 生活琐事
                                         </span></a>
                                     </li>
                                     <li style="margin-right: 32px">
@@ -66,12 +66,12 @@
                     </div>
                     <!--用户登录-->
                     <div class="header-user-avatar">
-                        <a href="login">
+                        <a v-bind:href="tokes.toke != null? '/end/frame':'login'">
                             <img class="faa-shake animated-hover"
-                            src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/none.png" width="30"
+                            src="style/images/none.png" width="30"
                             height="30"> </a>
                         <div class="header-user-menu">
-                            <div class="herder-user-name no-logged">Whether to <a href="https://2heng.xin/login/"
+                            <div class="herder-user-name no-logged">Whether to <a href="login"
                                                                                   target="_blank"
                                                                                   style="color:#333;font-weight:bold;text-decoration:none">log
                                 in</a> now?
@@ -81,13 +81,14 @@
                     <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
                 </div>
 
-
                 <!--原来头部-->
                 <div class="site-brand-wrapper">
                     <!--头部背景-->
                     <div class="site-brand-bg">
                         <picture>
-                            <img loading="lazy" src="style/images/header-gyx.png"></picture>
+                            <img class="lazyload" src="style/images/header-gyx.png" data-original="style/images/header-gyx.png">
+                        </picture>
+
                     </div>
                     <div class="site-meta">
                         <div class="custom-logo-site-title">
@@ -98,8 +99,7 @@
                                         <h1 class="post-title  index force-normal">
                                         <span class="brand">
                                             <span>
-                                                墨白
-                                                <!--<svg>
+<!--                                                <svg>
                                                     <text text-anchor="middle" x="50%" y="50%" class="text text-1"> 墨白 </text>
                                                     <text text-anchor="middle" x="50%" y="50%" class="text text-2"> 墨白 </text>
                                                     <text text-anchor="middle" x="50%" y="50%" class="text text-3"> 墨白 </text>
@@ -123,6 +123,7 @@
                 </div>
             </div>
         </header>
+        <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;"></h1>
         <main id="main" class="main">
             <div class="main-inner">
                 <div class="content-wrap">
@@ -131,7 +132,7 @@
                             <!--显示内容模块-->
                             <article v-for="brand in searchResult.list" style="background-color:#ffffff"  class=" post post-list-thumb post-list-show">
                                 <!--文章内容图片展示-->
-                                <div class="post-thumb"><a href="https://www.servicemesher.com/" style="height:200px" >
+                                <div class="post-thumb"><a v-bind:href="'detail?id='+brand.blogsarticleId" style="height:200px" >
                                     <img class="lazyload" id="post-th-4491"
                                          v-bind:src="brand.blogsarticleImage"
                                          onerror="imgError(this,3)"
@@ -139,7 +140,7 @@
                                 </div>
                                 <div class="post-content-wrap">
                                     <div class="post-datelazy">🕓发布于 {{brand.blogsarticleDate}}</div>
-                                    <a v-bind:href="brand.blogsarticleInformation" class="post-title">
+                                    <a v-bind:href="'detail?id='+brand.blogsarticleId" class="post-title">
                                         <h3>{{brand.blogsarticleHeadline}}</h3>
                                     </a>
                                     <div class="post-meta"><span><i class="iconfont icon-attention"></i>{{brand.accessnumber}}热度</span>
@@ -201,7 +202,7 @@
                                     </ul>
                                 </div>
                                 <details>
-                                    <summary class="views-top-name">技术列表</summary>
+                                    <summary class="views-top-name" >🏷️标签</summary>
                                         <ul>
                                             <li style="margin: 20px" v-for="item in classifybase">
                                                 <span v-on:click="finByBlogClassID(item.classifyId)">◆{{item.classifyName}}</span>
@@ -222,11 +223,11 @@
                     <img loading="lazy" src="style/images/footer.png"></picture>
             </div>
             <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
-                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白. 由 <a href="https://hexo.io/" target="_blank"
-                                                                                 class="external" rel="nofollow">Hexo</a>
-                    强力驱动. Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external"
-                                      rel="nofollow">Sagiri</a> v1.0 <a href="/sitemap.xml" target="_blank">站点地图</a>.</p>
-                <p>Made with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白. 由 <a href="https://spring.io/projects/spring-boot/"
+                                                                                 class="external" rel="nofollow">SpringBoot+Mybatis</a>
+                    制作. Theme By <a href="https://github.com/TheBreezeOverflows" target="_blank" class="external"
+                                      rel="nofollow">Sagiri</a> v1.0 </p>
+                <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
                                                                                                itemprop="copyrightHolder">墨白</span>.
                 </p></div>
         </footer>
@@ -236,51 +237,51 @@
 <!--右侧长条线图片-->
 <div class="back-to-top">
     <picture>
-        <source srcset="https://cdn.jsdelivr.net/gh/DIYgod/hexo-theme-sagiri/source/images/scroll.webp"
+        <source srcset="style/images/scroll.webp"
                 type="image/webp">
         <img loading="lazy" src="style/images/scroll.png"></picture>
 </div>
 <canvas id="evanyou"></canvas>
 <!--看板娘-->
-<div class="waifu">
+<!--<div class="waifu">-->
 
-    <!-- 提示框 -->
-    <div class="waifu-tips"></div>
+<!--    &lt;!&ndash; 提示框 &ndash;&gt;-->
+<!--    <div class="waifu-tips"></div>-->
 
-    <!-- 看板娘画布 -->
-    <canvas id="live2d" class="live2d"></canvas>
+<!--    &lt;!&ndash; 看板娘画布 &ndash;&gt;-->
+<!--    <canvas id="live2d" class="live2d"></canvas>-->
 
-    <!-- 工具栏 -->
-    <div class="waifu-tool">
-        <span class="fui-home"></span>
-        <span class="fui-chat"></span>
-        <span class="fui-eye"></span>
-        <span class="fui-user"></span>
-        <span class="fui-photo"></span>
-        <span class="fui-info-circle"></span>
-        <span class="fui-cross"></span>
-    </div>
+<!--    &lt;!&ndash; 工具栏 &ndash;&gt;-->
+<!--    <div class="waifu-tool">-->
+<!--        <span class="fui-home"></span>-->
+<!--        <span class="fui-chat"></span>-->
+<!--        <span class="fui-eye"></span>-->
+<!--        <span class="fui-user"></span>-->
+<!--        <span class="fui-photo"></span>-->
+<!--        <span class="fui-info-circle"></span>-->
+<!--        <span class="fui-cross"></span>-->
+<!--    </div>-->
 
-</div>
+<!--</div>-->
 <!-- 初始化看板娘，加载 waifu-tips.json -->
-<script type="text/javascript">
-    /* 可直接修改部分参数 */
-    live2d_settings['modelId'] = 6;                  // 默认模型 ID
-    live2d_settings['modelTexturesId'] = 4;         // 默认材质 ID
-    live2d_settings['modelStorage'] = false;         // 不储存模型 ID
-    live2d_settings['canCloseLive2d'] = false;       // 隐藏 关闭看板娘 按钮
-    live2d_settings['canTurnToHomePage'] = false;    // 隐藏 返回首页 按钮
-    live2d_settings['waifuSize'] = '280x250';        // 看板娘大小
-    live2d_settings['waifuTipsSize'] = '220x100';    // 提示框大小
-    live2d_settings['waifuFontSize'] = '30px';       // 提示框字体
-    live2d_settings['waifuToolFont'] = '36px';       // 工具栏字体
-    live2d_settings['waifuToolLine'] = '50px';       // 工具栏行高
-    live2d_settings['waifuToolTop'] = '-60px';       // 工具栏顶部边距
-    live2d_settings['waifuDraggable'] = 'axis-x';    // 拖拽样式
-    /* 在 initModel 前添加 */
-    initModel("assets/waifu-tips.json?v=1.4.2")
-</script>
-<script type="text/javascript" src="style/js/sagiri.min.js"></script>
+<!--<script type="text/javascript">-->
+<!--    /* 可直接修改部分参数 */-->
+<!--    live2d_settings['modelId'] = 204;                  // 默认模型 ID-->
+<!--    live2d_settings['modelTexturesId'] = 4;         // 默认材质 ID-->
+<!--    live2d_settings['modelStorage'] = false;         // 不储存模型 ID-->
+<!--    live2d_settings['canCloseLive2d'] = false;       // 隐藏 关闭看板娘 按钮-->
+<!--    live2d_settings['canTurnToHomePage'] = false;    // 隐藏 返回首页 按钮-->
+<!--    live2d_settings['waifuSize'] = '280x250';        // 看板娘大小-->
+<!--    live2d_settings['waifuTipsSize'] = '220x100';    // 提示框大小-->
+<!--    live2d_settings['waifuFontSize'] = '30px';       // 提示框字体-->
+<!--    live2d_settings['waifuToolFont'] = '36px';       // 工具栏字体-->
+<!--    live2d_settings['waifuToolLine'] = '50px';       // 工具栏行高-->
+<!--    live2d_settings['waifuToolTop'] = '-60px';       // 工具栏顶部边距-->
+<!--    live2d_settings['waifuDraggable'] = 'axis-x';    // 拖拽样式-->
+<!--    /* 在 initModel 前添加 */-->
+<!--    initModel("assets/waifu-tips.json?v=1.4.2")-->
+<!--</script>-->
+<!--<script type="text/javascript" src="style/js/sagiri.min.js"></script>-->
 </body>
 <script th:src="@{/brand/js/pages/brandController.js}"></script>
 </html>

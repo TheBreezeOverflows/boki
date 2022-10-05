@@ -1,0 +1,124 @@
+@CHARSET "UTF-8";
+
+
+a:link {
+	text-decoration: underline;
+	color: #31559c;
+}
+
+a:visited {
+	text-decoration: underline;
+	color: #31559c;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #cccccc;
+}
+
+select {
+	font-family: 宋体;
+	font-size: 12px;
+	font-weight: normal;
+	background-color: #eeeeee;
+	color: #111111;
+}
+
+body {
+	SCROLLBAR-HIGHLIGHT-COLOR: buttonface;
+	SCROLLBAR-SHADOW-COLOR: buttonface;
+	SCROLLBAR-3DLIGHT-COLOR: buttonhighlight;
+	SCROLLBAR-TRACK-COLOR: #eeeeee;
+	SCROLLBAR-DARKSHADOW-COLOR: buttonshadow font-size :   12px;
+	background-color: #FFFFFF
+}
+
+table {
+	font-family: Tahoma, Verdana;
+	color: #111111;
+	font-size: 12px
+}
+
+textarea,input,object {
+	font-family: Tahoma, Verdana;
+	font-size: 12px;
+	font-weight: normal;
+	background-color: #eeeeee;
+	color: #111111
+}
+
+.bold {
+	font-weight: bold
+}
+
+.subject {
+	font-size: 12px;
+	color: #111111;
+	font-family: Tahoma, Verdana;
+	font-weight: bold
+}
+
+.post {
+	font-size:12px ;
+	font-weight: normal;
+	font-family: Tahoma, Verdana
+}
+
+.header {
+	color: #F1F3FB;
+	font-family: Tahoma, Verdana;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #0061a5
+}
+
+.category {
+	font-family: Tahoma, Verdana;
+	color: #000000;
+	font-size: 12px;
+	background-color: #dddddd
+}
+
+.nav {
+	font-family: Tahoma, Verdana;
+	font-weight: bold;
+	font-size: 12px
+}
+
+.smalltxt {
+	font-size: 12px;
+	color: #111111;
+	font-family: Tohoma, Arial, Verdana
+}
+
+.mediumtxt {
+	font-size: 12px;
+	font-family: Tahoma, Verdana;
+	font-weight: normal;
+	color: #111111
+}
+
+.navtd {
+	font-size: 12px;
+	font-family: Tahoma, Verdana;
+	color: #F1F3FB;
+	text-decoration: none
+}
+
+.multi {
+	font-family: Tahoma, Verdana;
+	color: #222222;
+	font-size: 12px
+}
+
+/*
+ * 页面显不提示信息的样式
+ */
+.message{
+	left: 10px;
+	width:100%;
+	font-size:20px;
+	color:red;
+	position:absolute;
+	z-index: 100;
+}

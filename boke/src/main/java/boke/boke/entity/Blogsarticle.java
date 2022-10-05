@@ -3,27 +3,31 @@ package boke.boke.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 博客文章信息
+ */
 public class Blogsarticle implements Serializable {
+    //博文id
     private Integer blogsarticleId;
-
+    //发布用户id
     private Integer blogsarticleUserId;
-
+    //博文标题
     private String blogsarticleHeadline;
-
+    //发布时间
     private Date blogsarticleDate;
-
+    //显示图片(JSON格式存储文章所有图片)
     private String blogsarticleImage;
-
+    //博文内容
     private String blogsarticleContent;
-
+    //跳转连接(没什么用就用来存储标签了)
     private String blogsarticleInformation;
-
+    //博客文章详细信息
     private String blogsarticleDetailedinformation;
-
+    //浏览数
     private Integer accessnumber;
-
+    //回复数(用来做点赞了)
     private Integer commentnumber;
-
+    //文章作者
     private String bloagUserNames;
 
     public String getBloagUserNames() {

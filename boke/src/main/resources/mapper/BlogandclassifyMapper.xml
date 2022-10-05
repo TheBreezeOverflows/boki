@@ -137,4 +137,20 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <!--查询当前文章的标签id-->
+  <select id="selectByByPrimaryClassid" resultMap="BaseResultMap">
+    select
+      *
+    from blogandclassify
+    WHERE BlogsArticle_Id = #{blogsarticleId,jdbcType=INTEGER}
+  </select>
+  <update id="UpdablogClassKey" parameterType="map" >
+    update blogandclassify
+    set Classify_id=#{classid,jdbcType=INTEGER}
+    where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteblogclass" parameterType="java.lang.Integer" >
+    delete from blogandclassify
+    where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </delete>
 </mapper>

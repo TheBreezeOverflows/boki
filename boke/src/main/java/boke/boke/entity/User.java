@@ -2,6 +2,9 @@ package boke.boke.entity;
 
 import java.io.Serializable;
 
+/**
+ * 用户账号信息
+ */
 public class User implements Serializable {
     private Integer userId;
 
@@ -11,7 +14,16 @@ public class User implements Serializable {
 
     private String permission;
 
+    private Userdatainfo userdatainfo;
+
     private static final long serialVersionUID = 1L;
+
+    public void setUserdatainfo(Userdatainfo userdatainfo){
+        this.userdatainfo=userdatainfo;
+    }
+    public Userdatainfo getUserdatainfo(){
+        return userdatainfo;
+    }
 
     public Integer getUserId() {
         return userId;

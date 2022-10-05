@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 首页博客文章查询
  */
-@Controller
+@RestController
 public class bokeController {
     //依赖mapper
     @Autowired
@@ -36,14 +37,12 @@ public class bokeController {
         return blogsArticleInfo.BlogsArticleClassifyIdInfo(id,par);
     }
 
-
-
-    //根据文章id查询文章内容
-    @GetMapping("/Classnameid")
+    //根据名称信息查询信息
+    @GetMapping("/NamePage")
     @ResponseBody
-    public Blogsarticle ClassArticle(int id){
-        Blogsarticle blogsarticle = blogsArticleInfo.BlogsArticleContentInfo(id);
-        return blogsarticle;
+    public SearchResult NamefindPage(SearchParam para,String search){
+        SearchResult<Blogsarticle> blogsarticleSearchResult = blogsArticleInfo.BlogsArticleNameifyIdInfo(para,search);;
+        return blogsarticleSearchResult;
     }
 
 }

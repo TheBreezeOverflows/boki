@@ -1,49 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>博客管理</title>
-    <link rel="stylesheet" href="../../css/element.css">
-    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../font-blog/css/element.css">
+    <link rel="stylesheet" href="../font-blog/css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
     <div style="padding-bottom: 10px">
             <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item @click.native="parent.changeIndex('index')">首页</el-breadcrumb-item>
+                <el-breadcrumb-item @click="">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>博客管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
         <div style="height: 1px; margin: 10px 0; background-color: white"></div>
     <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索"
-              @keyup.enter.native="loadTable"></el-input>
-    <el-button @click="location.href='blog_edit.html'" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
+              @keyup.enter.native="loadTablew2"></el-input>
+    <el-button @click="location.href='blog_edit'" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
     <!-- <el-upload action="/files/upload" :on-success="successUpload" :show-file-list="false" style="display: inline-block">
         <el-button size="mini" type="primary">导入</el-button> -->
     </el-upload>
     <!-- <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button> -->
     <el-table :data="tableData" border stripe style="width: 100%">
-        <el-table-column type="index" :index="parent.changeXuhao" label="序号" width="50"> </el-table-column>
-        <el-table-column prop="title" label="标题"></el-table-column>
-        <el-table-column label="主图" width="120"><template slot-scope="scope"><el-image style="width: 100px; height: 50px" :src="scope.row.img" :preview-src-list="[scope.row.img]"></el-image></template></el-table-column>
-        <el-table-column prop="author" label="作者"></el-table-column>
-        <el-table-column prop="tag" label="标签"></el-table-column>
-        <el-table-column prop="time" label="时间"></el-table-column>
-<!--        <el-table-column prop="content" label="内容"></el-table-column>-->
+        <el-table-column type="index" label="序号" width="50"> </el-table-column>
+        <el-table-column prop="blogsarticleHeadline" label="标题"></el-table-column>
+        <el-table-column prop="" label="主图" width="120">
+            <template slot-scope="scope">
+                <el-image style="width: 100px; height: 50px" :src="'../'+scope.row.blogsarticleImage" >
+                </el-image>
+            </template>
+        </el-table-column>
+        <el-table-column prop="bloagUserNames" label="作者"></el-table-column>
+<!--        <el-table-column prop="blogsarticleId" label="标签"></el-table-column>-->
+        <el-table-column prop="blogsarticleDate" label="时间"></el-table-column>
+        <el-table-column prop="blogsarticleContent" label="内容"></el-table-column>
 
         <el-table-column
           fixed="right"
           label="操作"
           width="250">
         <template slot-scope="scope">
-          <el-button type="primary" size='mini' @click="location.href='blog_edit.html?id=' + scope.row.id">编辑</el-button>
-          <el-button type="primary" size='mini' @click="location.href='blog_display.html?id=' + scope.row.id">查看</el-button>
+          <el-button type="primary" size='mini' @click="location.href='blog_edit?id=' + scope.row.blogsarticleId">编辑</el-button>
+          <el-button type="primary" size='mini' @click="location.href='blog_display?id=' + scope.row.blogsarticleId">查看</el-button>
           <el-popconfirm
-              @onConfirm="del(scope.row.id)"
+              @onConfirm="del(scope.row.blogsarticleId)"
               title="确定删除？"
           >
             <el-button size='mini' type="danger" slot="reference" style="margin-left: 10px">删除</el-button>
@@ -56,9 +62,9 @@
         <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="pageNum"
+                :current-page="searchParam.pageNum"
                 :page-sizes="[5, 10, 20, 40]"
-                :page-size="pageSize"
+                :page-size="searchParam.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="total">
         </el-pagination>
@@ -82,83 +88,73 @@
     </el-dialog>
 </div>
 
-<script src="../../js/jquery.min.js"></script>
-<script src="../../js/vue.min.js"></script>
-<script src="../../js/element.js"></script>
-<script src="../../js/tinymce/tinymce.min.js"></script>
 
-
+<script src="../font-blog/js/jquery.min.js"></script>
+<script src="../font-blog/js/vue.min.js"></script>
+<script src="../font-blog/js/element.js"></script>
+<script th:src="@{/plugins/axios/axios.js}"></script>
 <script>
-
-    let urlBase = "/api/blog/";
+    let urlBase = "/userPage";
     new Vue({
         el: "#wrapper",
         data: {
             options: [],
             fileList: [],
-            user: {},
+            // user: {},
             tableData: [],
-            pageNum: 1,
-            pageSize: 10,
-            total: 0,
+            total: 0,//总数量
             dialogFormVisible: false,
             entity: {},
             isCollapse: false,
+            searchParam : {
+                id:1,
+                pageNum : 1,
+                pageSize : 10, //每页条数
+                search:'',
+            },
             search: '',
         },
         created() {
-            this.user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {};
             this.loadTable();
         },
         methods: {
-            fileSuccessUpload(res) {
-                this.entity.file = "http://localhost:8888/files/" + res.data;
-                this.entity.img = "http://localhost:8888/files/" + res.data;
-                console.log(res)
-            },
-            successUpload(value) {
-                $.get("/api/blog/upload/" + value.data).then(res => {
-                    if (res.code === '0') {
-                        this.$message({
-                            message: "导入成功",
-                            type: "success"
-                        });
-                        this.loadTable()
-                    }
-                })
-            },
-            changeState(obj, state) {  // 审核
-                this.entity = JSON.parse(JSON.stringify(obj));
-                this.entity.state = state;
-                this.save();
-            },
-            handleCollapse() {
-                this.isCollapse = !this.isCollapse;
-            },
-            logout() {
-                $.get("/api/user/logout");
-                sessionStorage.removeItem("user");
-                location.href = "/page/end/login.html";
-            },
             loadTable() {
-                $.get(urlBase + "/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&name=" + this.search).then(res => {
-                    this.tableData = res.data.records;
-                    this.total = res.data.total;
+                var self = this;
+                console.log("查询文章信息");
+                axios.get(urlBase,{params:self.searchParam}).then(function (res) {
+                    console.log("文章信息："+res);
+                    self.tableData = res.data.list;
+                    console.log(self.tableData);
+                    //设置总数量
+                    self.total = res.data.total;
                 })
-
-                 // $.get("/api/").then(res => {
-                    // this.options = res.data;
-                 // })
             },
-            exp() {   // excel 导出
-                window.open(urlBase + "/export");
+            loadTablew2() {
+                var self = this;
+                console.log("根据标题搜索文章信息");
+/*                $.ajax({
+                        url: "/NamePage",
+                        type: "get",
+                        data: {	// 请求参数放在请求体
+                            params:self.searchParam,
+                            name:self.search
+                        }*/
+                self.searchParam.search=self.search
+                axios.get("/NamePage",{params:self.searchParam
+                }).then(function (res) {
+                    console.log("文章信息："+self.search);
+                    self.tableData = res.data.list;
+                    console.log(self.tableData);
+                    //设置总数量
+                    self.total = res.data.total;
+                })
             },
             handleSizeChange(pageSize) {
-                this.pageSize = pageSize;
+                this.searchParam.pageSize = pageSize;
                 this.loadTable();
             },
             handleCurrentChange(pageNum) {
-                this.pageNum = pageNum;
+                this.searchParam.pageNum = pageNum;
                 this.loadTable();
             },
             add() {
@@ -195,9 +191,13 @@
                 this.dialogFormVisible = true;
             },
             del(id) {
+                console.log("id="+id);
                 $.ajax({
-                    url: urlBase + id,
-                    type: "delete"
+                    url: "/boke/blog/delteblog",
+                    type: "get",
+                    data: {	// 请求参数放在请求体
+                        id: id
+                    }
                 }).then(res => {
                     if (res.code === '0') {
                         this.$message({
@@ -212,6 +212,7 @@
                         })
                     }
                 })
+
             }
         }
     })

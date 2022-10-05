@@ -280,7 +280,7 @@
     select
     *
     from userdatainfo userdata
-    LEFT join user uses
+    inner join user uses
     on userdata.User_Id = uses.User_Id
     where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
   </select>

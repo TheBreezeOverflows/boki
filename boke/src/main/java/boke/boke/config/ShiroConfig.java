@@ -2,7 +2,11 @@ package boke.boke.config;
 
 
 import boke.boke.JWT.JwtFilter;
+import boke.boke.JWT.ResultMap;
 import boke.boke.realm.UserRealm;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SessionsSecurityManager;
@@ -24,47 +28,22 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    /**
-     * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
-     */
-    @Bean("shiroFilterFactoryBean")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
-        // 添加自己的过滤器并且取名为jwt
-        Map<String, Filter> filterMap = new LinkedHashMap<>(16);
-        //设置我们自定义的JWT过滤器
-        filterMap.put("jwt", new JwtFilter());
-        factoryBean.setFilters(filterMap);
-        factoryBean.setSecurityManager(securityManager);
-        // 设置无权限时跳转的 url;
-        factoryBean.setUnauthorizedUrl("/unauthorized/无权限");
-        Map<String, String> filterRuleMap = new HashMap<>();
-        // 访问 /unauthorized/** 不通过JWTFilter
-        filterRuleMap.put("/**/style/**", "anon");//anon表示不需要认证和授权就能访问
-        filterRuleMap.put("/**/assets/**", "anon");//anon表示不需要认证和授权就能访问
-        filterRuleMap.put("/**/pages/**", "anon");//anon表示不需要认证和授权就能访问
-        filterRuleMap.put("/**/font-blog/**", "anon");//anon表示不需要认证和授权就能访问
-        filterRuleMap.put("/**/plugins/**", "anon");//anon表示不需要认证和授权就能访问
-        filterRuleMap.put("/login", "anon");//登录
-        filterRuleMap.put("/regist", "anon");//注册
-        filterRuleMap.put("/user/login", "anon");
-        // 所有请求通过我们自己的JWT Filter
-        //配置受限资源（authc）---需要认证和授权才能访问
-        filterRuleMap.put("/**", "jwt");//把拦截所有交给JWT
-        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
-        //设置拦截后跳转的页面（默认是login.jsp，也可以修改）
-        factoryBean.setLoginUrl("/redirec/");
-        return factoryBean;
+
+    @Bean
+    public UserRealm myShiroRealm(HashedCredentialsMatcher matcher){
+        UserRealm myShiroRealm= new UserRealm();
+        myShiroRealm.setCredentialsMatcher(matcher);
+        return myShiroRealm;
     }
 
     /**
      * 注入 securityManager
      */
     @Bean
-    public SessionsSecurityManager securityManager(UserRealm customRealm) {
+    public SessionsSecurityManager securityManager(HashedCredentialsMatcher customRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置自定义 realm.
-        securityManager.setRealm(customRealm);
+        securityManager.setRealm(myShiroRealm(customRealm));
 
         /*
          * 关闭shiro自带的session，详情见文档
@@ -79,21 +58,52 @@ public class ShiroConfig {
     }
 
     /**
-     * 添加注解支持
+     * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
      */
     @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        // 强制使用cglib，防止重复代理和可能引起代理出错的问题
-        // https://zhuanlan.zhihu.com/p/29161098
-        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
-        return defaultAdvisorAutoProxyCreator;
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
+        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
+        // 添加自己的过滤器并且取名为jwt
+        Map<String, Filter> filterMap = new LinkedHashMap<>(16);
+        //设置我们自定义的JWT过滤器
+        filterMap.put("jwt", new JwtFilter());
+        factoryBean.setFilters(filterMap);
+        factoryBean.setSecurityManager(securityManager);
+        // 设置无权限时跳转的 url;
+        factoryBean.setUnauthorizedUrl("/user/error/无权限");
+        Map<String, String> filterRuleMap = new HashMap<>();
+        // 访问 /unauthorized/** 不通过JWTFilter
+        filterRuleMap.put("/**/style/**", "anon");//anon表示不需要认证和授权就能访问
+        filterRuleMap.put("/**/assets/**", "anon");//anon表示不需要认证和授权就能访问
+        filterRuleMap.put("/**/pages/**", "anon");//anon表示不需要认证和授权就能访问
+        filterRuleMap.put("/**/font-blog/**", "anon");//anon表示不需要认证和授权就能访问
+        filterRuleMap.put("/**/plugins/**", "anon");//anon表示不需要认证和授权就能访问
+        filterRuleMap.put("/login", "anon");//登录
+        filterRuleMap.put("/regist", "anon");//注册
+        filterRuleMap.put("/user/login", "anon");
+        // 所有请求通过我们自己的JWT Filter
+        //配置受限资源（authc）---需要认证和授权才能访问
+        filterRuleMap.put("/**", "jwt");//把拦截所有交给JWT
+        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
+        //设置拦截后跳转的页面（默认是login，也可以修改）
+        factoryBean.setLoginUrl("/login");
+        return factoryBean;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        hashedCredentialsMatcher.setHashIterations(128);// 设置加密次数
+        return hashedCredentialsMatcher;
+    }
+
+
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(HashedCredentialsMatcher matcher) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
+        advisor.setSecurityManager(securityManager(matcher));
         return advisor;
     }
 
@@ -101,4 +111,27 @@ public class ShiroConfig {
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
+    /**
+     * 添加注解支持
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        // 强制使用cglib，防止重复代理和可能引起代理出错的问题
+        // https://zhuanlan.zhihu.com/p/29161098
+        defaultAdvisorAutoProxyCreator.setUsePrefix(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
+    //设置reaml
+//    @Bean
+//    public UserRealm userRealm(){
+//        UserRealm ureaml=new UserRealm();
+//        //创建加密匹配器
+//        HashedCredentialsMatcher matcher =new HashedCredentialsMatcher("MD5");
+//        //添加散列次数
+//        matcher.setHashIterations(128);
+//        //添加加密匹配器
+//        ureaml.setCredentialsMatcher(matcher);
+//        return ureaml;
+//    }
 }

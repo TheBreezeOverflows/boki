@@ -2,6 +2,9 @@ package boke.boke.entity;
 
 import java.io.Serializable;
 
+/**
+ * 项目展示
+ */
 public class Project implements Serializable {
     private Integer projectId;
 

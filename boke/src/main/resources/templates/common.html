@@ -5,16 +5,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="theme-color" content="#fff">
-    <link rel="preload" href="https://cdn.jsdelivr.net/gh/DIYgod/hexo-theme-sagiri/source/fonts/Candyshop.otf" as="font"
+    <link rel="preload" href="DIYgod/Candyshop.otf" as="font"
           type="font/otf" crossorigin="anonymous">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="style/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="style/css/share.min.css" rel="stylesheet" type="text/css">
+    <link rel='stylesheet' href='lls/main.css' type='text/css' />
     <link href="style/css/main.css" rel="stylesheet" type="text/css">
     <link href="style/css/lazyload.css" rel="stylesheet" type="text/css">
-
+    <!-- 我也忘记是什么依赖了反正是后面放在页面末尾的不过老是报错直接注释掉好像也没什么问题  -->
+    <!--<script type="text/javascript" src="style/js/sagiri.min.js"></script>-->
     <!--看板娘js-->
     <link rel="stylesheet" type="text/css" href="assets/waifu.css"/>
     <script src="assets/autoload.js" type="text/javascript"></script>
@@ -38,8 +40,8 @@
     <script th:src="@{/plugins/vue/vuejs-paginate.js}"></script>
     <script th:src="@{/plugins/vue/vue-select.js}"></script>
     <script th:src="@{/plugins/axios/axios.js}"></script>
-    <link href="https://www.itxst.com/package/ant-design-vue/antd.min.css" rel="stylesheet" />
-
+<!--    <link href="https://www.itxst.com/package/ant-design-vue/antd.min.css" rel="stylesheet" />-->
+    <link href="plugins/antdesignvue/antd.min.css" rel="stylesheet" />
     <!--页面标题显示-->
     <script type="text/javascript" id="hexo.configurations">var NexT = window.NexT || {}, CONFIG = {
         root: "",
@@ -143,7 +145,7 @@
     }
 
     .feature i, /*.feature-title span ,*/
-    .download, .navigator i:hover, .links ul li:before, .ar-time i, span.ar-circle, .object, .comment .comment-reply-link, .siren-checkbox-radio:checked + .siren-checkbox-radioInput:after {
+    .download, .navigator i:hover, .links ul li:before, .ar-time i, span.ar-circle, .object, .comment  .siren-checkbox-radio:checked + .siren-checkbox-radioInput:after {
         background: #FE9600
     }
 
@@ -174,10 +176,17 @@
     }
     </style>
     <title>Hi, boy</title>
+<!--
     <script>!function (e, a, t, n, g, c, o) {
         e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
             (e.ga.q = e.ga.q || []).push(arguments)
         }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
+    }(window, document, "script", 0, "ga"), ga("create", "UA-48084758-7", "auto"), ga("send", "pageview")</script>
+-->
+    <script>!function (e, a, t, n, g, c, o) {
+        e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
+            (e.ga.q = e.ga.q || []).push(arguments)
+        }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "/google-analytics/analytics.js", o.parentNode.insertBefore(c, o)
     }(window, document, "script", 0, "ga"), ga("create", "UA-48084758-7", "auto"), ga("send", "pageview")</script>
 
     <!--去除浏览器默认-->
@@ -232,7 +241,9 @@
         }
 
     </style>
-    <meta name="generator" content="Hexo 5.4.0">
+    <link rel='stylesheet' id='genericons-neue-css' href='lls/genericons-neue.css' type='text/css' media='screen'/>
+    <link rel='stylesheet' id='modern-stylesheet-custom-css' href='lls/custom-styles.css' type='text/css' media='screen'/>
+
 </head>
 <body>
 

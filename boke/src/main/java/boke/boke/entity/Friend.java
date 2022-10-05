@@ -2,6 +2,9 @@ package boke.boke.entity;
 
 import java.io.Serializable;
 
+/**
+ * 友人帐
+ */
 public class Friend implements Serializable {
     private Integer friendId;
 

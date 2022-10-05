@@ -1,5 +1,6 @@
 package boke.boke.JWT;
 
+import org.apache.shiro.authc.pam.UnsupportedTokenException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Enumeration;
 
 /**
  * 此类是实现BasicHttpAuthenticationFilter类的过滤器
@@ -28,7 +30,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("Token");
+        String token = req.getHeader("baitoken");
         return token != null;
     }
     /**
@@ -37,7 +39,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader("Token");
+        String token = httpServletRequest.getHeader("baitoken");
         JwtToken jwtToken = new JwtToken(token);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(jwtToken);
@@ -66,6 +68,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
                 executeLogin(request, response);
                 return true;
             } catch (Exception e) {
+                e.printStackTrace();
                 //token 错误
                 responseError(response, e.getMessage());
             }
@@ -98,7 +101,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             //设置编码，否则中文字符在重定向时会变为空字符串
             message = URLEncoder.encode(message, "UTF-8");
-            httpServletResponse.sendRedirect("/error/" + message);
+            httpServletResponse.sendRedirect("/errors/" + message);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

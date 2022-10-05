@@ -3,6 +3,9 @@ package boke.boke.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 用户详细信息
+ */
 public class Userdatainfo implements Serializable {
     private Integer userinfoId;
 

@@ -256,4 +256,14 @@
       Message_reply = #{messageReply,jdbcType=INTEGER}
     where Comment_id = #{commentId,jdbcType=INTEGER}
   </update>
+  <select id="selectCommentblogExample" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from comment
+    where BlogsArticle_Id = #{blogId,jdbcType=INTEGER} and Message_reply =0
+  </select>
+  <select id="selectCommentparentExample" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from comment
+    where Message_reply = #{ReplyId,jdbcType=INTEGER}
+  </select>
 </mapper>

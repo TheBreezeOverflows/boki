@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="../../css/element.css">
     <link rel="stylesheet" href="../../css/base.css">
     <style>
-        .avatar-uploader .el-upload {
+        .avatars-uploader .el-upload {
             border: 1px dashed #d9d9d9;
             border-radius: 6px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
-        .avatar-uploader-icon {
+        .avatars-uploader-icon {
             font-size: 28px;
             color: #8c939d;
             width: 100px;
@@ -24,7 +24,7 @@
             line-height: 100px;
             text-align: center;
         }
-        .avatar {
+        .avatars {
             width: 100px;
             height: 100px;
             display: block;
@@ -45,12 +45,12 @@
         <div>
             <div style="padding: 10px 0; text-align: center">
                 <el-upload
-                        class="avatar-uploader"
+                        class="avatars-uploader"
                         action="/files/upload"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess">
-                    <img v-if="user.avatar" :src="['/files/' + user.avatar]" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    <img v-if="user.avatars" :src="['/files/' + user.avatars]" class="avatars">
+                    <i v-else class="el-icon-plus avatars-uploader-icon"></i>
                 </el-upload>
             </div>
             <div style="width: 300px; margin: 0 auto">
@@ -135,7 +135,7 @@
         methods: {
             handleAvatarSuccess(res) {
                 this.entity = JSON.parse(JSON.stringify(this.user));
-                this.entity.avatar = res.data;
+                this.entity.avatars = res.data;
                 this.save()
             },
             logout() {

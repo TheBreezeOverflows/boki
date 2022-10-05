@@ -27,4 +27,8 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+    //根据文章id搜索回复信息
+    List<Comment> selectCommentblogExample(@Param("blogId") Integer blogId);
+    //根据父级id搜索回复信息
+    List<Comment> selectCommentparentExample(@Param("ReplyId") Integer ReplyId);
 }
