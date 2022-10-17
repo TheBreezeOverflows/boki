@@ -885,6 +885,8 @@ code::before, pre::before, .wp-playlist::before, .pagination a:hover::before, .p
 /* FILE: main/base/__layout.scss */
 .site { position: relative; width: 100%; margin: 0 auto; }
 
+.mobaisite {font-weight: 700; }
+
 .site-header-inner, .intro-inner, .site-content-inner, .front-page-section-inner, .site-footer-area-inner { width: 88%; margin: 0 auto; }
 
 /* $content_width */

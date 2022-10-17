@@ -29,6 +29,16 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
     //根据文章id搜索回复信息
     List<Comment> selectCommentblogExample(@Param("blogId") Integer blogId);
+    //查询留言板页面信息
+    List<Comment> selectBlogMessageExample();
     //根据父级id搜索回复信息
     List<Comment> selectCommentparentExample(@Param("ReplyId") Integer ReplyId);
+    //根据父级id搜索回复信息
+    List<Comment> selectMessageparentExample(@Param("ReplyId") Integer ReplyId);
+    //查询子评论信息
+    public int selCommentmessageslave(@Param("commentid") int id);
+    //删除子评论信息
+    public int DelteCommentmessageslave(@Param("commentid") int id);
+    //修改文章审核状态
+    int updateByAuditComment(@Param("commentid") int commentid);
 }

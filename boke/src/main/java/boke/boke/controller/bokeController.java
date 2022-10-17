@@ -32,8 +32,10 @@ public class bokeController {
     //根据分类id查询文章信息
     @GetMapping("/classPage")
     @ResponseBody
-    public SearchResult ClassifyfindPage(int id,SearchParam par){
-        System.out.println("请求成功id="+id+"当前页数="+par.getPageNum()+"总："+par.getPageSize());
+    public SearchResult ClassifyfindPage(int id,int lab,SearchParam par){
+        if (lab<0){
+            par.setPageNum(1);
+        }
         return blogsArticleInfo.BlogsArticleClassifyIdInfo(id,par);
     }
 

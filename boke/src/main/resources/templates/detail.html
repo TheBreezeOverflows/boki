@@ -6,90 +6,8 @@
 
     <link rel="stylesheet" href="font-blog/css/element.css">
     <link rel="stylesheet" href="font-blog/css/base.css">
+    <link rel="stylesheet" href="brand/css/message/MessageController.css">
     <!--评论区-->
-        <style>
-        body {
-            background-color: #f0f9eb;
-        }
-        #main {
-            clear: both;
-            overflow: hidden;
-            padding: 20px 0 0 0;
-        }
-        #content {
-            margin-bottom: 36px;
-            background-color:#4F5083;
-        }
-        .vaptcha-container {
-            height: 36px;
-            width:50% ;
-            margin-bottom: 10px;
-        }
-
-        .vaptcha-init-main {
-            display: table;
-            width: 100%;
-            height: 100%;
-            background-color: #EEEEEE;
-        }
-        #content,
-        #content input,
-        #content textarea {
-            font-size: 14px;
-            line-height: 120%;
-            letter-spacing: 0.5px;
-        }
-
-        #content p,
-        #content ul,
-        #content ol,
-        #content dd,
-        #content pre,
-        #content hr {
-            margin-bottom: 12px; /*段落间距*/
-
-        }
-
-        /* 博客字体总控 */
-        *:not([class*="icon"]):not(i) {
-            font-family: tahoma, arial, 'Hiragino Sans GB', '\5FAE\8F6F\96C5\9ED1', sans-serif !important;
-        }
-
-        .site-content-inner {
-            color: white;
-        }
-
-        .comment-content {
-            color: #ff9800;
-        }
-
-
-
-        #comments .comments-area-inner {
-            padding-top: 110px;
-        }
-        :root {
-            --color_accent: #000000;
-            --color_accent_text: #000000;
-            --color_header_background: #0a0a0a;
-            --color_header_text: #4fcaff;
-            --color_header_text--a20: rgba(79, 202, 255, 0.2);
-            --color_content_background: #42447a;
-            --color_content_text: #ffffff;
-            --color_content_text--a20: rgba(255, 255, 255, 0.2);
-            --color_content_headings: #60afff;
-            --color_footer_background: #343d68;
-            --color_footer_text: #968d8d;
-            --color_footer_text--a20: rgba(150, 141, 141, 0.2);
-            --color_footer_headings: #a0a0a0;
-            --typography_size_html: 15px;
-        }
-
-        /* END CSS variables */
-        .intro-media::after {
-            background-image: linear-gradient(transparent, #8d94ba)
-        }
-    </style>
 </head>
 <body style="background-color: #8d94ba">
 <div id="wrapper" v-cloak>
@@ -108,15 +26,10 @@
                         <rp></rp></ruby> </a> </span> </span></div>
             <div class="lower-cantiner">
                 <div class="lower">
-                    <div id="show-nav" class="showNav mobile-fit">
-                        <div class="line line1"></div>
-                        <div class="line line2"></div>
-                        <div class="line line3"></div>
-                    </div>
                     <!--选择栏-->
                     <nav class="mobile-fit-control hide">
                         <ul id="menu-new" class="menu">
-                            <li style="margin-right: 32px;margin-left: 90px">
+                            <li style="margin-right: 32px;margin-left: 180px">
                                 <a href="index"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-meteor" aria-hidden="true"></i> 首页
                                         </span></a>
@@ -132,12 +45,12 @@
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
-                                <a href="#"><span class="faa-parent animated-hover">
+                                <a href="/message"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-magic" aria-hidden="true"></i> 留言板
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
-                                <a href="#" aria-current="page">
+                                <a href="/friend" aria-current="page">
                                             <span class="faa-parent animated-hover">
                                                 <i class="menu-item-icon fas fa-child" aria-hidden="true"></i> 友人帐
                                             </span>
@@ -174,7 +87,7 @@
             <!--头部背景-->
             <div class="site-brand-bg">
                 <picture>
-                    <img class="lazyload" v-bind:src="entity.blogsarticleImage" data-original="style/images/header-gyx.png">
+                    <img class="lazyload" v-bind:src="entity.blogsarticleImage" v-bind:data-original="entity.blogsarticleImage">
                 </picture>
             </div>
         </div>
@@ -216,7 +129,7 @@
             <div style="height: 1px; margin-top: 50px; "></div>
             <div style="text-align: center;margin-top: 50px">
                 <row>
-                    <button type="success" style="background-color: #4E4E4E" @click="changeClick()" round>👍（{{entity.commentnumber}}）</button>
+                    <button type="success" style="background-color: #4E4E4E" @click="changeClick()" round>👍（{{entity.likenumber}}）</button>
                     <button type="warning" style="background-color: #4E4E4E" @mouseleave="hideImg('wxImg')"  @mouseover="showImg('wxImg')" round>🐧联系我</button>
                     <div id="wxImg" style="display:none;position:absolute;z-index:2">
 <!--                        <div style="height:30px;back-ground:#f00;margin-left: 45px">
@@ -238,13 +151,15 @@
                             <article v-bind:id="'div-comment-'+item.data.commentId" class="comment-body">
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
-                                        <a  v-bind:href="item.data.directSite">
                                         <img alt=''
                                          src='/style/images/failure.png'
                                          srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
                                          height='240' width='240'/>
+                                        <a  v-bind:href="item.data.directSite">
+                                        <b class="fn">{{item.data.messageName}}</b>
                                         </a>
-                                        <b class="fn">{{item.data.messageName}}</b><span class="says">说道：</span></div>
+                                        <span class="says">说道：</span>
+                                    </div>
                                     <div class="comment-metadata">
                                         <a v-bind:href="'#comment-'+item.data.commentId">
                                         <time>{{item.data.commentDate}}</time>
@@ -261,14 +176,14 @@
                                     <article v-bind:id="'div-comment-'+itemcom.commentId" class="comment-body">
                                         <footer class="comment-meta">
                                             <div class="comment-author vcard">
-                                                <a  v-bind:href="itemcom.directSite">
                                                 <img alt=''
                                                    src='/style/images/failure.png'
                                                    srcset='/style/images/failure.png'
                                                    class='avatar avatar-240 photo'
                                                    height='240' width='240'/>
-                                                </a>
+                                                <a  v-bind:href="itemcom.directSite">
                                                 <b class="fn">{{itemcom.messageName}}</b>
+                                                </a>
                                                 <span class="says">说道：</span>
                                             </div>
                                             <div class="comment-metadata">
@@ -279,7 +194,7 @@
                                                 </a>
                                             </div>
                                         </footer>
-                                        <div class="comment-content"><p>@{{item.data.messageName}}：{{itemcom.voiceMessage}}</p></div>
+                                        <div class="comment-content"><p>@{{itemcom.messageReplyName}} ：{{itemcom.voiceMessage}}</p></div>
                                         <div class="reply">
                                             <a class='comment-reply-link'  href="#respond" v-on:click="messageReplyid(itemcom.commentId,itemcom.messageName)">
                                                 回复
@@ -290,6 +205,11 @@
                             </ol>
                         </li>
                     </ol>
+                    <p align="center">
+                        <paginate :container-class="'pagination'" :page-count="total"
+                                  :click-handler="BokeComet" :prev-text="'《'" :next-text="'》'"
+                                  :first-last-button="false" v-model="searchParam.pageNum">
+                    </p>
                     <!--发言回复区-->
                     <div id="respond" class="comment-respond">
                         <h3 id="reply-title" class="comment-reply-title">
@@ -338,7 +258,8 @@
                             </p>
                             <input id="messageRey" name="messageRey" v-bind:value="messageRey" style="display:none;"/>
                             <input id="blogid" name="blogid" v-bind:value="entity.blogsarticleId" style="display:none;"/>
-
+                            <input id="messagename" name="messagename" v-bind:value="messagereplyname" style="display:none;"/>
+                            <input id="audit" name="audit" v-bind:value="1" style="display:none;"/>
                             <p class="form-submit">
                                 <input name="submit"   type="submit" id="submit" class="submit" value="发表评论"/>
                                 <input type='hidden'
@@ -366,14 +287,22 @@
                 <img loading="lazy" src="style/images/footer.png"></picture>
         </div>
         <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
-            <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白. 由 <a href="https://spring.io/projects/spring-boot/"
-                                                                         class="external" rel="nofollow">SpringBoot+Mybatis</a>               制作. Theme By <a href="https://github.com/TheBreezeOverflows" target="_blank" class="external"
-                                rel="nofollow">Sagiri</a> v1.0 </p>
+            <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
+                                                                        rel="nofollow">TheBreezeOverflows</a>
+                制作.</p>
             <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
                                                                                               itemprop="copyrightHolder">墨白</span>.
             </p></div>
     </footer>
     </div>
+</div>
+<!--右侧长条线图片-->
+<div class="back-to-top">
+    <picture>
+        <source srcset="style/images/scroll.webp"
+                type="image/webp">
+        <img loading="lazy" src="style/images/scroll.png">
+    </picture>
 </div>
 <!--    js-->
 <script src="font-blog/js/jquery.min.js"></script>
@@ -382,135 +311,7 @@
 <script src="font-blog/js/tinymce/tinymce.min.js"></script>
 <script type='text/javascript' src='lls/comment-reply.min.js'></script>
 <script type='text/javascript' src='lls/scripts-global.js'></script>
-<!--<script type="text/javascript" src="style/js/sagiri.min.js"></script>-->
-<script>
-    new Vue({
-        el: "#wrapper",
-        data: {
-            src: '',
-            search: '',
-            entity:{},
-            pageNum: 1,
-            pageSize: 6,
-            total: 0,
-            messageRey:0,
-            messageReyName:'发表评论',
-            bokeComment:[],
-            tokes:{         //当前toke的存储
-                toke: null
-            },
-            dialogVisible: false
-        },
-        created() {
-            const token = localStorage.getItem("user-Token");
-            if(token!= null) { //判断是否有Token
-                this.tokes.toke = token;
-                console.log("有Token:" + this.tokes.toke)
-            }
-            let id = getUrlParamValue('id');
-            //查询文章信息
-            this.loadBlog(id);
-            //查询评论区评论信息
-            this.BokeComet(id);
-        },
-        methods: {
-            loadBlog(id) {
-                var self = this;
-                $.get("/boke/blog/Classname",{ids:id}).then(function (res) {
-                    console.log(res);
-                    self.entity = res;
-                    console.log(self.entity);
-                    $('#view-notice-body').html(res.blogsarticleDetailedinformation);
-                })
-            },
-            changeClick() {
-                var self = this;
-                var id=self.entity.blogsarticleId;
-                console.log("id:" + id)
-                var commentnumber = localStorage.getItem('successNumber'+id);
-                // console.log("点赞数:" + commentnumber)
-                if(commentnumber!= null) { //判断是否有对本篇文章点过赞,后续增加取消点赞
-                    // console.log("已经点赞:" + commentnumber)
-                }else {
-                    self.entity.commentnumber = self.entity.commentnumber + 1;
-                    $.get("/boke/blog/commentnumber",{ids:id}).then(function (res) {
-                        if (res.code === '0') {
-                            window.localStorage.setItem('successNumber'+id, '1')
-                            this.$message({
-                                message: "点赞成功",
-                                type: "success"
-                            });
-                        } else {
-                            this.$message({
-                                message: res.msg,
-                                type: "error"
-                            })
-                        }
-                    })
-                }
-
-            },
-            showImg(id) {
-                //显示二维码
-                document.getElementById(id).style.display='block';
-            },
-            hideImg(id) {
-                document.getElementById(id).style.display='none';
-            },
-            BokeComet(id) {
-                var self = this;
-                $.get("/boke/Comment/blogComment",{ids:id}).then(function (res) {
-                    self.bokeComment = res;
-                    console.log(self.bokeComment);
-                })
-            },
-            messageReplyid(id,name){//回复人id设置
-                var self = this;
-                self.messageRey=id;
-                self.showImg('cancel-comment-reply-link');
-                self.messageReyName="@："+name;
-            },
-            cancelReplyid(){//回复人取消
-                var self = this;
-                self.messageRey=0;
-                self.hideImg('cancel-comment-reply-link')
-                self.messageReyName="发表评论"
-            },
-            commentrelease() {//发表评论
-                console.log("进入表单验证")
-                var author = document.getElementById("author").value;
-                if (!author) {
-                    return false;
-                }
-                var email = document.getElementById("email").value;
-                if (!email) {
-                    return false;
-                }
-                return true;
-            }
-        }
-    });
-    /**
-     * 获取url参数
-     * @param name
-     * @returns {string|null}
-     */
-    function getUrlParamValue(name) {
-        if (name == null || name === 'undefined') {
-            return '';
-        }
-        let searchStr = decodeURI(location.search);
-        let infoIndex = searchStr.indexOf(name + "=");
-        if (infoIndex === -1) {
-            return '';
-        }
-        let searchInfo = searchStr.substring(infoIndex + name.length + 1);
-        let tagIndex = searchInfo.indexOf("&");
-        if (tagIndex !== -1) {
-            searchInfo = searchInfo.substring(0, tagIndex);
-        }
-        return searchInfo;
-    }
-</script>
+<script type="text/javascript" src="style/js/sagiri.min.js"></script>
+<script th:src="@{/brand/js/detail/CommentController.js}"></script>
 </body>
 </html>

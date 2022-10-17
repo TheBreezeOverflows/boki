@@ -27,4 +27,6 @@ public interface FriendMapper {
     int updateByPrimaryKeySelective(Friend record);
 
     int updateByPrimaryKey(Friend record);
+
+    List<Integer> selectType();
 }

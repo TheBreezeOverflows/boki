@@ -37,5 +37,9 @@ public interface BlogsArticleInfo {
     //给文章添加一次浏览次数
     public boolean AddBlogAccessnumber(int id);
     //给文章点赞
+    public boolean AddBlogLikenumber(int id);
+    //给文章回复数统计+1
     public boolean AddBlogcommentnumber(int id);
+    //给文章回复数统计-n
+    public boolean delBlogcommentnumber(int id,int number);
 }

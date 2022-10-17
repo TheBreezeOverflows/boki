@@ -443,6 +443,65 @@ public class FriendExample {
             addCriterion("Portrait not between", value1, value2, "portrait");
             return (Criteria) this;
         }
+        public Criteria andFriendTypeIsNull() {
+            addCriterion("Friend_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeIsNotNull() {
+            addCriterion("Friend_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeEqualTo(Integer value) {
+            addCriterion("Friend_type =", value, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeNotEqualTo(Integer value) {
+            addCriterion("Friend_type <>", value, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeGreaterThan(Integer value) {
+            addCriterion("Friend_type >", value, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Friend_type >=", value, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeLessThan(Integer value) {
+            addCriterion("Friend_type <", value, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("Friend_type <=", value, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeIn(List<Integer> values) {
+            addCriterion("Friend_type in", values, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeNotIn(List<Integer> values) {
+            addCriterion("Friend_type not in", values, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeBetween(Integer value1, Integer value2) {
+            addCriterion("Friend_type between", value1, value2, "friendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andFriendTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("Friend_type not between", value1, value2, "friendType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

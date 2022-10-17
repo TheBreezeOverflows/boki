@@ -172,8 +172,20 @@ public class BlogsArticleInfoImpl implements BlogsArticleInfo {
     }
     //给文章点赞
     @Override
+    public boolean AddBlogLikenumber(int id) {
+        blogsarticleMapper.AddBlogLikenumber(id);
+        return false;
+    }
+    //给文章回复数统计+1
+    @Override
     public boolean AddBlogcommentnumber(int id) {
         blogsarticleMapper.AddBlogcommentnumber(id);
+        return false;
+    }
+
+    @Override
+    public boolean delBlogcommentnumber(int id,int number) {
+        blogsarticleMapper.delBlogcommentnumber(id,number);
         return false;
     }
 }

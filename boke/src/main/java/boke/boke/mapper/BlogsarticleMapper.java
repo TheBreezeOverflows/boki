@@ -42,5 +42,9 @@ public interface BlogsarticleMapper {
     //给文章添加一次浏览次数
     int AddBlogAccessnumber(@Param("blogid") int id);
     //给文章点赞
+    int AddBlogLikenumber(@Param("blogid") int id);
+    //给文章回复数统计加1
     int AddBlogcommentnumber(@Param("blogid") int id);
+    //给文章回复数统计-n
+    int delBlogcommentnumber(@Param("blogid") int id,@Param("number") int number);
 }

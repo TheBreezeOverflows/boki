@@ -105,6 +105,18 @@
             <artifactId>hutool-all</artifactId>
             <version>5.5.4</version>
         </dependency>
+        <!-- png图片压缩-->
+        <dependency>
+            <groupId>org.jpedal</groupId>
+            <artifactId>OpenViewerFX</artifactId>
+            <version>6.6.14</version>
+        </dependency>
+        <!-- ImageIO.read方法当图片为webp时会报错需要添加此依赖 -->
+        <dependency>
+            <groupId>org.sejda.imageio</groupId>
+            <artifactId>webp-imageio</artifactId>
+            <version>0.1.6</version>
+        </dependency>
     </dependencies>
 
     <build>

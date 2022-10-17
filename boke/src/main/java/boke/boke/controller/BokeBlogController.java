@@ -84,19 +84,25 @@ public class BokeBlogController {
 
     @GetMapping("/delteblog")
     @ResponseBody
-    public SearchResult<?> delete(int id) {
-        System.out.print("id="+id);
-        blogsArticleInfo.removeById(id);
-        blogsArticleInfo.removeblogIdClass(id);
+    public SearchResult<?> delete(String  id) {
+        blogsArticleInfo.removeById(Integer.parseInt( id));
+        blogsArticleInfo.removeblogIdClass(Integer.parseInt(id));
         return SearchResult.success();
     }
 
     //点赞
+    @GetMapping("/likenumber")
+    @ResponseBody
+    public SearchResult<?> likenumber(String ids) {
+        blogsArticleInfo.AddBlogLikenumber(Integer.parseInt(ids));
+       return SearchResult.success();
+    }
+    //给文章回复数统计+1
     @GetMapping("/commentnumber")
     @ResponseBody
     public SearchResult<?> commentnumber(String ids) {
         blogsArticleInfo.AddBlogcommentnumber(Integer.parseInt(ids));
-       return SearchResult.success();
+        return SearchResult.success();
     }
 }
 

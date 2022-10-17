@@ -11,7 +11,7 @@ public class Comment implements Serializable {
     private Integer commentId;
     //评论名称
     private String messageName;
-    //评论人名称
+    //评论人邮箱
     private String messageEmail;
     //评论人个人站点
     private String directSite;
@@ -23,6 +23,12 @@ public class Comment implements Serializable {
     private Integer blogsarticleId;
     //回复信息id(上级id)
     private Integer messageReply;
+    //回复的人的名称
+    private String messageReplyName;
+    //审核留言板页面才有(0不通过，1通过)
+    private Integer commentAudit;
+    //头像路径
+    private String headPortrait;
 
     private static final long serialVersionUID = 1L;
 
@@ -88,5 +94,30 @@ public class Comment implements Serializable {
 
     public void setMessageReply(Integer messageReply) {
         this.messageReply = messageReply;
+    }
+
+
+    public String getMessageReplyName() {
+        return messageReplyName;
+    }
+
+    public Integer getCommentAudit() {
+        return commentAudit;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setMessageReplyName(String messageReplyName) {
+        this.messageReplyName = messageReplyName;
+    }
+
+    public void setCommentAudit(Integer commentAudit) {
+        this.commentAudit = commentAudit;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
     }
 }

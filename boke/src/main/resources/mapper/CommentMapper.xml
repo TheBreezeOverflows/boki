@@ -10,6 +10,9 @@
     <result column="Voice_message" property="voiceMessage" jdbcType="VARCHAR" />
     <result column="BlogsArticle_Id" property="blogsarticleId" jdbcType="INTEGER" />
     <result column="Message_reply" property="messageReply" jdbcType="INTEGER" />
+    <result column="Message_reply_name" property="messageReplyName" jdbcType="VARCHAR" />
+    <result column="Comment_audit" property="commentAudit" jdbcType="INTEGER" />
+    <result column="Head_portrait" property="headPortrait" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     Comment_id, Message_name, Message_email, Direct_site, Comment_Date, Voice_message, 
-    BlogsArticle_Id, Message_reply
+    BlogsArticle_Id, Message_reply,Message_reply_name,Comment_audit,Head_portrait
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.CommentExample" >
     select
@@ -106,10 +109,11 @@
   <insert id="insert" parameterType="boke.boke.entity.Comment" >
     insert into comment (Comment_id, Message_name, Message_email, 
       Direct_site, Comment_Date, Voice_message, 
-      BlogsArticle_Id, Message_reply)
+      BlogsArticle_Id, Message_reply,Message_reply_name,Comment_audit,Head_portrait)
     values (#{commentId,jdbcType=INTEGER}, #{messageName,jdbcType=VARCHAR}, #{messageEmail,jdbcType=VARCHAR}, 
       #{directSite,jdbcType=VARCHAR}, #{commentDate,jdbcType=DATE}, #{voiceMessage,jdbcType=VARCHAR}, 
-      #{blogsarticleId,jdbcType=INTEGER}, #{messageReply,jdbcType=INTEGER})
+      #{blogsarticleId,jdbcType=INTEGER}, #{messageReply,jdbcType=INTEGER},#{messageReplyName,jdbcType=VARCHAR},
+      #{commentAudit,jdbcType=INTEGER}, #{headPortrait,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="boke.boke.entity.Comment" >
     insert into comment
@@ -137,6 +141,15 @@
       </if>
       <if test="messageReply != null" >
         Message_reply,
+      </if>
+      <if test="messageReplyName != null" >
+        Message_reply_name,
+      </if>
+      <if test="commentAudit != null" >
+        Comment_audit,
+      </if>
+      <if test="headPortrait != null" >
+        Head_portrait,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -199,6 +212,15 @@
       <if test="record.messageReply != null" >
         Message_reply = #{record.messageReply,jdbcType=INTEGER},
       </if>
+      <if test="messageReplyName != null" >
+        Message_reply_name = #{messageReplyName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentAudit != null" >
+        Comment_audit = #{commentAudit,jdbcType=INTEGER},
+      </if>
+      <if test="headPortrait != null" >
+        Head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,7 +235,10 @@
       Comment_Date = #{record.commentDate,jdbcType=DATE},
       Voice_message = #{record.voiceMessage,jdbcType=VARCHAR},
       BlogsArticle_Id = #{record.blogsarticleId,jdbcType=INTEGER},
-      Message_reply = #{record.messageReply,jdbcType=INTEGER}
+      Message_reply = #{record.messageReply,jdbcType=INTEGER},
+      Message_reply_name = #{messageReplyName,jdbcType=VARCHAR},
+      Comment_audit = #{commentAudit,jdbcType=INTEGER},
+      Head_portrait = #{headPortrait,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,6 +267,15 @@
       <if test="messageReply != null" >
         Message_reply = #{messageReply,jdbcType=INTEGER},
       </if>
+      <if test="messageReplyName != null" >
+        Message_reply_name = #{messageReplyName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentAudit != null" >
+        Comment_audit = #{commentAudit,jdbcType=INTEGER},
+      </if>
+      <if test="headPortrait != null" >
+        Head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
     </set>
     where Comment_id = #{commentId,jdbcType=INTEGER}
   </update>
@@ -253,7 +287,10 @@
       Comment_Date = #{commentDate,jdbcType=DATE},
       Voice_message = #{voiceMessage,jdbcType=VARCHAR},
       BlogsArticle_Id = #{blogsarticleId,jdbcType=INTEGER},
-      Message_reply = #{messageReply,jdbcType=INTEGER}
+      Message_reply = #{messageReply,jdbcType=INTEGER},
+      Message_reply_name = #{messageReplyName,jdbcType=VARCHAR},
+      Comment_audit = #{commentAudit,jdbcType=INTEGER},
+      Head_portrait = #{headPortrait,jdbcType=VARCHAR}
     where Comment_id = #{commentId,jdbcType=INTEGER}
   </update>
   <select id="selectCommentblogExample" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -261,9 +298,45 @@
     from comment
     where BlogsArticle_Id = #{blogId,jdbcType=INTEGER} and Message_reply =0
   </select>
+  <select id="selectBlogMessageExample" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from comment
+    where  BlogsArticle_Id=-1 and Message_reply =0 and Comment_audit = 1
+  </select>
   <select id="selectCommentparentExample" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select *
     from comment
     where Message_reply = #{ReplyId,jdbcType=INTEGER}
+  </select>
+  <select id="selectMessageparentExample" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select *
+    from comment
+    where Message_reply = #{ReplyId,jdbcType=INTEGER} and Comment_audit = 1
+  </select>
+  <update id="updateByAuditComment" parameterType="map" >
+    update comment
+    set Comment_audit=1
+    where Comment_id = #{commentid,jdbcType=INTEGER}
+  </update>
+  <delete id="DelteCommentmessageslave" parameterType="java.lang.Integer" >
+    delete from comment
+    where Comment_id in (SELECT Comment_id FROM (
+                                                         SELECT t1.Comment_id,
+                                                                IF(FIND_IN_SET(`Message_reply`, @pids) > 0, @pids := CONCAT(@pids, ',', Comment_id), 0) AS ischild
+                                                         FROM (
+                                                                SELECT Comment_id,`Message_reply` FROM `comment` t ORDER BY `Message_reply`, Comment_id
+                                                              ) t1,
+                                                              (SELECT @pids := #{commentid,jdbcType=INTEGER}) t2
+                                                       ) t3 WHERE ischild != 0)
+  </delete>
+  <select id="selCommentmessageslave" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    SELECT count(Comment_id) FROM (
+                             SELECT t1.Comment_id,
+                                    IF(FIND_IN_SET(`Message_reply`, @pids) > 0, @pids := CONCAT(@pids, ',', Comment_id), 0) AS ischild
+                             FROM (
+                                    SELECT Comment_id,`Message_reply` FROM `comment` t ORDER BY `Message_reply`, Comment_id
+                                  ) t1,
+                                  (SELECT @pids := #{commentid,jdbcType=INTEGER}) t2
+                           ) t3 WHERE ischild != 0
   </select>
 </mapper>

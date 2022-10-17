@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>友人帐管理</title>
+    <link rel="stylesheet" href="../font-blog/css/element.css">
+    <link rel="stylesheet" href="../font-blog/css/base.css">
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <div style="padding-bottom: 10px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item @click.native="parent.changeIndex('index')">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>友人帐管理</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+
+    <div style="height: 1px; margin: 10px 0; background-color: white"></div>
+
+    <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入昵称按回车搜索"
+              @keyup.enter.native="loadTablew2"></el-input>
+    <el-button @click="add" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
+    <!--                <el-button @click="exp" type="primary" size="mini" style="margin: 10px 0">导出</el-button>-->
+    <el-table
+            :data="tableData"
+            border
+            style="width: 100%">
+        <el-table-column type="index" :index="parent.changeXuhao" label="序号" width="50"></el-table-column>
+        <el-table-column prop="friendName" label="昵称"></el-table-column>
+        <el-table-column prop="selfIntroduce" label="介绍"></el-table-column>
+        <el-table-column prop="" label="头像" width="120">
+            <template slot-scope="scope">
+                <el-image style="width: 100px; height: 50px" :src="'../'+scope.row.portrait" >
+                </el-image>
+            </template>
+        </el-table-column>
+        <el-table-column prop="directSite" label="地址"></el-table-column>
+        <el-table-column prop="friendType" label="类型">
+            <template slot-scope="scope">
+                <span v-if="scope.row.friendType==1">
+                    🏘️️邻居
+                </span>
+                <span v-if="scope.row.friendType==2">
+                    ⚰️阵亡战士
+                </span>
+                <span v-if="scope.row.friendType==3">
+                   📝大佬
+                </span>
+            </template>
+        </el-table-column>
+        <el-table-column
+                fixed="right"
+                label="操作"
+                width="150">
+            <template slot-scope="scope">
+                <el-button type="primary" @click="edit(scope.row)"  icon="el-icon-edit" circle size="mini"></el-button>
+                <el-popconfirm
+                        @onConfirm="del(scope.row.friendId)"
+                        title="确定删除？"
+                >
+                    <el-button type="danger" icon="el-icon-delete" circle slot="reference" size="mini"></el-button>
+                </el-popconfirm>
+            </template>
+        </el-table-column>
+    </el-table>
+    <!-- 分页 -->
+    <div style="background-color: white">
+        <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="searchParam.pageNum"
+                :page-sizes="[5, 10, 20, 40]"
+                :page-size="searchParam.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
+        </el-pagination>
+    </div>
+
+    <el-dialog title="友人信息" :visible.sync="dialogFormVisible" width="40%"
+               :close-on-click-modal="false">
+        <el-form :model="entity">
+            <el-form-item label="昵称" label-width="100px">
+                <el-input v-model="entity.friendName" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
+            <el-form-item label="介绍" label-width="100px">
+                <el-input v-model="entity.selfIntroduce" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
+            <el-form-item label="地址" label-width="100px">
+                <el-input v-model="entity.directSite" autocomplete="off" style="width: 80%"></el-input>
+            </el-form-item>
+            <el-form-item label="头像" label-width="100px">
+                <el-input v-model="entity.portrait" autocomplete="off" style="width: 80%"></el-input>
+                <el-upload action="http://localhost:81/files/friendupload" :on-success="fileSuccessUpload" :file-list="fileList">
+                    <el-button size="small" type="primary">上传头像</el-button>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="类型" label-width="100px">
+                <el-select clearable v-model="entity.friendType" placeholder="请选择" style="width: 80%">
+                    <el-option label="🏘️️邻居" value="1"></el-option>
+                    <el-option label="⚰️阵亡战士" value="2"></el-option>
+                    <el-option label="📝大佬" value="3"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="save">确 定</el-button>
+        </div>
+    </el-dialog>
+</div>
+
+<script src="../font-blog/js/jquery.min.js"></script>
+<script src="../font-blog/js/vue.min.js"></script>
+<script src="../font-blog/js/element.js"></script>
+<script th:src="@{/plugins/axios/axios.js}"></script>
+
+<script>
+
+    let urlBase = "/neighbor/AllFriendmessage";
+    new Vue({
+        el: "#wrapper",
+        data: {
+            options: [],
+            fileList: [],
+            tableData: [],
+            total: 0,//总数量
+            dialogFormVisible: false,
+            entity: {},
+            isCollapse: false,
+            searchParam : {
+                id:1,
+                pageNum : 1,
+                pageSize : 5, //每页条数
+                search:'',
+            },
+            search: '',
+        },
+        created() {
+            this.loadTable();
+        },
+        methods: {
+            fileSuccessUpload(res) {
+                this.entity.portrait = "friend/fileimage/" + res.msg;
+                console.log(res)
+                console.log(this.entity)
+            },
+            loadTable() {
+                var self = this;
+                axios.get(urlBase,{params:self.searchParam}).then(function (res) {
+                    self.tableData = res.data.list;
+                    console.log(self.tableData);
+                    //设置总数量
+                    self.total = res.data.total;
+                })
+            },
+            loadTablew2() {
+                var self = this;
+                console.log("根据标题搜索友链信息");
+                self.searchParam.search=self.search
+                axios.get("/neighbor/NamePage",{params:self.searchParam
+                }).then(function (res) {
+                    console.log("友链信息："+self.search);
+                    self.tableData = res.data.list;
+                    console.log(self.tableData);
+                    //设置总数量
+                    self.total = res.data.total;
+                })
+            },
+            handleSizeChange(pageSize) {
+                this.searchParam.pageSize = pageSize;
+                this.loadTable();
+            },
+            handleCurrentChange(pageNum) {
+                this.searchParam.pageNum = pageNum;
+                this.loadTable();
+            },
+            add() {
+                this.entity = {};
+                this.dialogFormVisible = true;
+            },
+            save() {
+                var self = this;
+                let type = self.entity.friendId ? "PUT" : "POST";
+                if (self.entity.friendId!=null){
+                    switch (self.entity.friendType){
+                        case "🏘️️邻居":
+                            self.entity.friendType=1;
+                            break;
+                        case "⚰️阵亡战士":
+                            self.entity.friendType=2;
+                            break;
+                        case "📝大佬":
+                            self.entity.friendType=3;
+                            break;
+                    }
+                }
+                $.ajax({
+                    url: "/neighbor/FriendOper",
+                    type: type,
+                    contentType: "application/json",
+                    data: JSON.stringify(self.entity)
+                }).then(res => {
+                    if (res.code === '0') {
+                        self.$message({
+                            message: "保存成功",
+                            type: "success"
+                        });
+                    } else {
+                        self.$message({
+                            message: res.msg,
+                            type: "error"
+                        })
+                    }
+                    self.loadTable();
+                    self.dialogFormVisible = false;
+                })
+            },
+            edit(obj) {
+                this.entity = {};
+                this.entity = JSON.parse(JSON.stringify(obj));
+                if (this.entity.friendType!=null){
+                    switch (this.entity.friendType){
+                        case 1:
+                            this.entity.friendType="🏘️️邻居";
+                            break;
+                        case 2:
+                            this.entity.friendType="⚰️阵亡战士";
+                            break;
+                        case 3:
+                            this.entity.friendType="📝大佬";
+                            break;
+                    }
+                }
+                this.fileList = [];
+                this.dialogFormVisible = true;
+            },
+            del(id) {
+                console.log("id="+id);
+                $.ajax({
+                    url: "/neighbor/delteComment",
+                    type: "get",
+                    data: {	// 请求参数放在请求体
+                        id: id
+                    }
+                }).then(res => {
+                    if (res.code === '0') {
+                        this.$message({
+                            message: "删除成功",
+                            type: "success"
+                        })
+                        this.loadTable();
+                    } else {
+                        this.$message({
+                            message: res.msg,
+                            type: "error"
+                        })
+                    }
+                })
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -25,10 +25,12 @@ public class Blogsarticle implements Serializable {
     private String blogsarticleDetailedinformation;
     //浏览数
     private Integer accessnumber;
-    //回复数(用来做点赞了)
+    //回复数
     private Integer commentnumber;
     //文章作者
     private String bloagUserNames;
+    //点赞
+    private Integer likenumber;
 
     public String getBloagUserNames() {
         return bloagUserNames;
@@ -118,5 +120,13 @@ public class Blogsarticle implements Serializable {
 
     public void setCommentnumber(Integer commentnumber) {
         this.commentnumber = commentnumber;
+    }
+
+    public Integer getLikenumber() {
+        return likenumber;
+    }
+
+    public void setLikenumber(Integer likenumber) {
+        this.likenumber = likenumber;
     }
 }

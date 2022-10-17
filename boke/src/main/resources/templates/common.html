@@ -3,10 +3,7 @@
 <head th:fragment="header(title)">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="theme-color" content="#fff">
-    <link rel="preload" href="DIYgod/Candyshop.otf" as="font"
-          type="font/otf" crossorigin="anonymous">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,13 +12,13 @@
     <link rel='stylesheet' href='lls/main.css' type='text/css' />
     <link href="style/css/main.css" rel="stylesheet" type="text/css">
     <link href="style/css/lazyload.css" rel="stylesheet" type="text/css">
-    <!-- 我也忘记是什么依赖了反正是后面放在页面末尾的不过老是报错直接注释掉好像也没什么问题  -->
-    <!--<script type="text/javascript" src="style/js/sagiri.min.js"></script>-->
+    <!-- 在页面末尾直接添加用于个人栏和返回顶部的动态显示  -->
+<!--    <script type="text/javascript" src="style/js/sagiri.min.js"></script>-->
     <!--看板娘js-->
-    <link rel="stylesheet" type="text/css" href="assets/waifu.css"/>
+   <!-- <link rel="stylesheet" type="text/css" href="assets/waifu.css"/>
     <script src="assets/autoload.js" type="text/javascript"></script>
     <script src="assets/waifu-tips.js"></script>
-    <script src="assets/live2d.js"></script>
+    <script src="assets/live2d.js"></script>-->
     <!-- waifu-tips.js 依赖 JQuery 库 -->
     <script type="text/javascript" src="assets/jquery-3.4.1.js" ></script>
 
@@ -61,7 +58,7 @@
                 sidebar: "slideUpIn"
             }
         },
-        since: "8/20/2021 11:30:00",
+        since: "10/11/2022 10:30:00",
         site: {title: "", subtitle: "", author: ""},
         duoshuo: {userId: "0", author: "博主"},
         algolia: {
@@ -78,15 +75,14 @@
         leancloud: {enable: !0, appID: "hRDdibVwWhuIGMhhzAMXiFYG-MdYXbMMI", appKey: "DB8u9iGG8iMTGAGOKz28lIer"},
         favicon: {
             visibilitychange: !0,
-            narmal: "style/images/favicon.ico",
-            hidden: "style/images/failure.ico",
+            narmal: "https://cdn.jsdelivr.net/gh/DIYgod/diygod.me/themes/sagiri/source/images/cursor.ico",
+            hidden: "https://cdn.jsdelivr.net/gh/DIYgod/diygod.me/themes/sagiri/source/images/cursor.ico",
             show_text: "(/≧▽≦/)// 欢迎！",
             hide_text: "(TAT)別走啦！"
         }
     }</script>
 
 
-    <link rel="canonical" href="https://diygod.me/page/6/">
     <!--头部名字标签-->
     <style type="text/css">
         .text {
@@ -141,7 +137,7 @@
     }
 
     .author-profile i, .post-like a, .post-share .show-share, .sub-text, .we-info a, span.sitename, .post-more i:hover, #paginations a:hover, .post-content a:hover, .float-content i:hover {
-        color: #FE9600
+        color: #00aefe
     }
 
     .feature i, /*.feature-title span ,*/

@@ -3089,11 +3089,18 @@ a:hover, a:active {
 .site-top .lower-cantiner {
     position: absolute;
     left: 50%;
-    min-width: 758.4px;
     pointer-events: none
 }
 
 .site-top .lower {
+    display: inline-block;
+    margin: 15px 0 0 10px;
+    font-size: 16px;
+    position: relative;
+    left: -50%;
+    pointer-events: auto !important
+}
+.mobailower {
     display: inline-block;
     margin: 15px 0 0 10px;
     font-size: 16px;
@@ -3108,18 +3115,17 @@ a:hover, a:active {
     opacity: 0;
     pointer-events: none
 }
-
 @media (max-width: 1200px) {
     .site-top .lower {
         left: 15px
     }
 
     .site-top .lower-cantiner {
-        left: 0
+        left: 0;
     }
 
     .site-top .lower nav.hide {
-        display: none !important
+        display: block !important
     }
 
     #show-nav.mobile-fit {
@@ -10418,7 +10424,7 @@ td.hljs-ln-numbers {
     -moz-transition: .3s filter linear;
     -ms-transition: .3s -ms-filter linear;
     -o-transition: .3s -o-filter linear;
-    transition: .3s filter linear, .3s -webkit-filter linear
+    transition: .3s filter linear, .3s -webkit-filter linear;
 }
 
 .lazyload[src*="#lazyload-blur"], .lazyload[style*="#lazyload-blur"] {

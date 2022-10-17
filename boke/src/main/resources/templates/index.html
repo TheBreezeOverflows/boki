@@ -20,15 +20,10 @@
                         <rp></rp></ruby> </a> </span> </span></div>
                     <div class="lower-cantiner">
                         <div class="lower">
-                            <div id="show-nav" class="showNav mobile-fit">
-                                <div class="line line1"></div>
-                                <div class="line line2"></div>
-                                <div class="line line3"></div>
-                            </div>
                             <!--选择栏-->
-                            <nav class="mobile-fit-control hide">
+                            <nav class="mobile-fit-control hide ">
                                 <ul id="menu-new" class="menu">
-                                    <li style="margin-right: 32px;margin-left: 90px">
+                                    <li style="margin-right: 32px;margin-left: 180px">
                                         <a href="index"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-meteor" aria-hidden="true"></i> 首页
                                         </span></a>
@@ -44,12 +39,12 @@
                                         </span></a>
                                     </li>
                                     <li style="margin-right: 32px">
-                                        <a href="#"><span class="faa-parent animated-hover">
+                                        <a href="/message"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-magic" aria-hidden="true"></i> 留言板
                                         </span></a>
                                     </li>
                                     <li style="margin-right: 32px">
-                                        <a href="#" aria-current="page">
+                                        <a href="/friend" aria-current="page">
                                             <span class="faa-parent animated-hover">
                                                 <i class="menu-item-icon fas fa-child" aria-hidden="true"></i> 友人帐
                                             </span>
@@ -86,7 +81,8 @@
                     <!--头部背景-->
                     <div class="site-brand-bg">
                         <picture>
-                            <img class="lazyload" src="style/images/header-gyx.png" data-original="style/images/header-gyx.png">
+<!--                            <img  src="style/images/header-gyx.jpg" data-original="style/images/header-gyx.jpg">-->
+                            <img  src="style/images/header-gyx.jpg">
                         </picture>
 
                     </div>
@@ -134,9 +130,7 @@
                                 <!--文章内容图片展示-->
                                 <div class="post-thumb"><a v-bind:href="'detail?id='+brand.blogsarticleId" style="height:200px" >
                                     <img class="lazyload" id="post-th-4491"
-                                         v-bind:src="brand.blogsarticleImage"
-                                         onerror="imgError(this,3)"
-                                         v-bind:data-src="brand.blogsarticleImage"> </a>
+                                         v-bind:src="'compress/'+brand.blogsarticleImage"> </a>
                                 </div>
                                 <div class="post-content-wrap">
                                     <div class="post-datelazy">🕓发布于 {{brand.blogsarticleDate}}</div>
@@ -205,7 +199,7 @@
                                     <summary class="views-top-name" >🏷️标签</summary>
                                         <ul>
                                             <li style="margin: 20px" v-for="item in classifybase">
-                                                <span v-on:click="finByBlogClassID(item.classifyId)">◆{{item.classifyName}}</span>
+                                                <span v-on:click="finByBlogClassID(item.classifyId,-1)">◆{{item.classifyName}}</span>
                                             </li>
                                         </ul>
                                 </details>
@@ -223,10 +217,9 @@
                     <img loading="lazy" src="style/images/footer.png"></picture>
             </div>
             <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
-                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白. 由 <a href="https://spring.io/projects/spring-boot/"
-                                                                                 class="external" rel="nofollow">SpringBoot+Mybatis</a>
-                    制作. Theme By <a href="https://github.com/TheBreezeOverflows" target="_blank" class="external"
-                                      rel="nofollow">Sagiri</a> v1.0 </p>
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
+                                                                           rel="nofollow">TheBreezeOverflows</a>
+                    制作.</p>
                 <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
                                                                                                itemprop="copyrightHolder">墨白</span>.
                 </p></div>
@@ -239,7 +232,8 @@
     <picture>
         <source srcset="style/images/scroll.webp"
                 type="image/webp">
-        <img loading="lazy" src="style/images/scroll.png"></picture>
+        <img loading="lazy" src="style/images/scroll.png">
+    </picture>
 </div>
 <canvas id="evanyou"></canvas>
 <!--看板娘-->
@@ -281,7 +275,7 @@
 <!--    /* 在 initModel 前添加 */-->
 <!--    initModel("assets/waifu-tips.json?v=1.4.2")-->
 <!--</script>-->
-<!--<script type="text/javascript" src="style/js/sagiri.min.js"></script>-->
 </body>
+<script type="text/javascript" src="style/js/sagiri.min.js"></script>
 <script th:src="@{/brand/js/pages/brandController.js}"></script>
 </html>

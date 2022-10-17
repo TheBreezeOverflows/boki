@@ -14,6 +14,12 @@ public class SearchResult<T> implements Serializable {
 
 	public SearchResult() {
 	}
+
+	public SearchResult(long size, List<?> list) {
+		this.total=size;
+		this.list= (List<T>) list;
+
+	}
 	public SearchResult(T data) {
 		this.data = data;
 	}
@@ -26,6 +32,17 @@ public class SearchResult<T> implements Serializable {
 		SearchResult result = new SearchResult<>();
 		result.setCode("0");
 		result.setMsg("成功");
+		return result;
+	}
+	public static SearchResult success2(String code) {
+		SearchResult result = new SearchResult<>();
+		result.setCode(code);
+		if (code.equals("0")){
+			result.setMsg("成功");
+
+		}else {
+			result.setMsg("失败");
+		}
 		return result;
 	}
 	public static <T> SearchResult<T> success(T data) {

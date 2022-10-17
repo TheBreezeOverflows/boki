@@ -120,9 +120,7 @@
         methods: {
             loadTable() {
                 var self = this;
-                console.log("查询文章信息");
                 axios.get(urlBase,{params:self.searchParam}).then(function (res) {
-                    console.log("文章信息："+res);
                     self.tableData = res.data.list;
                     console.log(self.tableData);
                     //设置总数量
@@ -131,7 +129,6 @@
             },
             loadTablew2() {
                 var self = this;
-                console.log("根据标题搜索文章信息");
 /*                $.ajax({
                         url: "/NamePage",
                         type: "get",
@@ -142,7 +139,6 @@
                 self.searchParam.search=self.search
                 axios.get("/NamePage",{params:self.searchParam
                 }).then(function (res) {
-                    console.log("文章信息："+self.search);
                     self.tableData = res.data.list;
                     console.log(self.tableData);
                     //设置总数量

@@ -13,6 +13,7 @@
     <result column="AccessNumber" property="accessnumber" jdbcType="INTEGER" />
     <result column="CommentNumber" property="commentnumber" jdbcType="INTEGER" />
     <result column="User_Name" property="bloagUserNames" jdbcType="VARCHAR" />
+    <result column="LikeNumber" property="likenumber" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
   <sql id="Base_Column_List" >
     BlogsArticle_Id, BlogsArticle_User_id, BlogsArticle_Headline, BlogsArticle_Date, 
     BlogsArticle_image, BlogsArticle_Content, BlogsArticle_Information, BlogsArticle_DetailedInformation, 
-    AccessNumber, CommentNumber
+    AccessNumber, CommentNumber,LikeNumber
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.BlogsarticleExample" >
     select
@@ -112,12 +113,12 @@
       BlogsArticle_Headline, BlogsArticle_Date, BlogsArticle_image, 
       BlogsArticle_Content, BlogsArticle_Information, 
       BlogsArticle_DetailedInformation, AccessNumber, 
-      CommentNumber,BloagUserNames)
+      CommentNumber,BloagUserNames,LikeNumber)
     values (#{blogsarticleId,jdbcType=INTEGER}, #{blogsarticleUserId,jdbcType=INTEGER}, 
       #{blogsarticleHeadline,jdbcType=VARCHAR}, #{blogsarticleDate,jdbcType=DATE}, #{blogsarticleImage,jdbcType=VARCHAR}, 
       #{blogsarticleContent,jdbcType=VARCHAR}, #{blogsarticleInformation,jdbcType=VARCHAR}, 
       #{blogsarticleDetailedinformation,jdbcType=VARCHAR}, #{accessnumber,jdbcType=INTEGER}, 
-      #{commentnumber,jdbcType=INTEGER},#{bloagUserNames,jdbcType=VARCHAR})
+      #{commentnumber,jdbcType=INTEGER},#{bloagUserNames,jdbcType=VARCHAR},#{likenumber,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="boke.boke.entity.Blogsarticle" >
     insert into blogsarticle
@@ -152,6 +153,9 @@
       <if test="commentnumber != null" >
         CommentNumber,
       </if>
+      <if test="likenumber != null" >
+        LikeNumber,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="blogsarticleId != null" >
@@ -183,6 +187,9 @@
       </if>
       <if test="commentnumber != null" >
         #{commentnumber,jdbcType=INTEGER},
+      </if>
+      <if test="likenumber != null" >
+        #{likenumber,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -225,6 +232,9 @@
       <if test="record.commentnumber != null" >
         CommentNumber = #{record.commentnumber,jdbcType=INTEGER},
       </if>
+      <if test="record.likenumber != null" >
+        LikeNumber = #{record.likenumber,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -241,7 +251,8 @@
       BlogsArticle_Information = #{record.blogsarticleInformation,jdbcType=VARCHAR},
       BlogsArticle_DetailedInformation = #{record.blogsarticleDetailedinformation,jdbcType=VARCHAR},
       AccessNumber = #{record.accessnumber,jdbcType=INTEGER},
-      CommentNumber = #{record.commentnumber,jdbcType=INTEGER}
+      CommentNumber = #{record.commentnumber,jdbcType=INTEGER},
+      LikeNumber = #{record.likenumber,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -276,6 +287,9 @@
       <if test="commentnumber != null" >
         CommentNumber = #{commentnumber,jdbcType=INTEGER},
       </if>
+      <if test="likenumber != null" >
+        LikeNumber = #{likenumber,jdbcType=INTEGER},
+      </if>
     </set>
     where BlogsArticle_Id = #{blogsarticleId,jdbcType=INTEGER}
   </update>
@@ -289,7 +303,8 @@
       BlogsArticle_Information = #{blogsarticleInformation,jdbcType=VARCHAR},
       BlogsArticle_DetailedInformation = #{blogsarticleDetailedinformation,jdbcType=VARCHAR},
       AccessNumber = #{accessnumber,jdbcType=INTEGER},
-      CommentNumber = #{commentnumber,jdbcType=INTEGER}
+      CommentNumber = #{commentnumber,jdbcType=INTEGER},
+      LikeNumber = #{likenumber,jdbcType=INTEGER}
     where BlogsArticle_Id = #{blogsarticleId,jdbcType=INTEGER}
   </update>
 
@@ -298,7 +313,7 @@
     select
       BlogsArticle_Id, BlogsArticle_User_id, BlogsArticle_Headline, BlogsArticle_Date,
       BlogsArticle_image, BlogsArticle_Content, BlogsArticle_Information, BlogsArticle_DetailedInformation,
-      AccessNumber, CommentNumber,
+      AccessNumber, CommentNumber,LikeNumber,
       User_Name
     from user uses
     inner join blogsarticle blog
@@ -309,7 +324,7 @@
     select
       BlogsArticle_Id, BlogsArticle_User_id, BlogsArticle_Headline, BlogsArticle_Date,
       BlogsArticle_image, BlogsArticle_Content, BlogsArticle_Information, BlogsArticle_DetailedInformation,
-      AccessNumber, CommentNumber
+      AccessNumber, CommentNumber,LikeNumber
     from blogsarticle
     WHERE BlogsArticle_Id
     in (SELECT BlogsArticle_Id from blogandclassify WHERE Classify_id= #{blogsarticleId,jdbcType=INTEGER})
@@ -318,7 +333,7 @@
     select
     BlogsArticle_Id, BlogsArticle_User_id, BlogsArticle_Headline, BlogsArticle_Date,
     BlogsArticle_image, BlogsArticle_Content, BlogsArticle_Information, BlogsArticle_DetailedInformation,
-    AccessNumber, CommentNumber,
+    AccessNumber, CommentNumber,LikeNumber,
     User_Name
     from user uses
     inner join blogsarticle blog
@@ -334,12 +349,12 @@
                               BlogsArticle_Headline, BlogsArticle_Date, BlogsArticle_image,
                               BlogsArticle_Content, BlogsArticle_Information,
                               BlogsArticle_DetailedInformation, AccessNumber,
-                              CommentNumber,BloagUserNames)
+                              CommentNumber,BloagUserNames,LikeNumber)
     values (#{blogsarticleId,jdbcType=INTEGER}, #{blogsarticleUserId,jdbcType=INTEGER},
             #{blogsarticleHeadline,jdbcType=VARCHAR}, #{blogsarticleDate,jdbcType=DATE}, #{blogsarticleImage,jdbcType=VARCHAR},
             #{blogsarticleContent,jdbcType=VARCHAR}, #{blogsarticleInformation,jdbcType=VARCHAR},
             #{blogsarticleDetailedinformation,jdbcType=VARCHAR}, #{accessnumber,jdbcType=INTEGER},
-            #{commentnumber,jdbcType=INTEGER},#{bloagUserNames,jdbcType=VARCHAR})
+            #{commentnumber,jdbcType=INTEGER},#{bloagUserNames,jdbcType=VARCHAR},#{likenumber,jdbcType=INTEGER})
   </insert>
 
   <select id="selectByblogclasscontent" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -354,9 +369,19 @@
     set AccessNumber=AccessNumber+1
     where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
   </update>
+  <update id="AddBlogLikenumber" parameterType="map" >
+    update blogsarticle
+    set LikeNumber=LikeNumber+1
+    where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </update>
   <update id="AddBlogcommentnumber" parameterType="map" >
     update blogsarticle
     set CommentNumber=CommentNumber+1
+    where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
+  </update>
+  <update id="delBlogcommentnumber" parameterType="map" >
+    update blogsarticle
+    set CommentNumber=CommentNumber-#{number,jdbcType=INTEGER}
     where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
   </update>
 </mapper>

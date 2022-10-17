@@ -4,15 +4,15 @@ spring:
     name: boke
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/boki?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/boki?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: 123
     #数据库为mysql
     platform: mysql
     #启动时初始化5个连接
-    initialSize: 5
+    initialSize: 6
     #最小空闲连接5个
-    minIdle: 5
+    minIdle: 6
     #最大连接数20
     maxActive: 20
     #获取连接等待时间60秒
@@ -58,3 +58,4 @@ mybatis:
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #mybatis控制台输出sql日志

@@ -11,6 +11,7 @@ var brandController = new Vue({
         pageCount:0,//总页数
         searchParam : {
             id:1,
+            lab:0,
             pageNum : 1,
             pageSize : 4 //每页条数
         },
@@ -89,8 +90,12 @@ var brandController = new Vue({
                 self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
             })
         },
-        finByBlogClassID(ids){
+        finByBlogClassID(ids,lab){
             var self = this;
+            console.log("根据标签查询")
+            //判断是否是用标签点击进入的查询
+            self.searchParam.lab=0;
+            self.searchParam.lab=lab;
             if(localStorage.getItem("user-Token") != null){ //判断是否有Token
                 self.searchParam.id=ids;
                 self.basePath="classPage";
@@ -100,10 +105,13 @@ var brandController = new Vue({
                         'baitoken':window.localStorage['user-Token']
                     }
                 }).then(function (res) {
+                    console.log("根据标签查询完成")
                     console.debug(res);
                     self.searchResult = res.data;
                     //设置总页数
                     self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
+                    self.searchParam.lab=-1;
+                    self.searchParam.pageNum=1;
                 })
             }else{
                 self.searchParam.id=ids;
@@ -114,6 +122,8 @@ var brandController = new Vue({
                 self.searchResult = res.data;
                 //设置总页数
                 self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
+                self.searchParam.lab=-1;
+                self.searchParam.pageNum=1;
             })
            }
         }
