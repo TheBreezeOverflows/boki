@@ -80,10 +80,11 @@ public class ShiroConfig {
         filterRuleMap.put("/**/plugins/**", "anon");//anon表示不需要认证和授权就能访问
         filterRuleMap.put("/login", "anon");//登录
         filterRuleMap.put("/regist", "anon");//注册
-        filterRuleMap.put("/user/login", "anon");
+        filterRuleMap.put("/redirec", "anon");//注册
+        filterRuleMap.put("/**/style/**", "anon");//anon表示不需要认证和授权就能访问
         // 所有请求通过我们自己的JWT Filter
         //配置受限资源（authc）---需要认证和授权才能访问
-        filterRuleMap.put("/**", "jwt");//把拦截所有交给JWT
+        filterRuleMap.put("/end/**", "jwt");//把拦截所有交给JWT
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         //设置拦截后跳转的页面（默认是login，也可以修改）
         factoryBean.setLoginUrl("/login");

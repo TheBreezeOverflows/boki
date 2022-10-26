@@ -18,6 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/detail").setViewName("detail");
         registry.addViewController("/message").setViewName("message");
         registry.addViewController("/friend").setViewName("friend");
+        registry.addViewController("/archive").setViewName("archive");
+        registry.addViewController("/author").setViewName("/author");
         //后台
         registry.addViewController("/end/index").setViewName("end/index");
         registry.addViewController("/end/frame").setViewName("end/frame");
@@ -26,6 +28,10 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/end/blog_display").setViewName("end/blog_display");
         registry.addViewController("/end/message").setViewName("/end/message");
         registry.addViewController("/end/friend").setViewName("end/friend");
+        registry.addViewController("/end/user").setViewName("end/user");
+        registry.addViewController("/end/tag").setViewName("end/tag");
+        registry.addViewController("/end/link").setViewName("end/link");
+        registry.addViewController("/end/author").setViewName("end/author");
     }
 
 

@@ -107,7 +107,7 @@
                 })*/
 
             }
-            $.get("/classif/base").then(res => {    //获取所有的标签
+            $.get("/classif/bases").then(res => {    //获取所有的标签
                 self.options = res;
                 console.log("标签");
                 console.log(self.options);
@@ -162,9 +162,6 @@
                 console.log(type);
                 self.entity.blogsarticleInformation=self.opton;
                 $.ajax({
-                    headers: {
-                        'baitoken':window.localStorage['user-Token']
-                    },
                     url: urlBase,
                     type: type,
                     contentType: "application/json",

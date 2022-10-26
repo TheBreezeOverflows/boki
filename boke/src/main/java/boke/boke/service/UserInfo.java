@@ -1,8 +1,13 @@
 package boke.boke.service;
 
+import boke.boke.entity.Friend;
 import boke.boke.entity.User;
 import boke.boke.entity.Userdatainfo;
+import boke.boke.entity.dto.SearchParam;
+import boke.boke.entity.dto.SearchResult;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface UserInfo {
     //根据id查询用户信息
@@ -18,4 +23,14 @@ public interface UserInfo {
     public String UserPermission(String name);
     // 根据用户密码
     public User login(String username,String userpassword);
+    //分页查询所有用户
+    public SearchResult<Userdatainfo> AllUserMessage(SearchParam searchParam);
+    //根据名称分页查询所有用户
+    public SearchResult<Userdatainfo> AlluserNameMessage(SearchParam searchParam,String name);
+    //修改用户
+    public boolean updateByUser(Userdatainfo userdatainfo);
+    //删除用户
+    public boolean DelteByUserMessage(int userid,int userinfoid);
+    //出现所有用户信息
+    public List<User> selectAlluserinfo();
 }

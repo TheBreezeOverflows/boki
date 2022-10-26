@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import boke.boke.util.ImageUtil;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
@@ -111,6 +113,67 @@ public class FileController {
                 System.out.println(fileName + "--上传成功");
                 Thread.sleep(1L);
             } catch (Exception e) {
+                System.err.println(fileName + "--文件上传失败");
+            }
+            SearchResult<String> success = SearchResult.success(flag);
+            success.setMsg(flag);
+            return success;
+        }
+    }
+    /**
+     * 上传资源管理的图片
+     *
+     * @param file
+     * @return
+     */
+    @PostMapping("/Linkupload")
+    public SearchResult<String> Linkupload(MultipartFile file) {
+        synchronized (FileController.class) {
+            //原图路径
+            String filePath = System.getProperty("user.dir") + "/src/main/resources/static/friend/linkfile/";
+            //压缩图片的路径
+            String filePathcom = System.getProperty("user.dir") + "/src/main/resources/static/friend/linkimage/";
+            String fileName = file.getOriginalFilename();//文件名称
+            String flag =System.currentTimeMillis() + "-" + fileName;//文件名称+随机数拼接
+            try {
+                File filecom = FileUtil.writeBytes(file.getBytes(), filePath + flag);//将获取到的文件写入文件夹中
+                System.out.println(fileName + "--上传成功");
+                //判断上传的是否是png图片
+                boolean suf = false;//文件后缀
+                //判断图片的宽高
+                BufferedImage bi = ImageIO.read(filecom);
+                if ((bi.getWidth()<20 && bi.getWidth()>10)
+                    &&(bi.getHeight()<20 && bi.getHeight()>10)){
+                    FileUtil.writeBytes(file.getBytes(), filePathcom + flag);//将获取到的文件写入文件夹中
+                    SearchResult<String> success = SearchResult.success(flag);
+                    success.setMsg(flag);
+                    return success;
+                }
+                File imgFile = null;
+                try {
+                    //获取图片路径
+                    String outfileName = filecom.getAbsolutePath();
+                    //将图片格式更改
+                    String newName =filePathcom + flag;
+                    FileOutputStream fos = new FileOutputStream(newName);
+                    //将需要压缩的文件、压缩后的文件对象、压缩后的宽、高放入(会根据放入的宽高和原图的比例来设置压缩的比例)
+                    ImageUtil.thumbnail_w_h(filecom, 18, 18, fos,suf);
+                    fos.close();
+                    imgFile = new File(newName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.err.println(fileName + "--文件上传失败");
+                }
+                    finally {//删除原文件
+                        //删除原有png图片
+                        boolean delete = FileUtil.del(filecom);
+                        if (delete){
+                            System.out.println("删除成功");
+                        }
+                    }
+                Thread.sleep(1L);
+            } catch (Exception e) {
+                e.printStackTrace();
                 System.err.println(fileName + "--文件上传失败");
             }
             SearchResult<String> success = SearchResult.success(flag);

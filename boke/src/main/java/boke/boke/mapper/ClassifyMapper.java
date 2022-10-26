@@ -31,7 +31,17 @@ public interface ClassifyMapper {
     //查询状态为零的数据
     List<Classify> selectByPrimarydatakey();
     //查询当前文章的标签id
-    Classify selectByByPrimaryClassname(int id);
+    Classify selectByByPrimaryClassname(@Param("blogsarticleId") int id);
+    //查询当前文章的标签-大标签
+    Classify selectByByPrimaryClassbigname(@Param("blogsarticleId") int id);
+    //根据当前名称与id查询是否有重复的数据
+    Integer selectByClassnameid(@Param("classname") String name, @Param("classid") int id);
     //根据当前文章名称查询标签id
     Classify selectByByClassname(@Param("classname") String name);
+    //根据上级id修改上级标签名称
+    int  updatetagnameByid(@Param("classupname") String name, @Param("classupid") int id);
+    //根据上级id修改上级标签名称和id
+    int  updatetagnameandid(@Param("classupname") String name, @Param("classupid") int id,@Param("alterid") int alterid);
+    //根据标签名称查询标签id
+    Integer selectByclassName(@Param("classname") String name);
 }

@@ -2,30 +2,36 @@ package boke.boke.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户详细信息
  */
 public class Userdatainfo implements Serializable {
+    //编号
     private Integer userinfoId;
-
+    //用户表关联id
     private Integer userId;
-
+    //注册时间
     private Date userTime;
-
+    //用户出生日期
     private Date userBirthdaydate;
-
+    //用户邮箱
     private String userEmail;
-
-    private String userRelevance;
-
+    //用户资源标签(json格式)
+    private List<Link> userRelevance;
+    //个人介绍
     private String userIntro;
-
+    //用户主页图片
     private String userImage;
-
+    //用户个人博客路径
     private String userBoki;
-
+    //用户名称(数据库中不存在)
     private String userdatanames;
+    //权限
+    private String userpermission;
+    //修改的密码
+    private String userPassword;
 
     public String getUserdatanames() {
         return userdatanames;
@@ -77,13 +83,10 @@ public class Userdatainfo implements Serializable {
         this.userEmail = userEmail == null ? null : userEmail.trim();
     }
 
-    public String getUserRelevance() {
+    public List<Link> getUserRelevance() {
         return userRelevance;
     }
 
-    public void setUserRelevance(String userRelevance) {
-        this.userRelevance = userRelevance == null ? null : userRelevance.trim();
-    }
 
     public String getUserIntro() {
         return userIntro;
@@ -107,5 +110,25 @@ public class Userdatainfo implements Serializable {
 
     public void setUserBoki(String userBoki) {
         this.userBoki = userBoki == null ? null : userBoki.trim();
+    }
+
+    public String getUserpermission() {
+        return userpermission;
+    }
+
+    public void setUserpermission(String userpermission) {
+        this.userpermission = userpermission;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserRelevance(List<Link> userRelevance) {
+        this.userRelevance = userRelevance;
     }
 }

@@ -209,5 +209,12 @@
         SELECT permission
         FROM user
         WHERE User_Name = #{userName}
-    </select>
+  </select>
+
+  <select id="selectByAllUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+      User_Id,User_Name
+    FROM
+      user
+  </select>
 </mapper>

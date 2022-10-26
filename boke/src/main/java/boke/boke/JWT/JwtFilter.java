@@ -1,6 +1,9 @@
 package boke.boke.JWT;
 
+import boke.boke.realm.UserRealm;
+import boke.boke.util.JWTUtil;
 import org.apache.shiro.authc.pam.UnsupportedTokenException;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,16 +34,23 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("baitoken");
-        return token != null;
+        //改为cookie存储获取token 2022-10-20改
+        //String token = req.getHeader("baitoken");
+        Cookie baitoken = JWTUtil.findCookie("baitoken", req.getCookies());
+        String token= baitoken.getValue();
+        //判断token是否过期(为空或过期时会返回false)
+        return JWTUtil.getexceedmin(token);
     }
-    /**
+    /**z
      * 执行登录操作
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader("baitoken");
+        HttpServletRequest req = (HttpServletRequest) request;
+        //改为cookie存储获取token 2022-10-20改
+        //String token = httpServletRequest.getHeader("baitoken");
+        Cookie baitoken = JWTUtil.findCookie("baitoken", req.getCookies());
+        String token= baitoken.getValue();
         JwtToken jwtToken = new JwtToken(token);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(jwtToken);
@@ -61,12 +72,18 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        //放行该请求
+        if(httpServletRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
+            return true;
+        }
         //判断请求的请求头是否带上 "Token"
         if (isLoginAttempt(request, response)) {
             //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
             try {
                 executeLogin(request, response);
                 return true;
+
             } catch (Exception e) {
                 e.printStackTrace();
                 //token 错误
@@ -74,7 +91,13 @@ public class JwtFilter extends BasicHttpAuthenticationFilter{
             }
         }
         //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问，无需检查 token，直接返回 true
-        return true;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        try {
+            httpServletResponse.sendRedirect("/login");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     /**
      * 对跨域提供支持

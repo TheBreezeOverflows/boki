@@ -35,13 +35,8 @@
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
-                                <a href="#"><span class="faa-parent animated-hover">
+                                <a href="/archive"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
-                                        </span></a>
-                            </li>
-                            <li style="margin-right: 32px">
-                                <a href="#"><span class="faa-parent animated-hover">
-                                            <i class="menu-item-icon fas fa-mars-stroke" aria-hidden="true"></i> 生活琐事
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
@@ -87,7 +82,7 @@
             <!--头部背景-->
             <div class="site-brand-bg">
                 <picture>
-                    <img class="lazyload" v-bind:src="entity.blogsarticleImage" v-bind:data-original="entity.blogsarticleImage">
+                    <img class="lazyload" v-bind:src="'compress/'+entity.blogsarticleImage" v-bind:data-original="'compress/'+entity.blogsarticleImage">
                 </picture>
             </div>
         </div>
@@ -205,11 +200,13 @@
                             </ol>
                         </li>
                     </ol>
+                    <span v-if="total!=0">
                     <p align="center">
                         <paginate :container-class="'pagination'" :page-count="total"
                                   :click-handler="BokeComet" :prev-text="'《'" :next-text="'》'"
                                   :first-last-button="false" v-model="searchParam.pageNum">
                     </p>
+                    </span>
                     <!--发言回复区-->
                     <div id="respond" class="comment-respond">
                         <h3 id="reply-title" class="comment-reply-title">
@@ -297,13 +294,7 @@
     </div>
 </div>
 <!--右侧长条线图片-->
-<div class="back-to-top">
-    <picture>
-        <source srcset="style/images/scroll.webp"
-                type="image/webp">
-        <img loading="lazy" src="style/images/scroll.png">
-    </picture>
-</div>
+<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
 <script src="font-blog/js/jquery.min.js"></script>
 <script src="font-blog/js/vue.min.js"></script>
@@ -311,7 +302,6 @@
 <script src="font-blog/js/tinymce/tinymce.min.js"></script>
 <script type='text/javascript' src='lls/comment-reply.min.js'></script>
 <script type='text/javascript' src='lls/scripts-global.js'></script>
-<script type="text/javascript" src="style/js/sagiri.min.js"></script>
 <script th:src="@{/brand/js/detail/CommentController.js}"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="font-blog/css/element.css">
     <link rel="stylesheet" href="dist/css/flexDate.css">
 <!--    <link href="dist/js/prettify.min.css" rel="stylesheet">-->
-    <link rel="stylesheet" href="dist/css/flexDate.css">
 </head>
 <body style="background:url('style/images/blhx.png') no-repeat; background-size: cover;">
 <div id="wrapper">
@@ -70,9 +69,10 @@
                 axios.post("/user/register",params).then(function (res) {
                     if (res.data.code==200) {
                         setTimeout(function(){
-                            location.href= "/login";
                             const token = res.data.message;
                             console.log("token:"+token);
+                            //location.href= "/login";
+                            window.location.pathname = '/login';
                             /*将token设置到elocalStorag本地存储*/
                             /*window.localStorage.setItem('user-Token', token);
                             window.location.pathname = '/';*/

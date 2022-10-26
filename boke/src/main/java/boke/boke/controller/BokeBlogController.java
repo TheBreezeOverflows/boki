@@ -1,12 +1,14 @@
 package boke.boke.controller;
 
 import boke.boke.entity.Blogsarticle;
+import boke.boke.entity.Classify;
 import boke.boke.entity.User;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.service.BlogsArticleInfo;
 import boke.boke.service.ClassifyInfo;
 import boke.boke.util.GetHeaderToken;
 import boke.boke.util.JWTUtil;
+import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +54,7 @@ public class BokeBlogController {
         //获取用户名称和编号进行添加
         String username ="不详";
         String userid =null;
-        String token= GetHeaderToken.getRequestHeaderMap().get("baitoken");
+        String token= GetHeaderToken.getRequestCookie("baitoken");
         if (!token.equals(null)) {
              username = JWTUtil.getUsername(token, "username");//获取当前用户名
              userid = JWTUtil.getUserid(token);//获取当前用户编号
@@ -62,10 +64,15 @@ public class BokeBlogController {
         blog.setBlogsarticleDate(simpleDateFormat.parse(transformDate));
         blog.setAccessnumber(0);
         blog.setCommentnumber(0);
+        blog.setLikenumber(0);
         //返回新增的文章id
         int blogid = blogsArticleInfo.save(blog);
         //添加文章与标签关联
-        int classid =classifyInfo.selectByByPrimaryClass(blog.getBlogsarticleInformation());
+        Classify classify = classifyInfo.selectByByPrimaryClass(blog.getBlogsarticleInformation());
+        if (classify.getSuperclassId()!=0){
+            blogsArticleInfo.AddblogClassify(blogid,classify.getSuperclassId());
+        }
+        int classid =classify.getClassifyId();
         blogsArticleInfo.AddblogClassify(blogid,classid);
         return SearchResult.success();
     }
@@ -74,10 +81,19 @@ public class BokeBlogController {
     @ResponseBody
     public SearchResult<?> update(@RequestBody Blogsarticle blog) {
         blog.setBlogsarticleDate(new Date());
+        int bloid=blog.getBlogsarticleId();
+        String blogtag=blog.getBlogsarticleInformation();
         //修改文章与标签关联
-        if (blog.getBlogsarticleInformation()!=null){
-            int classid =classifyInfo.selectByByPrimaryClass(blog.getBlogsarticleInformation());
-            blogsArticleInfo.UpdablogClassify(blog.getBlogsarticleId(), classid);
+        if (!StringUtils.isEmpty(blogtag)){
+            //删除文章与标签关联id
+            blogsArticleInfo.removeblogIdClass(bloid);
+            //添加文章与标签关联id
+            Classify classify = classifyInfo.selectByByPrimaryClass(blogtag);
+            if (classify.getSuperclassId()!=0){
+                blogsArticleInfo.AddblogClassify(bloid,classify.getSuperclassId());
+            }
+            int classid =classify.getClassifyId();
+            blogsArticleInfo.AddblogClassify(bloid,classid);
         }
         return SearchResult.success(blogsArticleInfo.updateById(blog));
     }

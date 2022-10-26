@@ -1,9 +1,9 @@
 package boke.boke.util;
 
-import com.sun.deploy.cache.BaseLocalApplicationProperties;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class GetHeaderToken {
 
 
     //获得当前HttpServletRequest对象
-    protected static HttpServletRequest getRequest(){
+    public static HttpServletRequest getRequest(){
         return ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
     }
 
@@ -28,6 +28,13 @@ public class GetHeaderToken {
             headerMap.put(name, request.getHeader(name));
         }
         return headerMap;
+    }
+    //获取cookie中的参数
+    public static String getRequestCookie(String tokenname) {
+        HttpServletRequest request = getRequest();
+        Cookie baitoken = JWTUtil.findCookie("baitoken", request.getCookies());
+        String token= baitoken.getValue();
+        return token;
     }
 
 

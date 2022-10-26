@@ -1,16 +1,22 @@
 package boke.boke.service.Impl;
 
 import boke.boke.entity.*;
+import boke.boke.entity.dto. ArchiveResult;
 import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.mapper.BlogandclassifyMapper;
 import boke.boke.mapper.BlogsarticleMapper;
+import boke.boke.mapper.ClassifyMapper;
 import boke.boke.service.BlogsArticleInfo;
+import boke.boke.service.ClassifyInfo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +27,8 @@ public class BlogsArticleInfoImpl implements BlogsArticleInfo {
     private BlogsarticleMapper blogsarticleMapper;
     @Autowired(required = false)
     private BlogandclassifyMapper blogandclassifyMapper;
+    @Autowired(required = false)
+    private ClassifyMapper classifyMapper;
 
     public BlogsArticleInfoImpl() {
     }
@@ -79,20 +87,34 @@ public class BlogsArticleInfoImpl implements BlogsArticleInfo {
     //根据文章id查询文章内容
     @Override
     public Blogsarticle BlogsArticleContentInfo(int id) {
-        return blogsarticleMapper.selectByblogclasscontent(id);
+        Blogsarticle blogsarticle = blogsarticleMapper.selectByblogclasscontent(id);
+        Classify classify = classifyMapper.selectByByPrimaryClassbigname(blogsarticle.getBlogsarticleId());
+        if (null!=classify){
+            blogsarticle.setBlogsarticleInformation(classify.getClassifyName());
+        }
+        return blogsarticle;
     }
 
     //根据创建时间查询文章分类信息
     @Override
-    public SearchResult<Blogsarticle> BlogsArticleCreationTime(Date time, SearchParam searchParam) {
-        BlogsarticleExample example=new BlogsarticleExample();
-        example.createCriteria().andBlogsarticleDateEqualTo(time);
-        //设置分页信息
-        PageHelper.startPage(searchParam.getPageNum(), searchParam.getPageSize());
-        //查询
-        Page page = (Page) blogsarticleMapper.selectByExample(example);
-        return new SearchResult<>(page.getTotal(), page.getResult());
+    public List<ArchiveResult<Blogsarticle>> BlogsArticleCreationTime() {
+         ArchiveResult<Blogsarticle>  archiveResult=null;
+        List< ArchiveResult<Blogsarticle>>  archiveResultList=new ArrayList< ArchiveResult<Blogsarticle>>();
+        Blogsarticle blog=null;
+        //查询文章所以年份
+        List<Integer> yearTime = blogsarticleMapper.BlogsArticleYearTime();
+        for (Integer ytime:yearTime) {
+            //年份查询当年份的文章
+            List<Blogsarticle> blogsarticlelist = blogsarticleMapper.BlogsArticleCreationTime(ytime);
+            archiveResult=new  ArchiveResult<>();
+            archiveResult.setData(ytime+"");
+            archiveResult.setList(blogsarticlelist);
+            archiveResultList.add(archiveResult);
+        }
+
+        return  archiveResultList;
     }
+
     //根据文章id查询文章标签id
     @Override
     public List<Blogandclassify> LableRelevanceLableid(int id) {

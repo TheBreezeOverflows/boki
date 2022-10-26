@@ -2,7 +2,10 @@ package boke.boke.service;
 
 import boke.boke.entity.Blogandclassify;
 import boke.boke.entity.Blogsarticle;
+import boke.boke.entity.Friend;
 import boke.boke.entity.User;
+import boke.boke.entity.dto.ArchiveResult;
+import boke.boke.entity.dto.CommentResult;
 import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 
@@ -18,8 +21,8 @@ public interface BlogsArticleInfo {
     public SearchResult<Blogsarticle> BlogsArticleNameifyIdInfo( SearchParam searchParam,String name);
     //根据文章id查询文章内容
     public Blogsarticle BlogsArticleContentInfo(int id);
-    //根据时间查询文章
-    public  SearchResult<Blogsarticle>  BlogsArticleCreationTime(Date time, SearchParam searchParam);
+    //根据年份查询当年份的文章
+    public  List<ArchiveResult<Blogsarticle>>  BlogsArticleCreationTime();
     //根据文章id查询文章标签信息
     public List<Blogandclassify> LableRelevanceLableid(int id);
     //保存文章信息

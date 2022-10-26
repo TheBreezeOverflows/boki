@@ -7,11 +7,11 @@
     <result column="User_time" property="userTime" jdbcType="TIMESTAMP" />
     <result column="User_BirthdayDate" property="userBirthdaydate" jdbcType="TIMESTAMP" />
     <result column="User_email" property="userEmail" jdbcType="VARCHAR" />
-    <result column="User_relevance" property="userRelevance" jdbcType="VARCHAR" />
     <result column="User_Intro" property="userIntro" jdbcType="VARCHAR" />
     <result column="User_Image" property="userImage" jdbcType="VARCHAR" />
     <result column="User_boki" property="userBoki" jdbcType="VARCHAR" />
     <result column="User_Name" property="userdatanames" jdbcType="VARCHAR" />
+    <result column="permission" property="userpermission" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    UserInfo_id, User_Id, User_time, User_BirthdayDate, User_email, User_relevance, User_Intro, 
+    UserInfo_id, User_Id, User_time, User_BirthdayDate, User_email,User_Intro,
     User_Image, User_boki
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.UserdatainfoExample" >
@@ -107,11 +107,11 @@
   </delete>
   <insert id="insert" parameterType="boke.boke.entity.Userdatainfo" >
     insert into userdatainfo (UserInfo_id, User_Id, User_time, 
-      User_BirthdayDate, User_email, User_relevance, 
+      User_BirthdayDate, User_email,
       User_Intro, User_Image, User_boki
       )
     values (#{userinfoId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userTime,jdbcType=TIMESTAMP}, 
-      #{userBirthdaydate,jdbcType=TIMESTAMP}, #{userEmail,jdbcType=VARCHAR}, #{userRelevance,jdbcType=VARCHAR}, 
+      #{userBirthdaydate,jdbcType=TIMESTAMP}, #{userEmail,jdbcType=VARCHAR},
       #{userIntro,jdbcType=VARCHAR}, #{userImage,jdbcType=VARCHAR}, #{userBoki,jdbcType=VARCHAR}
       )
   </insert>
@@ -132,9 +132,6 @@
       </if>
       <if test="userEmail != null" >
         User_email,
-      </if>
-      <if test="userRelevance != null" >
-        User_relevance,
       </if>
       <if test="userIntro != null" >
         User_Intro,
@@ -161,9 +158,6 @@
       </if>
       <if test="userEmail != null" >
         #{userEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="userRelevance != null" >
-        #{userRelevance,jdbcType=VARCHAR},
       </if>
       <if test="userIntro != null" >
         #{userIntro,jdbcType=VARCHAR},
@@ -200,9 +194,6 @@
       <if test="record.userEmail != null" >
         User_email = #{record.userEmail,jdbcType=VARCHAR},
       </if>
-      <if test="record.userRelevance != null" >
-        User_relevance = #{record.userRelevance,jdbcType=VARCHAR},
-      </if>
       <if test="record.userIntro != null" >
         User_Intro = #{record.userIntro,jdbcType=VARCHAR},
       </if>
@@ -224,7 +215,6 @@
       User_time = #{record.userTime,jdbcType=TIMESTAMP},
       User_BirthdayDate = #{record.userBirthdaydate,jdbcType=TIMESTAMP},
       User_email = #{record.userEmail,jdbcType=VARCHAR},
-      User_relevance = #{record.userRelevance,jdbcType=VARCHAR},
       User_Intro = #{record.userIntro,jdbcType=VARCHAR},
       User_Image = #{record.userImage,jdbcType=VARCHAR},
       User_boki = #{record.userBoki,jdbcType=VARCHAR}
@@ -247,9 +237,6 @@
       <if test="userEmail != null" >
         User_email = #{userEmail,jdbcType=VARCHAR},
       </if>
-      <if test="userRelevance != null" >
-        User_relevance = #{userRelevance,jdbcType=VARCHAR},
-      </if>
       <if test="userIntro != null" >
         User_Intro = #{userIntro,jdbcType=VARCHAR},
       </if>
@@ -268,7 +255,6 @@
       User_time = #{userTime,jdbcType=TIMESTAMP},
       User_BirthdayDate = #{userBirthdaydate,jdbcType=TIMESTAMP},
       User_email = #{userEmail,jdbcType=VARCHAR},
-      User_relevance = #{userRelevance,jdbcType=VARCHAR},
       User_Intro = #{userIntro,jdbcType=VARCHAR},
       User_Image = #{userImage,jdbcType=VARCHAR},
       User_boki = #{userBoki,jdbcType=VARCHAR}
@@ -283,6 +269,23 @@
     inner join user uses
     on userdata.User_Id = uses.User_Id
     where UserInfo_id = #{userinfoId,jdbcType=INTEGER}
+  </select>
+  <!--分页查询所有用户-->
+  <select id="selectendPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+      *
+    from userdatainfo userdata
+           inner join user uses
+    on userdata.User_Id = uses.User_Id
+  </select>
+  <!--根据用户名模糊查询所有用户-->
+  <select id="selectendPrimaryname" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+      uses.User_Id,uses.User_Name,uses.permission,userdata.Userinfo_Id,userdata.User_Email,userdata.User_Birthdaydate
+    from userdatainfo userdata
+           inner join user uses
+                      on userdata.User_Id = uses.User_Id
+    where uses.User_Name like concat( '%' , '${name}', '%')
   </select>
 
 </mapper>

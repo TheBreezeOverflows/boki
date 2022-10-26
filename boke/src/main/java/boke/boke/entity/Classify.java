@@ -3,12 +3,13 @@ package boke.boke.entity;
 import java.io.Serializable;
 
 public class Classify implements Serializable {
+    //编号
     private Integer classifyId;
-
+    //名称
     private String classifyName;
-
+    //上级标签
     private String classifyCategory;
-
+    //大标签的id
     private Integer superclassId;
 
     private static final long serialVersionUID = 1L;

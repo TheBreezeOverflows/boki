@@ -2,6 +2,7 @@
 <html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:insert="~{common::header('首页')}">
+
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans" class="theme-darling">
 <div id="brandView">
@@ -10,7 +11,7 @@
             <div class="header-inner">
                 <!--头部栏-->
 <!--                <header class="site-header no-select" role="banner">-->
-                <div class="site-header no-select  site-top">
+                <div id="toplan" class="site-header no-select  site-top">
                     <div class="site-branding"><span class="site-title"> <span class="logolink moe-mashiro"> <a
                             href="#" alt="墨白"> <ruby><span class="sakuraso" style="font-family: 仿宋">墨白</span>
                         <span class="no" style="font-family: 楷体">沉墨</span><span class="shironeko"
@@ -29,13 +30,8 @@
                                         </span></a>
                                     </li>
                                     <li style="margin-right: 32px">
-                                        <a href="#"><span class="faa-parent animated-hover">
+                                        <a href="/archive"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
-                                        </span></a>
-                                    </li>
-                                    <li style="margin-right: 32px">
-                                        <a href="#"><span class="faa-parent animated-hover">
-                                            <i class="menu-item-icon fas fa-mars-stroke" aria-hidden="true"></i> 生活琐事
                                         </span></a>
                                     </li>
                                     <li style="margin-right: 32px">
@@ -61,10 +57,24 @@
                     </div>
                     <!--用户登录-->
                     <div class="header-user-avatar">
-                        <a v-bind:href="tokes.toke != null? '/end/frame':'login'">
-                            <img class="faa-shake animated-hover"
-                            src="style/images/none.png" width="30"
-                            height="30"> </a>
+                    <!-- 有token时 -->
+                        <span v-if="tokes.toke != null">
+<!--                            <form action="/redirec/endframe" method="post">-->
+                                <span @click="fsubmit">
+                                <img class="faa-shake animated-hover"
+                                     src="style/images/none.png" width="30"
+                                     height="30">
+                                </span>
+<!--                            </form>-->
+                        </span>
+                        <!-- 无token时 -->
+                        <span v-else>
+                            <a href="/login">
+                                <img class="faa-shake animated-hover"
+                                     src="style/images/none.png" width="30"
+                                     height="30">
+                            </a>
+                        </span>
                         <div class="header-user-menu">
                             <div class="herder-user-name no-logged">Whether to <a href="login"
                                                                                   target="_blank"
@@ -155,11 +165,13 @@
                             <span class="posts post-list-thumbs"></span>
                         </section>
                         <!--页面选择栏-->
+                        <span v-if="pageCount!=0">
                         <p align="center">
                             <paginate :container-class="'pagination'" :page-count="pageCount"
                                       :click-handler="findPage" :prev-text="'《'" :next-text="'》'"
                                       :first-last-button="false" v-model="searchParam.pageNum">
                         </p>
+                        </span>
                     </div>
                 </div>
                 <div class="sidebar-toggle">
@@ -169,7 +181,7 @@
                             class="sidebar-toggle-line sidebar-toggle-line-last"></span></div>
                 </div>
                 <!--右边个人信息展示栏-->
-                <aside id="sidebar" class="sidebar">
+                <aside id="sidebar" class="sidebar" >
                     <div class="sidebar-inner">
                         <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
                             <div class="site-overview">
@@ -184,12 +196,12 @@
                                     <p class="site-description motion-element" style="" itemprop="description">{{userinfodata.userdatanames}}</p>
                                 </div>
                                 <div class="links-of-author motion-element">
-                                    <ul v-for="item in userinfodata.userRelevance">
-                                        <span class="links-of-author-item scaleup">
-                                                <a v-bind:href="item.url" target="_blank" v-bind:title="item.name">
+                                    <ul v-for="item in userinfodata.userRelevance" class="links-of-author-item scaleup" style="margin-bottom: 7px">
+                                        <span>
+                                                <a v-bind:href="item.linkUrl" target="_blank" v-bind:title="item.linkName" style="text-decoration:none">
                                                     <i  style="color:#191717">
-                                                    <img v-bind:src="item.image">
-                                                        <span  v-bind:text="item.name">{{item.name}}</span>
+                                                    <img v-bind:src="item.linkImage">
+                                                        <span  v-bind:text="item.linkName">{{item.linkName}}</span>
                                                     </i>
                                                 </a>
                                             </span>
@@ -209,6 +221,7 @@
                 </aside>
             </div>
         </main>
+
         <footer id="footer" class="footer">
             <div class="footer-image">
                 <picture>
@@ -228,54 +241,36 @@
     </div>
 </div>
 <!--右侧长条线图片-->
-<div class="back-to-top">
-    <picture>
-        <source srcset="style/images/scroll.webp"
-                type="image/webp">
-        <img loading="lazy" src="style/images/scroll.png">
-    </picture>
-</div>
+    <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <canvas id="evanyou"></canvas>
-<!--看板娘-->
-<!--<div class="waifu">-->
+<script>//sidebar toplan
+    $(function() {
+        var offs=$('#sidebar').offset().top;
+        //scroll 事件适用于所有可滚动的元素和 window 对象（浏览器窗口）。
+        $(window).scroll(function() {
+            //右侧个人信息栏随页面居中
+            $(document).ready((function () {
+                var t = $(".sidebar-inner");
+                function e() {
+                    var e = $(".header-inner").height() + CONFIG.sidebar.offset;
+                    $("#sidebar").height() < $("#content").height() && t.affix({
+                        offset: {
+                            top: e - 2 * CONFIG.sidebar.offset,
+                            bottom: 540
+                        }
+                    })
+                }
 
-<!--    &lt;!&ndash; 提示框 &ndash;&gt;-->
-<!--    <div class="waifu-tips"></div>-->
+                e(), window.matchMedia("(min-width: 991px)").addListener((function (n) {
+                    n.matches && ($(window).off(".affix"), t.removeData("bs.affix").removeClass("affix affix-top affix-bottom"), e())
+                }))
+            }))
+        })
+    })
 
-<!--    &lt;!&ndash; 看板娘画布 &ndash;&gt;-->
-<!--    <canvas id="live2d" class="live2d"></canvas>-->
 
-<!--    &lt;!&ndash; 工具栏 &ndash;&gt;-->
-<!--    <div class="waifu-tool">-->
-<!--        <span class="fui-home"></span>-->
-<!--        <span class="fui-chat"></span>-->
-<!--        <span class="fui-eye"></span>-->
-<!--        <span class="fui-user"></span>-->
-<!--        <span class="fui-photo"></span>-->
-<!--        <span class="fui-info-circle"></span>-->
-<!--        <span class="fui-cross"></span>-->
-<!--    </div>-->
 
-<!--</div>-->
-<!-- 初始化看板娘，加载 waifu-tips.json -->
-<!--<script type="text/javascript">-->
-<!--    /* 可直接修改部分参数 */-->
-<!--    live2d_settings['modelId'] = 204;                  // 默认模型 ID-->
-<!--    live2d_settings['modelTexturesId'] = 4;         // 默认材质 ID-->
-<!--    live2d_settings['modelStorage'] = false;         // 不储存模型 ID-->
-<!--    live2d_settings['canCloseLive2d'] = false;       // 隐藏 关闭看板娘 按钮-->
-<!--    live2d_settings['canTurnToHomePage'] = false;    // 隐藏 返回首页 按钮-->
-<!--    live2d_settings['waifuSize'] = '280x250';        // 看板娘大小-->
-<!--    live2d_settings['waifuTipsSize'] = '220x100';    // 提示框大小-->
-<!--    live2d_settings['waifuFontSize'] = '30px';       // 提示框字体-->
-<!--    live2d_settings['waifuToolFont'] = '36px';       // 工具栏字体-->
-<!--    live2d_settings['waifuToolLine'] = '50px';       // 工具栏行高-->
-<!--    live2d_settings['waifuToolTop'] = '-60px';       // 工具栏顶部边距-->
-<!--    live2d_settings['waifuDraggable'] = 'axis-x';    // 拖拽样式-->
-<!--    /* 在 initModel 前添加 */-->
-<!--    initModel("assets/waifu-tips.json?v=1.4.2")-->
-<!--</script>-->
+</script>
 </body>
-<script type="text/javascript" src="style/js/sagiri.min.js"></script>
 <script th:src="@{/brand/js/pages/brandController.js}"></script>
 </html>

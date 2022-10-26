@@ -1,5 +1,20 @@
 //初始化分页组件
 Vue.component('paginate',VuejsPaginate);
+
+// 添加请求拦截器
+// axios.interceptors.request.use(function (config) {
+//     // 在发送请求之前做些什么
+//     //2、将token添加入头部
+//     if (window.localStorage['user-Token']) {
+//         //如果vuex中存储有用户token,就把token传给后端
+//         config.headers['baitoken'] = window.localStorage['user-Token'];
+//     }
+//     return config;
+// }, function (error) {
+//     // 对请求错误做些什么
+//     return Promise.reject(error);
+// });
+
 //初始化Vue对象
 var brandController = new Vue({
     el:"#brandView",
@@ -30,61 +45,27 @@ var brandController = new Vue({
     methods:{//方法
         findUser(){
             var self = this;
-
             self.findByuserId();
             self.findPage();
+            // 判断是否存在token，如果存在的话，则每个http header都加上token
         },
         findByuserId(){     //查询用户信息，查看localStorage是否存储有用户信息Token有则将Token放入请求头中请求没有则直接用Boss账户
            var self = this;
             const token = localStorage.getItem("user-Token");
-            if(token!= null){ //判断是否有Token
                 self.tokes.toke=token;
-                console.log("有Token:"+self.tokes.toke)
-                // axios.get('/user/info', {
-                //     headers: {
-                //         Authorization: `${token}`,
-                //     },
-                // }).then(function (res) {
-                //     console.log("技术栏加载完毕");
-                //     console.log(res);
-                //     self.classifybase = res.data;
-                // });
-                axios.get('/user/info',{
-                    headers: {
-                        'baitoken':window.localStorage['user-Token']
-                    }
-                }).then(function (res) {
+                axios.get('/user/info').then(function (res) {
                     self.userinfodata = res.data;
-                    console.log(self.userinfodata);
-                    self.userinfodata.userRelevance=JSON.parse(self.userinfodata.userRelevance);
+                    self.userinfodata.userRelevance=self.userinfodata.userRelevance;
                     //加载技术栏
                     axios.get('/classif/base').then(function (res) {
-                        console.log("技术栏加载完毕");
-                        console.log(res);
                         self.classifybase = res.data;
                     })
                 })
-
-            }else{
-                console.log("无:"+self.tokes.toke)
-                //获取默认boss账户信息
-                axios.get('/user/infos').then(function (res) {
-                    self.userinfodata = res.data;
-                    self.userinfodata.userRelevance=JSON.parse(self.userinfodata.userRelevance);
-                    //加载技术栏
-                    axios.get('/classif/base').then(function (res) {
-                        console.log("技术栏加载完毕");
-                        console.log(res);
-                        self.classifybase = res.data;
-                    })
-                })
-            }
         },
         findPage(){//查询文章，异步请求
             var self = this;
             //get请求参数才要加params关键字，其它请求不需要
             axios.get(this.basePath,{params:self.searchParam}).then(function (res) {
-                console.debug(res);
                 self.searchResult = res.data;
                 //设置总页数
                 self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
@@ -92,40 +73,33 @@ var brandController = new Vue({
         },
         finByBlogClassID(ids,lab){
             var self = this;
-            console.log("根据标签查询")
             //判断是否是用标签点击进入的查询
-            self.searchParam.lab=0;
             self.searchParam.lab=lab;
-            if(localStorage.getItem("user-Token") != null){ //判断是否有Token
-                self.searchParam.id=ids;
-                self.basePath="classPage";
-                //get请求参数才要加params关键字，其它请求不需要
-                axios.get(self.basePath,{params:self.searchParam,
-                    headers: {
-                        'baitoken':window.localStorage['user-Token']
-                    }
-                }).then(function (res) {
-                    console.log("根据标签查询完成")
-                    console.debug(res);
-                    self.searchResult = res.data;
-                    //设置总页数
-                    self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
-                    self.searchParam.lab=-1;
-                    self.searchParam.pageNum=1;
-                })
-            }else{
-                self.searchParam.id=ids;
-                self.basePath="classPage";
+            self.searchParam.id=ids;
+            self.basePath="classPage";
             //get请求参数才要加params关键字，其它请求不需要
             axios.get(self.basePath,{params:self.searchParam}).then(function (res) {
                 console.debug(res);
                 self.searchResult = res.data;
                 //设置总页数
                 self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
-                self.searchParam.lab=-1;
+                self.searchParam.lab=0;
                 self.searchParam.pageNum=1;
             })
-           }
+
+        },
+        findendtoken(){//查询文章，异步请求
+            var self = this;
+            //get请求参数才要加params关键字，其它请求不需要
+            axios.get(this.basePath).then(function (res) {
+                console.debug(res);
+                self.searchResult = res.data;
+                //设置总页数
+                self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
+            })
+        },fsubmit(){
+             //将token与路径拼接，后台更改获取token的方式
+             location.href='end/frame';
         }
     }
 });

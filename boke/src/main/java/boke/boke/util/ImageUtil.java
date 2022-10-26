@@ -81,6 +81,7 @@ public class ImageUtil {
         g.dispose();
         ImageIO.write(tag, "JPG", out);
     }
+    //读取图片格式
     public static String imgTypes(InputStream inputStream) throws IOException {
         // 读取文件前几位
         byte[] fileHeader = new byte[4];

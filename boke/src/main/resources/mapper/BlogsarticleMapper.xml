@@ -384,4 +384,31 @@
     set CommentNumber=CommentNumber-#{number,jdbcType=INTEGER}
     where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
   </update>
+  <select id="BlogsArticleCreationTime" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+      BlogsArticle_Id,BlogsArticle_Date,BlogsArticle_Content
+    FROM
+      blogsarticle
+    WHERE
+      YEAR ( BlogsArticle_Date )= #{year,jdbcType=INTEGER}
+    ORDER BY
+      BlogsArticle_Date DESC,
+      BlogsArticle_Id ASC
+  </select>
+  <select id="BlogsArticleYearTime" resultType="java.lang.Integer" >
+    SELECT YEAR
+      ( BlogsArticle_Date )
+    FROM
+      blogsarticle
+    GROUP BY
+      YEAR ( BlogsArticle_Date )
+    ORDER BY
+      YEAR ( BlogsArticle_Date ) DESC
+  </select>
+  <update id="updateBlogsAlterClass" parameterType="map" >
+    UPDATE blogsarticle
+    SET BlogsArticle_Information =#{altername,jdbcType=VARCHAR}
+    WHERE
+      BlogsArticle_Information =#{classname,jdbcType=VARCHAR}
+  </update>
 </mapper>

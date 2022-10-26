@@ -29,4 +29,8 @@ public interface UserdatainfoMapper {
     int updateByPrimaryKeySelective(Userdatainfo record);
 
     int updateByPrimaryKey(Userdatainfo record);
+
+    List<Userdatainfo> selectendPrimaryKey();
+
+    List<Userdatainfo> selectendPrimaryname(String name);
 }

@@ -4,7 +4,7 @@
 <!--上面URL可能报错，但不影响-->
 <generatorConfiguration>
     <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
-    <classPathEntry  location="E:\mysqlGenerator\mysql-connector-java-5.0.8-bin.jar"/>
+    <classPathEntry  location="D:\mysqlGenerator\mysql-connector-java-5.0.8-bin.jar"/>
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!-- 配置内置的或者自定义的Plugin -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
@@ -13,7 +13,7 @@
         </commentGenerator>
         <!-- 数据库链接URL、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/boki" userId="root"
-                        password="123456">
+                        password="123">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false" />
@@ -33,7 +33,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         <!-- 要生成哪些表(更改tableName和domainObjectName就可以) -->
-        <table tableName="user" />
-        <table tableName="userdatainfo" />
+        <table tableName="link" />
+<!--        <table tableName="userdatainfo" />-->
     </context>
 </generatorConfiguration>

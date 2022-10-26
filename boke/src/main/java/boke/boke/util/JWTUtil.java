@@ -1,5 +1,6 @@
 package boke.boke.util;
 
+import com.alibaba.druid.util.StringUtils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
@@ -8,6 +9,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
@@ -16,13 +18,13 @@ import java.util.Date;
  * JwtUtil是生成、解析、验证token的工具类
  */
 public class JWTUtil {
-    // 过期时间 24 小时
+    // 过期时间 6分钟
     private static final long EXPIRE_TIME = 6 * 60 * 1000;
     // 密钥
     private static final String SECRET = "SHIRO+JWT";
 
     /**
-     * 生成 token, 5min后过期
+     * 生成 token,  6min后过期
      * @param subject 用户id
      * @param password 密码
      * @return 加密的token
@@ -72,6 +74,11 @@ public class JWTUtil {
             DecodedJWT jwt = JWT.decode(token);
             String uname = jwt.getClaim("username").asString();
             String upwd = jwt.getClaim("pwass").asString();
+            Date expiresAt = jwt.getExpiresAt();
+            //判断token是否过期
+            if (new Date().getTime()>expiresAt.getTime()){
+                return false;
+            }
             if (uname.equals(userName) && upwd.equals(password)){
                 return true;
             }else {
@@ -118,6 +125,7 @@ public class JWTUtil {
             return null;
         }
     }
+    //获取token中的用户编号
     public static String getUserid(String token) {
         try {
             // Algorithm algorithm = Algorithm.HMAC256(SECRET);
@@ -127,4 +135,40 @@ public class JWTUtil {
             return null;
         }
     }
+
+    /**
+     * 检测token是否过期
+     * @param token
+     * @return
+     */
+    public static boolean getexceedmin(String token) {
+        if (!StringUtils.isEmpty(token)){
+        DecodedJWT jwt = JWT.decode(token);
+        Date expiresAt = jwt.getExpiresAt();
+        //判断token是否过期
+        if (new Date().getTime()>expiresAt.getTime()){
+            return false;
+        }
+        }
+        return true;
+    }
+
+    /***
+     *查找指定名称的 Cookie 对象
+     * @param name
+     * @param cookies
+     * @return
+     *  */
+    public static Cookie findCookie(String name , Cookie[] cookies){
+        if (name == null || cookies == null || cookies.length == 0) {
+            return null;
+        }
+        for (Cookie cookie : cookies) {
+            if (name.equals(cookie.getName())) {
+                return cookie;
+            }
+        }
+        return null;
+    }
+
 }

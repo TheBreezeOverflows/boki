@@ -6,14 +6,15 @@ import java.io.Serializable;
  * 用户账号信息
  */
 public class User implements Serializable {
+    //用户编号
     private Integer userId;
-
+    //名称
     private String userName;
-
+    //密码
     private String userUserPassword;
-
+    //权限
     private String permission;
-
+    //用户详细信息
     private Userdatainfo userdatainfo;
 
     private static final long serialVersionUID = 1L;

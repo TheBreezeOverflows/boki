@@ -47,4 +47,10 @@ public interface BlogsarticleMapper {
     int AddBlogcommentnumber(@Param("blogid") int id);
     //给文章回复数统计-n
     int delBlogcommentnumber(@Param("blogid") int id,@Param("number") int number);
+    //根据年份查询当年份的文章
+    List<Blogsarticle> BlogsArticleCreationTime(@Param("year") int year);
+    //查询文章的所有年份
+    List<Integer> BlogsArticleYearTime();
+    //修改文章存储的标签名称
+    int updateBlogsAlterClass(@Param("classname") String classname,@Param("altername") String altername);
 }

@@ -2,6 +2,9 @@ package boke.boke.controller;
 
 
 import boke.boke.entity.Blogsarticle;
+import boke.boke.entity.Friend;
+import boke.boke.entity.dto.ArchiveResult;
+import boke.boke.entity.dto.CommentResult;
 import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.service.BlogsArticleInfo;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 首页博客文章查询
@@ -45,6 +50,12 @@ public class bokeController {
     public SearchResult NamefindPage(SearchParam para,String search){
         SearchResult<Blogsarticle> blogsarticleSearchResult = blogsArticleInfo.BlogsArticleNameifyIdInfo(para,search);;
         return blogsarticleSearchResult;
+    }
+    //查询留言板
+    @GetMapping("/blogCreationTime")
+    @ResponseBody
+    public List<ArchiveResult<Blogsarticle>> selectBlogCreationTime(){
+        return blogsArticleInfo.BlogsArticleCreationTime();
     }
 
 }

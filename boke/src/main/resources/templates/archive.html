@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml" >
+<head th:insert="~{common::header('归档')}">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="font-blog/css/element.css">
+    <link rel="stylesheet" href="font-blog/css/base.css">
+    <link rel="stylesheet" href="brand/css/message/MessageController.css">
+    <!--评论区-->
+</head>
+<body style="background-color: #8d94ba">
+<div id="wrapper" v-cloak>
+    <section id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <!--    <div class="header-inner">-->
+        <!--    </div>-->
+        <!--头部栏-->
+        <!--                <header class="site-header no-select" role="banner">-->
+        <div class="site-header no-select  site-top">
+            <div class="site-branding"><span class="site-title"> <span class="logolink moe-mashiro"> <a
+                    href="#" alt="墨白"> <ruby><span class="sakuraso" style="font-family: 仿宋">墨白</span>
+                        <span class="no" style="font-family: 楷体">沉墨</span><span class="shironeko"
+                                                                                style="font-family: 楷体">满纸</span>
+                        <rp style="padding-bottom: 100px"></rp>
+                        <rt class="chinese-font">一笑若白</rt>
+                        <rp></rp></ruby> </a> </span> </span></div>
+            <div class="lower-cantiner">
+                <div class="lower">
+                    <!--选择栏-->
+                    <nav class="mobile-fit-control hide">
+                        <ul id="menu-new" class="menu">
+                            <li style="margin-right: 32px;margin-left: 180px">
+                                <a href="index"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-meteor" aria-hidden="true"></i> 首页
+                                        </span></a>
+                            </li>
+                            <li style="margin-right: 32px">
+                                <a href="#"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
+                                        </span></a>
+                            </li>
+                            <li style="margin-right: 32px">
+                                <a href="/message"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-magic" aria-hidden="true"></i> 留言板
+                                        </span></a>
+                            </li>
+                            <li style="margin-right: 32px">
+                                <a href="/friend" aria-current="page">
+                                            <span class="faa-parent animated-hover">
+                                                <i class="menu-item-icon fas fa-child" aria-hidden="true"></i> 友人帐
+                                            </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-heartbeat" aria-hidden="true"></i>关于我
+                                        </span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!--用户登录-->
+            <div class="header-user-avatar">
+                <a v-bind:href="tokes.toke != null? '/end/frame':'login'">
+                    <img class="faa-shake animated-hover"
+                         src="style/images/none.png" width="30"
+                         height="30"> </a>
+                <div class="header-user-menu">
+                    <div class="herder-user-name no-logged">Whether to <a href="login"
+                                                                          target="_blank"
+                                                                          style="color:#333;font-weight:bold;text-decoration:none">log
+                        in</a> now?
+                    </div>
+                </div>
+            </div>
+            <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+        </div>
+
+        <!--原来头部-->
+        <div class="site-brand-wrapper2">
+            <!--头部背景-->
+            <div class="site-brand-bg">
+                <picture>
+                    <img class="lazyload" src="/style/images/interlude14.png" data-original="/style/images/interlude14.png">
+                </picture>
+            </div>
+        </div>
+        <div  style="height: 76px; width: 100%;">
+        </div>
+    </section>
+
+    <!-- 主体页面-->
+    <div id="content" class="site-content" >
+        <!--        <main id="main" class="main" style="background-color:#735C94;">-->
+        <main id="main" class="main site-mainwzxx" style="background-color:#ABBDF4;">
+            <!--背景图片-->
+            <div  style="text-align: center;z-index:2">
+                <div class="entry-media" style="margin-bottom: 20px;text-align: center">
+                    <figure style="text-align: center">
+                        <a  href="/style/images/interlude14.png">
+                            <img
+                                    width="1200" height="576" src="/style/images/interlude14.png"
+                                    class="attachment-large size-large wp-post-image" alt=""
+                                    sizes="(max-width: 1200px) 100vw, 1024px"/>
+                        </a>
+                    </figure>
+                </div>
+
+            </div>
+            <div id="teamnewslist">
+                <ol>
+                    <span v-for="item in bokeArchive">
+                        <li>
+                            <b></b>
+                            <p style="padding-top: 5px">🗓️{{item.data}}</p>
+                        </li>
+
+                     <span v-for="Archivetime in item.list">
+                         <li>
+                             <a v-bind:href="'detail?id='+Archivetime.blogsarticleId">
+                            <b>{{Archivetime.blogsarticleDate}}</b>
+                                 {{Archivetime.blogsarticleContent}}
+                             </a>
+                        </li>
+                    </span>
+                    </span>
+                </ol>
+            </div>
+            <div style="height: 1px; margin-top: 20px;margin-bottom: 30px; background-color: #ccc"></div>
+            <!--评论-->
+        </main>
+
+    </div>
+    <!-- 底部栏-->
+    <div style="position: relative;z-index:5">
+        <footer id="footer" class="footer">
+            <div class="footer-image" >
+                <picture>
+                    <source srcset="style/images/footer.webp"
+                            type="image/webp">
+                    <img loading="lazy" src="style/images/footer.png"></picture>
+            </div>
+            <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
+                                                                            rel="nofollow">TheBreezeOverflows</a>
+                    制作.</p>
+                <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
+                                                                                                  itemprop="copyrightHolder">墨白</span>.
+                </p></div>
+        </footer>
+    </div>
+</div>
+<!--右侧长条线图片-->
+<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
+<!--    js-->
+<script src="font-blog/js/jquery.min.js"></script>
+<script src="font-blog/js/vue.min.js"></script>
+<script src="font-blog/js/element.js"></script>
+<script src="font-blog/js/tinymce/tinymce.min.js"></script>
+<script type='text/javascript' src='lls/comment-reply.min.js'></script>
+<script type='text/javascript' src='lls/scripts-global.js'></script>
+<script th:src="@{/brand/js/Archive/ArchiveController.js}"></script>
+
+<style>
+    /* 站点动态时间轴 */
+    #teamnewslist ol{list-style:none;margin-left: 36px;padding-left: 14px;border-left: 2px solid #eee;font-size: 18px;color: #666;}
+    #teamnewslist b{font-size: 12px;font-weight: normal;color: #999;display: block;position: relative;margin-bottom:5px;}
+    #teamnewslist b::after{position: absolute;top: 6px;left: -22px;content: '';width: 14px;height: 14px;border-radius: 50%;background-color: #fff;border: 2px solid #ccc;}
+    #teamnewslist li{list-style:none;margin: 0 0 30px 0;line-height: 100%;}
+    #teamnewslist li:hover{color: #555;}
+    #teamnewslist li:hover b::after{border-color: #C01EBDE9;}
+    #teamnewslist li:hover b{color: #C01E22;}
+    #teamnewslist li:hover a{color: #ff5900;text-decoration:none;}
+</style>
+</body>
+</html>

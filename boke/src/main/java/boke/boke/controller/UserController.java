@@ -1,8 +1,11 @@
 package boke.boke.controller;
 
 import boke.boke.JWT.ResultMap;
+import boke.boke.entity.Friend;
 import boke.boke.entity.User;
 import boke.boke.entity.Userdatainfo;
+import boke.boke.entity.dto.SearchParam;
+import boke.boke.entity.dto.SearchResult;
 import boke.boke.mapper.UserMapper;
 import boke.boke.service.UserInfo;
 import boke.boke.util.GetHeaderToken;
@@ -27,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -97,7 +101,7 @@ public class UserController  {
         }
     }
     //密码加密
-    public String PasswordEncryption(String password){
+    public static String PasswordEncryption(String password){
         SimpleHash simpleHash = new SimpleHash("MD5", password.getBytes(StandardCharsets.UTF_8), UtilTools.Salt(), 128);
         return simpleHash.toHex();
     }
@@ -121,5 +125,44 @@ public class UserController  {
     @GetMapping(path = "info")
     public Userdatainfo defauser(){
         return userInfoservice.UserDatailInfo(1);
+    }
+    //-------------------------------------------后台页面(后台的接口可以添加token的验证)----------------------------------------------------------------
+    //分页查询所有用户
+    @GetMapping("/AllUsermessage")
+    @ResponseBody
+    public SearchResult selectAlluser(SearchParam params){
+        return userInfoservice.AllUserMessage(params);
+    }
+    //根据名称分页查询所有用户
+    @GetMapping("/NamePage")
+    @ResponseBody
+    public SearchResult NamefindPage(SearchParam para,String search){
+        SearchResult<Userdatainfo> CommentSearchResult = userInfoservice.AlluserNameMessage(para,search);;
+        return CommentSearchResult;
+    }
+    //修改用户
+    @PutMapping("/UserOper")
+    @ResponseBody
+    public SearchResult<?> updateuser(@RequestBody Userdatainfo userdatainfo){
+        boolean flg =true; userInfoservice.updateByUser(userdatainfo);
+        if (flg){
+            return SearchResult.success();
+        }
+        return SearchResult.success("500");
+    }
+    //删除用户
+    @GetMapping("/delteComment")
+    @ResponseBody
+    public SearchResult<?> deleteFriend(int id,int infoid) {
+        System.out.print("id="+id);
+        userInfoservice.DelteByUserMessage(id,infoid);
+        return SearchResult.success();
+    }
+
+    //分页查询所有用户
+    @GetMapping("/AllUser")
+    @ResponseBody
+    public List<User> selectAlluserinfo(){
+        return userInfoservice.selectAlluserinfo();
     }
 }

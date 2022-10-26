@@ -35,13 +35,8 @@
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
-                                <a href="#"><span class="faa-parent animated-hover">
+                                <a href="/archive"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
-                                        </span></a>
-                            </li>
-                            <li style="margin-right: 32px">
-                                <a href="/index"><span class="faa-parent animated-hover">
-                                            <i class="menu-item-icon fas fa-mars-stroke" aria-hidden="true"></i> 生活琐事
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
@@ -87,7 +82,7 @@
             <!--头部背景-->
             <div class="site-brand-bg">
                 <picture>
-                    <img class="lazyload" src="/style/images/interlude_MDxTH_2.png" data-original="/style/images/interlude_MDxTH_2.png">
+                    <img class="lazyload" src="/style/images/interlude2.png" data-original="/style/images/interlude2.png">
                 </picture>
             </div>
         </div>
@@ -103,9 +98,9 @@
             <div  style="text-align: center">
             <div class="entry-media" style="margin-bottom: 20px;text-align: center">
                 <figure style="text-align: center">
-                    <a  href="/style/images/interlude_MDxTH_2.png">
+                    <a  href="/style/images/interlude2.png">
                         <img
-                                width="1200" height="576" src="/style/images/interlude_MDxTH_2.png"
+                                width="1200" height="576" src="/style/images/interlude2.png"
                                 class="attachment-large size-large wp-post-image" alt=""
                                 sizes="(max-width: 1200px) 100vw, 1024px"/></a></figure>
             </div>
@@ -176,11 +171,13 @@
                             </ol>
                         </li>
                     </ol>
+                    <span v-if="total!=0">
                     <p align="center">
                     <paginate :container-class="'pagination'" :page-count="total"
                               :click-handler="BokeComet" :prev-text="'《'" :next-text="'》'"
                               :first-last-button="false" v-model="searchParam.pageNum" >
                     </p>
+                     </span>
                     <!--发言回复区-->
                     <div id="respond" class="comment-respond">
                         <h3 id="reply-title" class="comment-reply-title">
@@ -274,13 +271,7 @@
     </div>
 </div>
 <!--右侧长条线图片-->
-<div class="back-to-top">
-    <picture>
-        <source srcset="style/images/scroll.webp"
-                type="image/webp">
-        <img loading="lazy" src="style/images/scroll.png">
-    </picture>
-</div>
+<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
 <script src="font-blog/js/jquery.min.js"></script>
 <script src="font-blog/js/vue.min.js"></script>
@@ -288,7 +279,6 @@
 <script src="font-blog/js/tinymce/tinymce.min.js"></script>
 <script type='text/javascript' src='lls/comment-reply.min.js'></script>
 <script type='text/javascript' src='lls/scripts-global.js'></script>
-<script type="text/javascript" src="style/js/sagiri.min.js"></script>
 <script th:src="@{/brand/js/message/MessageController.js}"></script>
 </body>
 </html>

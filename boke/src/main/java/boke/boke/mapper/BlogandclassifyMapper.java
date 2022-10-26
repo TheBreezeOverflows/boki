@@ -25,4 +25,6 @@ public interface BlogandclassifyMapper {
     int UpdablogClassKey(@Param("blogid") int blogid, @Param("classid") int classid);
     //删除当前文章与标签关联
     int deleteblogclass(@Param("blogid") int blogid);
+    //因大标签变小标签所修改标签id
+    int UpdaClassByid(@Param("classid") int blogid, @Param("alterid") int alterid);
 }

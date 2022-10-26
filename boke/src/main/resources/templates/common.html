@@ -27,7 +27,9 @@
 
     <script type="text/javascript" src="style/js/jquery.min.js"></script>
     <script type="text/javascript" src="style/js/disqus.js"></script>
-
+    <!--右侧顶部返回跳转-->
+    <link rel="stylesheet" type="text/css" href="GoTop/css/szgotop.css" />
+    <script type="text/javascript" src="GoTop/js/szgotop.js"></script>
     <!--vue相关依赖-->
     <link rel="stylesheet" th:href="@{/plugins/bootstrap/css/bootstrap.min.css}">
     <script th:src="@{/plugins/bootstrap/js/bootstrap.js}"></script>
@@ -75,12 +77,13 @@
         leancloud: {enable: !0, appID: "hRDdibVwWhuIGMhhzAMXiFYG-MdYXbMMI", appKey: "DB8u9iGG8iMTGAGOKz28lIer"},
         favicon: {
             visibilitychange: !0,
-            narmal: "https://cdn.jsdelivr.net/gh/DIYgod/diygod.me/themes/sagiri/source/images/cursor.ico",
-            hidden: "https://cdn.jsdelivr.net/gh/DIYgod/diygod.me/themes/sagiri/source/images/cursor.ico",
+            narmal: "/style/images/favicon.ico",
+            hidden: "/style/images/failure.ico",
             show_text: "(/≧▽≦/)// 欢迎！",
             hide_text: "(TAT)別走啦！"
         }
-    }</script>
+    }
+    </script>
 
 
     <!--头部名字标签-->
@@ -172,18 +175,7 @@
     }
     </style>
     <title>Hi, boy</title>
-<!--
-    <script>!function (e, a, t, n, g, c, o) {
-        e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
-            (e.ga.q = e.ga.q || []).push(arguments)
-        }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
-    }(window, document, "script", 0, "ga"), ga("create", "UA-48084758-7", "auto"), ga("send", "pageview")</script>
--->
-    <script>!function (e, a, t, n, g, c, o) {
-        e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
-            (e.ga.q = e.ga.q || []).push(arguments)
-        }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "/google-analytics/analytics.js", o.parentNode.insertBefore(c, o)
-    }(window, document, "script", 0, "ga"), ga("create", "UA-48084758-7", "auto"), ga("send", "pageview")</script>
+
 
     <!--去除浏览器默认-->
     <style type="text/css">
@@ -235,8 +227,10 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
-
+        .gallery{ width: 60px; height: 60px; position: fixed; z-index: 10; bottom: 60px; right: 20px;display:none; }
     </style>
+    <!-- 顶部跳转条-->
+
     <link rel='stylesheet' id='genericons-neue-css' href='lls/genericons-neue.css' type='text/css' media='screen'/>
     <link rel='stylesheet' id='modern-stylesheet-custom-css' href='lls/custom-styles.css' type='text/css' media='screen'/>
 

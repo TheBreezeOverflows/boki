@@ -153,4 +153,10 @@
     delete from blogandclassify
     where BlogsArticle_Id = #{blogid,jdbcType=INTEGER}
   </delete>
+  <update id="UpdaClassByid" parameterType="map" >
+    UPDATE blogandclassify
+    SET Classify_id =#{alterid,jdbcType=INTEGER}
+    WHERE
+      Classify_id =#{classid,jdbcType=INTEGER}
+  </update>
 </mapper>

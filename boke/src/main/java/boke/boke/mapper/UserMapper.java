@@ -48,4 +48,6 @@ public interface UserMapper {
      */
     String getpwd(String name);
 
+    //查询所有用户名和编号
+    List<User> selectByAllUser();
 }
