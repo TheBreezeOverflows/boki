@@ -6,8 +6,8 @@
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>关于作者</title>
-    <link rel="stylesheet" href="../../css/element.css">
-    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../font-blog/css/element.css">
+    <link rel="stylesheet" href="../font-blog/css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
@@ -31,15 +31,16 @@
     </div>
 </div>
 
-<script src="../../js/jquery.min.js"></script>
-<script src="../../js/vue.min.js"></script>
-<script src="../../js/element.js"></script>
-<script src="../../js/tinymce/tinymce.min.js"></script>
+<script src="../font-blog/js/jquery.min.js"></script>
+<script src="../font-blog/js/vue.min.js"></script>
+<script src="../font-blog/js/element.js"></script>
+<script th:src="@{/plugins/axios/axios.js}"></script>
+<script src="../font-blog/js/tinymce/tinymce.min.js"></script>
 
 
 <script>
 
-    let urlBase = "/api/author/";
+    let urlBase = "/authorblog/saveAuthor";
     new Vue({
         el: "#wrapper",
         data: {
@@ -59,36 +60,25 @@
                 plugins: ['quickbars', 'link', 'table', 'image'], //选择需加载的插件
             });
 
-            $.get("/api/author").then(res => {
-                let result = res.data;
-                if (result.length === 0) {
+            $.get("/authorblog/endAuthormessage").then(res => {
+                console.log(res);
+                if (res.authorId === 0) {
                     this.entity = {}
                 } else {
-                    this.entity = res.data[0];
+                    this.entity = res;
                     setTimeout(() => {
-                        tinymce.activeEditor.setContent(res.data[0].content);
+                        tinymce.activeEditor.setContent(res.authorContent);
                     }, 500)
                 }
             })
         },
         methods: {
-            fileSuccessUpload(res) {
-                this.entity.file = "http://localhost:8888/files/" + res.data;
-                this.entity.img = "http://localhost:8888/files/" + res.data;
-                console.log(res)
-            },
-            handleCollapse() {
-                this.isCollapse = !this.isCollapse;
-            },
-            logout() {
-                $.get("/api/user/logout");
-                sessionStorage.removeItem("user");
-                location.href = "/page/end/login.html";
-            },
             save() {
-                this.entity.content = tinymce.activeEditor.getContent();
-                let type = this.entity.id ? "PUT" : "POST";
+                this.entity.authorContent = tinymce.activeEditor.getContent();
+                let type = this.entity.authorId ? "PUT" : "POST";
                 console.log(this.entity);
+                console.log("JSON转换")
+                console.log(JSON.stringify(this.entity))
                 $.ajax({
                     url: urlBase,
                     type: type,
@@ -106,7 +96,6 @@
                             type: "error"
                         })
                     }
-                    // location.href="author.html"
                 })
             },
         }

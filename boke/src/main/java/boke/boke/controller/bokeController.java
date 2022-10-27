@@ -8,6 +8,8 @@ import boke.boke.entity.dto.CommentResult;
 import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.service.BlogsArticleInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @RestController
 public class bokeController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     //依赖mapper
     @Autowired
     private BlogsArticleInfo blogsArticleInfo;

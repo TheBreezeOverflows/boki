@@ -58,4 +58,9 @@ mybatis:
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #mybatis控制台输出sql日志
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl mybatis控制台输出sql日志
+#log4j的配置
+logging:
+  config: classpath:log/log4j.xml
+  level:
+    boke.boke: trace

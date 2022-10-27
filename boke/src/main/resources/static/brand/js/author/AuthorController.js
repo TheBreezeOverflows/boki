@@ -28,22 +28,16 @@ var CommentController = new Vue({
             this.tokes.toke = token;
             console.log("有Token:" + this.tokes.toke)
         }
-        //查询友链
+        //查询个人介绍
         this.Archive();
     },
     methods: {
         Archive() {
             var self = this;
-            axios.get("/blogCreationTime").then(function (res) {
-                console.log("归档");
-                console.log(res);
-                self.bokeArchive =res.data;
+            axios.get("/authorblog/Authormessage").then(function (res) {
+                console.log(res)
+                $('#view-notice-body').html(res.data);
             })
-        },
-        showImg(id) {
-            //显示div
-            document.getElementById(id).style.display='block';
-            document.getElementById('gd').style.display='none';
         }
     }
 });

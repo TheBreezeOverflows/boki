@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 后台博客文章详细操作
+ * 后台博客资源详细操作
  */
 @RestController
 @RequestMapping("/blog/link")

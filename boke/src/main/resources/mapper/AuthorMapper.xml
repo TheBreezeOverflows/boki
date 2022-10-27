@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boke.boke.mapper.AuthorMapper" >
+  <resultMap id="BaseResultMap" type="boke.boke.entity.Author" >
+    <id column="author_id" property="authorId" jdbcType="INTEGER" />
+    <result column="author_content" property="authorContent" jdbcType="VARCHAR" />
+    <result column="author_user" property="authorUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    author_id, author_content, author_user
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="boke.boke.entity.AuthorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from author
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from author
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from author
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="boke.boke.entity.AuthorExample" >
+    delete from author
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="boke.boke.entity.Author" >
+    insert into author (author_id, author_content, author_user
+      )
+    values (#{authorId,jdbcType=INTEGER}, #{authorContent,jdbcType=VARCHAR}, #{authorUser,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="boke.boke.entity.Author" >
+    insert into author
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="authorContent != null" >
+        author_content,
+      </if>
+      <if test="authorUser != null" >
+        author_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="authorId != null" >
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="authorContent != null" >
+        #{authorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="authorUser != null" >
+        #{authorUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="boke.boke.entity.AuthorExample" resultType="java.lang.Integer" >
+    select count(*) from author
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update author
+    <set >
+      <if test="record.authorId != null" >
+        author_id = #{record.authorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.authorContent != null" >
+        author_content = #{record.authorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorUser != null" >
+        author_user = #{record.authorUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update author
+    set author_id = #{record.authorId,jdbcType=INTEGER},
+      author_content = #{record.authorContent,jdbcType=VARCHAR},
+      author_user = #{record.authorUser,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="boke.boke.entity.Author" >
+    update author
+    <set >
+      <if test="authorContent != null" >
+        author_content = #{authorContent,jdbcType=VARCHAR},
+      </if>
+      <if test="authorUser != null" >
+        author_user = #{authorUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="boke.boke.entity.Author" >
+    update author
+    set author_content = #{authorContent,jdbcType=VARCHAR},
+      author_user = #{authorUser,jdbcType=INTEGER}
+    where author_id = #{authorId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByuserid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+      *
+    from author
+    where author_user = #{authorId,jdbcType=INTEGER}
+  </select>
+</mapper>

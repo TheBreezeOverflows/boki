@@ -11,7 +11,7 @@
 </head>
 <body style="background-color: #8d94ba">
 <div id="wrapper" v-cloak>
-<section id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+<section id="header" class="header">
 <!--    <div class="header-inner">-->
 <!--    </div>-->
         <!--头部栏-->
@@ -82,7 +82,7 @@
             <!--头部背景-->
             <div class="site-brand-bg">
                 <picture>
-                    <img class="lazyload" v-bind:src="'compress/'+entity.blogsarticleImage" v-bind:data-original="'compress/'+entity.blogsarticleImage">
+                    <img class="lazyload" v-bind:src="entity.blogsarticleImage" v-bind:data-original="entity.blogsarticleImage">
                 </picture>
             </div>
         </div>
@@ -296,9 +296,7 @@
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
-<script src="font-blog/js/jquery.min.js"></script>
 <script src="font-blog/js/vue.min.js"></script>
-<script src="font-blog/js/element.js"></script>
 <script src="font-blog/js/tinymce/tinymce.min.js"></script>
 <script type='text/javascript' src='lls/comment-reply.min.js'></script>
 <script type='text/javascript' src='lls/scripts-global.js'></script>

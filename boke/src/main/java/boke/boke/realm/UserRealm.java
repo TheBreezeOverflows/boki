@@ -88,7 +88,7 @@ public class UserRealm extends AuthorizingRealm {
         if (cm != null) {
             String token=(String) authenticationToken.getCredentials();
             String pwd=info.getCredentials().toString();
-            if (!JWTUtil.verifyon2(token,pwd)) {
+            if (!JWTUtil.verifyon2(token,pwd)) {//这里是调用了自定义方法验证验证密码
                 String msg = "Submitted credentials for token [" + token + "] did not match the expected credentials.";
                 throw new IncorrectCredentialsException(msg);
             }

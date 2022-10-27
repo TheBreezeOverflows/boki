@@ -19,7 +19,7 @@ import java.util.Date;
  */
 public class JWTUtil {
     // 过期时间 6分钟
-    private static final long EXPIRE_TIME = 6 * 60 * 1000;
+    private static final long EXPIRE_TIME = 60 * 60 * 1000;
     // 密钥
     private static final String SECRET = "SHIRO+JWT";
 
@@ -98,8 +98,8 @@ public class JWTUtil {
     public static boolean verifyon2(String token,String password) {
         try {
             // Algorithm algorithm = Algorithm.HMAC256(SECRET);
-            DecodedJWT jwt = JWT.decode(token);
-            String upwd = jwt.getClaim("pwass").asString();
+            DecodedJWT jwt = JWT.decode(token);//解析token
+            String upwd = jwt.getClaim("pwass").asString();//获取token中的密码
             if (upwd.equals(password)){
                 return true;
             }else {

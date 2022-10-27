@@ -1,17 +1,17 @@
 ﻿<!DOCTYPE html>
 <html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml" >
-<head th:insert="~{common::header('归档')}">
+<head th:insert="~{common::header('关于我')}">
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="font-blog/css/element.css">
-    <link rel="stylesheet" href="font-blog/css/base.css">
+
     <link rel="stylesheet" href="brand/css/message/MessageController.css">
     <!--评论区-->
 </head>
 <body style="background-color: #8d94ba">
 <div id="wrapper" v-cloak>
-    <section id="header" class="header" >
+    <section id="header" class="header">
         <!--    <div class="header-inner">-->
         <!--    </div>-->
         <!--头部栏-->
@@ -35,7 +35,7 @@
                                         </span></a>
                             </li>
                             <li style="margin-right: 32px">
-                                <a href="#"><span class="faa-parent animated-hover">
+                                <a href="/archive"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
                                         </span></a>
                             </li>
@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/author"><span class="faa-parent animated-hover">
+                                <a href="#"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-heartbeat" aria-hidden="true"></i>关于我
                                         </span></a>
                             </li>
@@ -93,9 +93,13 @@
     <!-- 主体页面-->
     <div id="content" class="site-content" >
         <!--        <main id="main" class="main" style="background-color:#735C94;">-->
-        <main id="main" class="main site-mainwzxx" style="background-color:#ABBDF4;">
+        <main id="main" class="site-mainwzxx" style="background-color:#ABBDF4;padding-bottom: 380px">
+            <header class="entry-header" >
+                <h1 class="entry-title">关于我</h1>
+            </header>
+            <div style="height: 1px; margin-top: 20px;margin-bottom: 30px;"></div>
             <!--背景图片-->
-            <div id="arch" style="text-align: center;z-index:2;display:none;">
+            <div id="arch" style="text-align: center;z-index:2;">
                 <div class="entry-media" style="margin-bottom: 20px;text-align: center">
                     <figure style="text-align: center">
                         <a  href="/style/images/interlude14.png">
@@ -107,41 +111,23 @@
                     </figure>
                 </div>
             </div>
-            <header id="gd" @click="showImg('arch')" class="entry-header" round>
-                <h1 class="entry-title">归档</h1>
-            </header>
-            <div id="teamnewslist">
-                <ol>
-                    <span v-for="item in bokeArchive">
-                        <li>
-                            <b></b>
-                            <p style="padding-top: 5px">🗓️{{item.data}}</p>
-                        </li>
+            <!--个人信息-->
+            <div style="height: 1px; margin-top: 20px;margin-bottom: 30px; background-color: #ccc"></div>
 
-                     <span v-for="Archivetime in item.list">
-                         <li>
-                             <a v-bind:href="'detail?id='+Archivetime.blogsarticleId">
-                            <b>{{Archivetime.blogsarticleDate}}</b>
-                                 {{Archivetime.blogsarticleContent}}
-                             </a>
-                        </li>
-                    </span>
-                    </span>
-                </ol>
-            </div>
+            <div class="entry-content" id="view-notice-body">个人信息</div>
             <div style="height: 1px; margin-top: 20px;margin-bottom: 30px; background-color: #ccc"></div>
             <!--评论-->
         </main>
-
     </div>
     <!-- 底部栏-->
-    <div style="position: relative;z-index:5" >
+    <div id="bootom" style="position: relative;z-index:5;">
         <footer id="footer" class="footer">
             <div class="footer-image" >
                 <picture>
                     <source srcset="style/images/footer.webp"
                             type="image/webp">
-                    <img loading="lazy" src="style/images/footer.png"></picture>
+                    <img loading="lazy" src="style/images/footer.png">
+                </picture>
             </div>
             <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
                 <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
@@ -156,23 +142,10 @@
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
-<script src="font-blog/js/vue.min.js"></script>
 <script src="font-blog/js/element.js"></script>
 <script src="font-blog/js/tinymce/tinymce.min.js"></script>
 <script type='text/javascript' src='lls/comment-reply.min.js'></script>
 <script type='text/javascript' src='lls/scripts-global.js'></script>
-<script th:src="@{/brand/js/Archive/ArchiveController.js}"></script>
-
-<style>
-    /* 站点动态时间轴 */
-    #teamnewslist ol{list-style:none;margin-left: 36px;padding-left: 14px;border-left: 2px solid #eee;font-size: 18px;color: #666;}
-    #teamnewslist b{font-size: 12px;font-weight: normal;color: #999;display: block;position: relative;margin-bottom:5px;}
-    #teamnewslist b::after{position: absolute;top: 6px;left: -22px;content: '';width: 14px;height: 14px;border-radius: 50%;background-color: #fff;border: 2px solid #ccc;}
-    #teamnewslist li{list-style:none;margin: 0 0 30px 0;line-height: 100%;}
-    #teamnewslist li:hover{color: #555;}
-    #teamnewslist li:hover b::after{border-color: #C01EBDE9;}
-    #teamnewslist li:hover b{color: #C01E22;}
-    #teamnewslist li:hover a{color: #ff5900;text-decoration:none;}
-</style>
+<script th:src="@{/brand/js/author/AuthorController.js}"></script>
 </body>
 </html>

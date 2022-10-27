@@ -1,5 +1,6 @@
 package boke.boke.service;
 
+import boke.boke.entity.Author;
 import boke.boke.entity.Friend;
 import boke.boke.entity.User;
 import boke.boke.entity.Userdatainfo;
@@ -33,4 +34,12 @@ public interface UserInfo {
     public boolean DelteByUserMessage(int userid,int userinfoid);
     //出现所有用户信息
     public List<User> selectAlluserinfo();
+    //查询关于我
+    public String selectAuthormessage();
+    //后台查询关于我
+    Author selectendAuthormessage();
+    //根据用户编号添加关于我的信息数据
+    boolean saveAuthor(Author autor);
+    //修改关于我
+    boolean UpdateAuthor(Author autor);
 }

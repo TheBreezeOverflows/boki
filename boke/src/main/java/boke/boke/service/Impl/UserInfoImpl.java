@@ -4,10 +4,13 @@ import boke.boke.controller.UserController;
 import boke.boke.entity.*;
 import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
+import boke.boke.mapper.AuthorMapper;
 import boke.boke.mapper.LinkMapper;
 import boke.boke.mapper.UserMapper;
 import boke.boke.mapper.UserdatainfoMapper;
 import boke.boke.service.UserInfo;
+import boke.boke.util.GetHeaderToken;
+import boke.boke.util.JWTUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ public class UserInfoImpl implements UserInfo {
     //依赖mapper
     @Autowired(required = false)
     private LinkMapper linkMapper;
+    //依赖mapper
+    @Autowired(required = false)
+    private AuthorMapper authorMapper;
 
     //根据id查询用户信息
     @Override
@@ -36,8 +42,6 @@ public class UserInfoImpl implements UserInfo {
    //根据用户id查询用户详细信息
     @Override
     public Userdatainfo UserDatailInfo(int id) {
-
-
         Userdatainfo userdatainfo = userdatainfoMapper.selectByusernamePrimaryKey(id);
         List<Link> links = linkMapper.selectByUserType(id);
         if (links.size()>0){
@@ -181,5 +185,39 @@ public class UserInfoImpl implements UserInfo {
     @Override
     public List<User> selectAlluserinfo() {
         return userMapper.selectByAllUser();
+    }
+
+    //关于我页面的查询
+    @Override
+    public String selectAuthormessage() {
+        return authorMapper.selectByuserid(1).getAuthorContent();
+    }
+    //后台查询关于我页面的
+    @Override
+    public Author selectendAuthormessage() {
+        return authorMapper.selectByuserid(1);
+    }
+
+    @Override
+    public boolean saveAuthor(Author autor){
+        boolean fal =false;
+        String token= GetHeaderToken.getRequestCookie("baitoken");
+        String userid = JWTUtil.getUserid(token);
+        autor.setAuthorUser(Integer.parseInt(userid));
+        int in =  authorMapper.insert(autor);
+        if (in!=0){
+            fal=true;
+        }
+        return fal;
+    }
+
+    @Override
+    public boolean UpdateAuthor(Author autor) {
+        boolean fal =false;
+       int in= authorMapper.updateByPrimaryKey(autor);
+        if (in!=0){
+            fal=true;
+        }
+        return fal;
     }
 }

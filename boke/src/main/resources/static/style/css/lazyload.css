@@ -8347,8 +8347,9 @@ button.botui-actions-buttons-button {
 }
 
 .logolink a:hover .no {
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite
+    /*设置字体旋转*/
+    /*-webkit-animation: spin 1.5s linear infinite;*/
+    /*animation: spin 1.5s linear infinite*/
 }
 
 .logolink ruby {

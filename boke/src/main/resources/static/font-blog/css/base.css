@@ -73,7 +73,7 @@ button {
 }
 /*elementUI样式调整*/
 [v-cloak] {
-    display: none;
+    display: none !important;
 }
 .el-header {
     padding-left: 0;

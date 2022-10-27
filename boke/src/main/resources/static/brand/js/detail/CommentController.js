@@ -6,6 +6,7 @@ var CommentController = new Vue({
     data: {
         src: '',
         search: '',
+        options: [],
         entity:{},
         pageNum: 1,
         pageSize: 6,

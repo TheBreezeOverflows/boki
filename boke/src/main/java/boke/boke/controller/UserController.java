@@ -11,12 +11,15 @@ import boke.boke.service.UserInfo;
 import boke.boke.util.GetHeaderToken;
 import boke.boke.util.JWTUtil;
 import boke.boke.util.UtilTools;
+import boke.boke.util.logUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +42,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("user")
 public class UserController  {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final ResultMap resultMap;
     private final UserInfo userInfoservice;
     @Autowired
@@ -54,13 +58,16 @@ public class UserController  {
         if (null != pass) {
            String pwd =PasswordDecode(password);
             if (!pwd.equals(pass)) {
+                logger.info("用户尝试登录但密码错误--ip为："+ logUtil.getIpAddress());
                 return resultMap.fail().code(401).message("密码错误");
             } else {
                 User user = userInfoservice.login(username,pwd);
                 String token = JWTUtil.createToken(user.getUserId() + "", user.getUserName(), user.getUserUserPassword());
+                logger.info("用户登录成功--ip为："+ logUtil.getIpAddress());
                 return resultMap.success().code(200).message(token);
             }
         }
+        logger.info("用户尝试登录但用户名错误--ip为："+ logUtil.getIpAddress());
         return resultMap.fail().code(401).message("用户名错误");
     }
     //注册
