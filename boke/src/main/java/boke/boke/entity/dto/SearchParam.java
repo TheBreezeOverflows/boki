@@ -7,7 +7,7 @@ public class SearchParam implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer pageNum;
 	private Integer pageSize;
-
+	private String keyword;//搜索关键字
 	public SearchParam() {
 	}
 
@@ -32,4 +32,11 @@ public class SearchParam implements Serializable {
 		this.pageSize = pageSize;
 	}
 
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 }

@@ -1,13 +1,18 @@
 package boke.boke.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 博客文章信息
  */
+@Document(indexName = "blog",type = "message")
 public class Blogsarticle implements Serializable {
     //博文id
+    @Id
     private Integer blogsarticleId;
     //发布用户id
     private Integer blogsarticleUserId;

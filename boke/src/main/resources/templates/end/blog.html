@@ -20,8 +20,7 @@
         </div>
 
         <div style="height: 1px; margin: 10px 0; background-color: white"></div>
-    <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索"
-              @keyup.enter.native="loadTablew2"></el-input>
+    <el-input v-model="search" style="width: 20%;" suffix-icon="el-icon-search" placeholder="请输入名称按回车搜索" @keyup.enter.native="loadTablew2"></el-input>
     <el-button @click="location.href='blog_edit'" type="primary" size="mini" style="margin: 10px 0">新增</el-button>
     <!-- <el-upload action="/files/upload" :on-success="successUpload" :show-file-list="false" style="display: inline-block">
         <el-button size="mini" type="primary">导入</el-button> -->

@@ -23,10 +23,9 @@ var CommentController = new Vue({
         dialogVisible: false
     },
     created() {
-        const token = localStorage.getItem("user-Token");
-        if(token!= null) { //判断是否有Token
+        const token =document.cookie;// localStorage.getItem("user-Token");
+        if(token.length>10) { //判断是否有Token
             this.tokes.toke = token;
-            console.log("有Token:" + this.tokes.toke)
         }
         //查询个人介绍
         this.Archive();
@@ -38,6 +37,10 @@ var CommentController = new Vue({
                 console.log(res)
                 $('#view-notice-body').html(res.data);
             })
+        },
+        finByBlogsearch(){
+            var sear = document.getElementById("keyword").value;
+            window.location.href="/search?search="+sear;
         }
     }
 });

@@ -8,6 +8,8 @@ import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.service.BlogsArticleInfo;
 import boke.boke.service.CommentInfo;
+import boke.boke.util.GetHeaderToken;
+import boke.boke.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,6 +74,13 @@ public class CommentController {
         }else {
             //当评论的是谋篇文章时则增加文章类中评论总数
             blogsArticleInfo.AddBlogcommentnumber(Integer.parseInt(blogid));
+            com.setCommentAudit(1);
+        }
+        //判断是否有token
+        String token= GetHeaderToken.getRequestCookie("baitoken");
+        String userid = JWTUtil.getUserid(token);
+        if (userid.equals("1")){
+            com.setHeadPortrait("/style/images/headImg.png");
             com.setCommentAudit(1);
         }
         //添加评论数据

@@ -23,10 +23,9 @@ var CommentController = new Vue({
         dialogVisible: false
     },
     created() {
-        const token = localStorage.getItem("user-Token");
-        if(token!= null) { //判断是否有Token
+        const token =document.cookie; //localStorage.getItem("user-Token");
+        if(token.length>10) { //判断是否有Token
             this.tokes.toke = token;
-            console.log("有Token:" + this.tokes.toke)
         }
         let id = getUrlParamValue('id');
         //查询友链
@@ -65,8 +64,6 @@ var CommentController = new Vue({
             let id =-2
             self.searchParam.ids=id;
             axios.get("/boke/Comment/blogComment",{params:self.searchParam}).then(function (res) {
-                console.log("评论信息");
-                console.log(res.data);
                 self.bokeComment =res.data.list;
                 //设置总数量
                 self.total =Math.ceil(res.data.total/self.searchParam.pageSize);
@@ -97,6 +94,10 @@ var CommentController = new Vue({
                 return false;
             }
             return true;
+        },
+        finByBlogsearch(){
+            var sear = document.getElementById("keyword").value;
+            window.location.href="/search?search="+sear;
         }
     }
 });

@@ -28,7 +28,8 @@ var brandController = new Vue({
             id:1,
             lab:0,
             pageNum : 1,
-            pageSize : 4 //每页条数
+            pageSize : 4, //每页条数
+            keyword : null
         },
         searchResult : {        //文章内容
             total : 0,
@@ -51,8 +52,10 @@ var brandController = new Vue({
         },
         findByuserId(){     //查询用户信息，查看localStorage是否存储有用户信息Token有则将Token放入请求头中请求没有则直接用Boss账户
            var self = this;
-            const token = localStorage.getItem("user-Token");
-                self.tokes.toke=token;
+            const token = document.cookie;
+                if (token.length>10){
+                    self.tokes.toke=token;
+                }
                 axios.get('/user/info').then(function (res) {
                     self.userinfodata = res.data;
                     self.userinfodata.userRelevance=self.userinfodata.userRelevance;
@@ -97,9 +100,15 @@ var brandController = new Vue({
                 //设置总页数
                 self.pageCount = Math.ceil(res.data.total/self.searchParam.pageSize);
             })
-        },fsubmit(){
+        },
+        fsubmit(){
              //将token与路径拼接，后台更改获取token的方式
              location.href='end/frame';
+        },
+        finByBlogsearch(){
+            var sear = document.getElementById("keyword").value;
+            this.searchParam.keyword=sear;
+             this.findPage();
         }
     }
 });

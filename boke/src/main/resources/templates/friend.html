@@ -4,14 +4,14 @@
 <head th:insert="~{common::header('友人帐')}">
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="font-blog/css/element.css">
-    <link rel="stylesheet" href="font-blog/css/base.css">
+<!--    <link rel="stylesheet" href="font-blog/css/element.css">-->
+<!--    <link rel="stylesheet" href="font-blog/css/base.css">-->
     <link rel="stylesheet" href="brand/css/message/MessageController.css">
     <!--评论区-->
 </head>
 <body style="background-color: #8d94ba">
 <div id="wrapper" v-cloak>
-<section id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+<section id="header" class="header">
 <!--    <div class="header-inner">-->
 <!--    </div>-->
         <!--头部栏-->
@@ -74,7 +74,10 @@
                     </div>
                 </div>
             </div>
-            <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+            <div class="searchbox">
+                <input id="keyword" v-on:keydown.enter="finByBlogsearch" type="text" style="line-height: 0px" placeholder="站内搜索">
+                <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+            </div>
         </div>
 
         <!--原来头部-->
@@ -82,7 +85,7 @@
             <!--头部背景-->
             <div class="site-brand-bg">
                 <picture>
-                    <img class="lazyload" src="/style/images/interlude99.png" data-original="/style/images/interlude99.png">
+                    <img class="lazyload" src="/style/images/interlude99.jpg" data-original="/style/images/interlude99.jpg">
                 </picture>
             </div>
         </div>
@@ -106,8 +109,8 @@
                     <h3 style="color: #774553">#博客信息</h3>
                     <div class="wp-block-preformatted" style="background-color:#b9d1fc; padding:10px;" >
                         名称：墨白
-                        <br/><br/>地址：http://localhost:81/
-                        <br/><br/>头像：http://localhost:81/style/images/headImg.png
+                        <br/><br/>地址：www.overflows.top
+                        <br/><br/>头像：www.overflows.top/style/images/mobai.jpg
                         <br/><br/>申请友联联系邮箱(qq)：3315177689@qq.com
                     </div>
                     </div>
@@ -158,10 +161,18 @@
                             <article v-bind:id="'div-comment-'+item.data.commentId" class="comment-body">
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
-                                            <img alt=''
-                                                 src='/style/images/failure.png'
-                                                 srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
-                                                 height='240' width='240'/>
+                                        <span v-if="item.data.headPortrait == null">
+                                        <img alt=''
+                                             src='/style/images/failure.png'
+                                             srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
+                                             height='240' width='240'/>
+                                        </span>
+                                        <span v-if="item.data.headPortrait != null">
+                                        <img alt=''
+                                             v-bind:src='item.data.headPortrait'
+                                             v-bind:srcset='item.data.headPortrait'                                                                           class='avatar avatar-240 photo'
+                                             height='240' width='240'/>
+                                        </span>
                                         <a  v-bind:href="item.data.directSite">
                                         <b class="fn">{{item.data.messageName}}</b>
                                         </a>
@@ -183,11 +194,18 @@
                                     <article v-bind:id="'div-comment-'+itemcom.commentId" class="comment-body">
                                         <footer class="comment-meta">
                                             <div class="comment-author vcard">
+                                                    <span v-if="itemcom.headPortrait == null">
                                                     <img alt=''
                                                          src='/style/images/failure.png'
-                                                         srcset='/style/images/failure.png'
-                                                         class='avatar avatar-240 photo'
+                                                         srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
                                                          height='240' width='240'/>
+                                                    </span>
+                                                    <span v-if="itemcom.headPortrait != null">
+                                                    <img alt=''
+                                                         v-bind:src='itemcom.headPortrait'
+                                                         v-bind:srcset='itemcom.headPortrait'                                                                           class='avatar avatar-240 photo'
+                                                         height='240' width='240'/>
+                                                    </span>
                                                 <a  v-bind:href="itemcom.directSite">
                                                 <b class="fn">{{itemcom.messageName}}</b>
                                                 </a>
@@ -308,11 +326,11 @@
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
-<script src="font-blog/js/vue.min.js"></script>
-<script src="font-blog/js/element.js"></script>
-<script src="font-blog/js/tinymce/tinymce.min.js"></script>
-<script type='text/javascript' src='lls/comment-reply.min.js'></script>
-<script type='text/javascript' src='lls/scripts-global.js'></script>
+<!--<script src="font-blog/js/vue.min.js"></script>-->
+<!--<script src="font-blog/js/element.js"></script>-->
+<!--<script src="font-blog/js/tinymce/tinymce.min.js"></script>-->
+<!--<script type='text/javascript' src='lls/comment-reply.min.js'></script>&lt;!&ndash;下面两个是将评论发表的默认内容显示在方框里&ndash;&gt;-->
+<!--<script type='text/javascript' src='lls/scripts-global.js'></script>-->
 <script th:src="@{/brand/js/friend/friendController.js}"></script>
 </body>
 </html>

@@ -21,10 +21,9 @@ var CommentController = new Vue({
         dialogVisible: false
     },
     created() {
-        const token = localStorage.getItem("user-Token");
-        if(token!= null) { //判断是否有Token
+        const token =document.cookie;  //localStorage.getItem("user-Token");
+        if(token.length>10) { //判断是否有Token
             this.tokes.toke = token;
-            console.log("有Token:" + this.tokes.toke)
         }
         let id = getUrlParamValue('id');
         //查询评论区评论信息
@@ -74,6 +73,10 @@ var CommentController = new Vue({
                 return false;
             }
             return true;
+        },
+        finByBlogsearch(){
+            var sear = document.getElementById("keyword").value;
+            window.location.href="/search?search="+sear;
         }
     }
 });

@@ -45,4 +45,6 @@ public interface BlogsArticleInfo {
     public boolean AddBlogcommentnumber(int id);
     //给文章回复数统计-n
     public boolean delBlogcommentnumber(int id,int number);
+    //es保存
+    void index();
 }

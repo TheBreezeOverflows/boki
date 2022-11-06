@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:insert="~{common::header('首页')}">
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans" class="theme-darling">
+<div id="brandView">
+    <div class="container sidebar-position-right page-home">
+        <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+            <div class="header-inner">
+                <!--头部栏-->
+                <!--                <header class="site-header no-select" role="banner">-->
+                <div id="toplan" class="site-header no-select  site-top">
+                    <div class="site-branding"><span class="site-title"> <span class="logolink moe-mashiro"> <a
+                            href="#" alt="墨白"> <ruby><span class="sakuraso" style="font-family: 仿宋">墨白</span>
+                        <span class="no" style="font-family: 楷体">沉墨</span>
+                        <span class="shironeko" style="font-family: 楷体">满纸</span>
+                        <rp style="padding-bottom: 100px"></rp>
+                        <rt class="chinese-font">一笑若白</rt>
+                        <rp></rp></ruby> </a> </span> </span></div>
+                    <div class="lower-cantiner">
+                        <div class="lower">
+                            <!--选择栏-->
+                            <nav class="mobile-fit-control hide ">
+                                <ul id="menu-new" class="menu">
+                                    <li style="margin-right: 32px;margin-left: 180px">
+                                        <a href="index"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-meteor" aria-hidden="true"></i> 首页
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="/archive"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-archive" aria-hidden="true"></i> 归档
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="/message"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-magic" aria-hidden="true"></i> 留言板
+                                        </span></a>
+                                    </li>
+                                    <li style="margin-right: 32px">
+                                        <a href="/friend" aria-current="page">
+                                            <span class="faa-parent animated-hover">
+                                                <i class="menu-item-icon fas fa-child" aria-hidden="true"></i> 友人帐
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/author"><span class="faa-parent animated-hover">
+                                            <i class="menu-item-icon fas fa-heartbeat" aria-hidden="true"></i>关于我
+                                        </span></a>
+                                    </li>
+                                    <!--                                    <li class="menu-item search">-->
+                                    <!--                                        <form class="search-form">-->
+                                    <!--                                            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">-->
+                                    <!--                                            <button type="submit" class="search-submit">-->
+                                    <!--                                                <i class="fas fa-search"></i>-->
+                                    <!--                                            </button>-->
+                                    <!--                                        </form>-->
+                                    <!--                                    </li>-->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--用户登录-->
+                    <div class="header-user-avatar">
+                        <!-- 有token时 -->
+                        <span v-if="tokes.toke != null">
+<!--                            <form action="/redirec/endframe" method="post">-->
+                                <span @click="fsubmit">
+                                <img class="faa-shake animated-hover"
+                                     src="style/images/none.png" width="30"
+                                     height="30">
+                                </span>
+                            <!--                            </form>-->
+                        </span>
+                        <!-- 无token时 -->
+                        <span v-else>
+                            <a href="/login">
+                                <img class="faa-shake animated-hover"
+                                     src="style/images/none.png" width="30"
+                                     height="30">
+                            </a>
+                        </span>
+                        <div class="header-user-menu">
+                            <div class="herder-user-name no-logged">Whether to <a href="login"
+                                                                                  target="_blank"
+                                                                                  style="color:#333;font-weight:bold;text-decoration:none">log
+                                in</a> now?
+                            </div>
+                        </div>
+                    </div>
+                        <div class="searchbox">
+                            <input id="keyword" v-on:keydown.enter="finByBlogsearch" type="text" style="line-height: 0px" placeholder="站内搜索">
+                            <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+                        </div>
+                </div>
+
+                <!--原来头部-->
+                <div class="site-brand-wrapper">
+                    <!--头部背景-->
+                    <div class="site-brand-bg">
+                        <picture>
+                            <!-- <img  src="style/images/header-gyx.jpg" data-original="style/images/header-gyx.jpg">-->
+                            <img  src="style/images/header-gyx.jpg">
+                        </picture>
+
+                    </div>
+                    <div class="site-meta">
+                        <div class="custom-logo-site-title">
+                            <div class="brand"><span class="logo-line-before"><i></i></span>
+                                <div class="site-title">
+                                    <!--头部显示内容-->
+                                    <div class="site-master">
+                                        <h1 class="post-title  index force-normal">
+                                        <span class="brand">
+                                            <span>
+<!--                                                <svg>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-1"> 墨白 </text>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-2"> 墨白 </text>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-3"> 墨白 </text>
+                                                    <text text-anchor="middle" x="50%" y="50%" class="text text-4"> 墨白 </text>
+                                                </svg>-->
+                                            </span>
+                                        </span><br>
+                                        </h1>
+                                        <span>
+                                                <h2 class="site-master-description scaleup" itemprop="description"><!--沉墨满纸,一笑若白--></h2>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="logo-line-after"><i></i></span></div>
+                        </div>
+                        <p class="site-subtitle"></p></div>
+                    <div class="site-nav-toggle">
+                        <button><span class="btn-bar"></span> <span class="btn-bar"></span> <span class="btn-bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;"></h1>
+        <main id="main" class="main">
+            <div class="search-form" style="max-width: 50%; margin: auto;margin-bottom: 10px ">
+                <label>
+                    <input id="keywordblog" v-on:keydown.enter="finBlogsearch" type="text" style="line-height: 0px" placeholder="搜索文章：" v-bind:value="searchParam.keyword">
+                 </label>
+            </div>
+            <div class="main-inner">
+                <div class="content-wrap">
+                    <div id="content" class="content">
+                        <section id="posts" class="posts-expand">
+                            <!--显示内容模块-->
+                            <article v-for="brand in searchResult.list" style="background-color:#ffffff"  class=" post post-list-thumb post-list-show">
+                                <!--文章内容图片展示-->
+                                <div class="post-thumb"><a v-bind:href="'detail?id='+brand.blogsarticleId" style="height:200px" >
+                                    <img class="lazyload" id="post-th-4491"
+                                         v-bind:src="'compress/'+brand.blogsarticleImage"> </a>
+                                </div>
+                                <div class="post-content-wrap">
+                                    <div class="post-datelazy">🕓发布于 {{brand.blogsarticleDate}}</div>
+                                    <a v-bind:href="'detail?id='+brand.blogsarticleId" class="post-title">
+                                        <h3>{{brand.blogsarticleHeadline}}</h3>
+                                    </a>
+                                    <div class="post-meta"><span><i class="iconfont icon-attention"></i>{{brand.accessnumber}}热度</span>
+                                        <span class="comments-number"><i class="iconfont icon-mark"></i><a
+                                                href="#">{{brand.commentnumber}}条评论</a></span>
+                                        <span><i class="iconfont icon-file"></i><a
+                                                href="#">作者:{{brand.bloagUserNames}}</a> </span></div>
+                                    <div class="float-content">
+                                        <p>
+                                            {{brand.blogsarticleContent}}
+                                        </p>
+                                        <div class="post-bottom"><a
+                                                href="#"
+                                                class="button-normal"><i class="iconfont icon-caidan"></i></a></div>
+                                    </div>
+                                </div>
+                            </article>
+                            <span class="posts post-list-thumbs"></span>
+                        </section>
+                        <!--页面选择栏-->
+                        <span v-if="pageCount!=0">
+                        <p align="center">
+                            <paginate :container-class="'pagination'" :page-count="pageCount"
+                                      :click-handler="findPage" :prev-text="'《'" :next-text="'》'"
+                                      :first-last-button="false" v-model="searchParam.pageNum">
+                        </p>
+                        </span>
+                    </div>
+                </div>
+                <div class="sidebar-toggle">
+                    <div class="sidebar-toggle-line-wrap"><span
+                            class="sidebar-toggle-line sidebar-toggle-line-first"></span> <span
+                            class="sidebar-toggle-line sidebar-toggle-line-middle"></span> <span
+                            class="sidebar-toggle-line sidebar-toggle-line-last"></span></div>
+                </div>
+                <!--右边个人信息展示栏-->
+                <aside id="sidebar" class="sidebar" >
+                    <div class="sidebar-inner">
+                        <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+                            <div class="site-overview">
+                                <div class="site-author motion-element" itemprop="author" itemscope
+                                     itemtype="http://schema.org/Person">
+                                    <picture>
+                                        <source srcset="style/images/mobai.jpg"
+                                                type="image/webp">
+                                        <img loading="lazy" class="site-author-image" itemprop="image"
+                                             src="style/images/mobai.jpg"
+                                             alt=""></picture>
+                                    <p class="site-description motion-element" style="" itemprop="description">{{userinfodata.userdatanames}}</p>
+                                </div>
+                                <div class="links-of-author motion-element">
+                                    <ul v-for="item in userinfodata.userRelevance" class="links-of-author-item scaleup" style="margin-bottom: 7px">
+                                        <span>
+                                                <a v-bind:href="item.linkUrl" target="_blank" v-bind:title="item.linkName" style="text-decoration:none">
+                                                    <i  style="color:#191717">
+                                                    <img v-bind:src="item.linkImage">
+                                                        <span  v-bind:text="item.linkName">{{item.linkName}}</span>
+                                                    </i>
+                                                </a>
+                                            </span>
+                                    </ul>
+                                </div>
+                                <details>
+                                    <summary class="views-top-name" >🏷️标签</summary>
+                                    <ul>
+                                        <li style="margin: 20px" v-for="item in classifybase">
+                                            <span v-on:click="finByBlogClassID(item.classifyId,-1)">◆{{item.classifyName}}</span>
+                                        </li>
+                                    </ul>
+                                </details>
+                            </div>
+                        </section>
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+        <footer id="footer" class="footer">
+            <div class="footer-image">
+                <picture>
+                    <source srcset="style/images/footer.webp"
+                            type="image/webp">
+                    <img loading="lazy" src="style/images/footer.png"></picture>
+            </div>
+            <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
+                                                                            rel="nofollow">TheBreezeOverflows</a>
+                    制作.</p>
+                <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
+                                                                                                  itemprop="copyrightHolder">墨白</span>.
+                </p></div>
+        </footer>
+
+    </div>
+</div>
+<!--右侧长条线图片-->
+<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
+<canvas id="evanyou"></canvas>
+<script>//sidebar toplan
+$(function() {
+    var offs=$('#sidebar').offset().top;
+    //scroll 事件适用于所有可滚动的元素和 window 对象（浏览器窗口）。
+    $(window).scroll(function() {
+        //右侧个人信息栏随页面居中
+        $(document).ready((function () {
+            var t = $(".sidebar-inner");
+            function e() {
+                var e = $(".header-inner").height() + CONFIG.sidebar.offset;
+                $("#sidebar").height() < $("#content").height() && t.affix({
+                    offset: {
+                        top: e - 2 * CONFIG.sidebar.offset,
+                        bottom: 540
+                    }
+                })
+            }
+
+            e(), window.matchMedia("(min-width: 991px)").addListener((function (n) {
+                n.matches && ($(window).off(".affix"), t.removeData("bs.affix").removeClass("affix affix-top affix-bottom"), e())
+            }))
+        }))
+    })
+})
+
+
+
+</script>
+</body>
+<script th:src="@{/brand/js/search/brandController.js}"></script>
+</html>

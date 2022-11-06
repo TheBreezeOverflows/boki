@@ -4,8 +4,8 @@
 <head th:insert="~{common::header('归档')}">
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="font-blog/css/element.css">
-    <link rel="stylesheet" href="font-blog/css/base.css">
+<!--    <link rel="stylesheet" href="font-blog/css/element.css">-->
+<!--    <link rel="stylesheet" href="font-blog/css/base.css">-->
     <link rel="stylesheet" href="brand/css/message/MessageController.css">
     <!--评论区-->
 </head>
@@ -74,7 +74,10 @@
                     </div>
                 </div>
             </div>
-            <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+            <div class="searchbox">
+                <input id="keyword" v-on:keydown.enter="finByBlogsearch" type="text" style="line-height: 0px" placeholder="站内搜索">
+                <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+            </div>
         </div>
 
         <!--原来头部-->
@@ -82,7 +85,7 @@
             <!--头部背景-->
             <div class="site-brand-bg">
                 <picture>
-                    <img class="lazyload" src="/style/images/interlude14.png" data-original="/style/images/interlude14.png">
+                    <img class="lazyload" src="/style/images/interlude14.jpg" data-original="/style/images/interlude14.jpg">
                 </picture>
             </div>
         </div>
@@ -98,9 +101,9 @@
             <div id="arch" style="text-align: center;z-index:2;display:none;">
                 <div class="entry-media" style="margin-bottom: 20px;text-align: center">
                     <figure style="text-align: center">
-                        <a  href="/style/images/interlude14.png">
+                        <a  href="/style/images/interlude14.jpg">
                             <img
-                                    width="1200" height="576" src="/style/images/interlude14.png"
+                                    width="1200" height="576" src="/style/images/interlude14.jpg"
                                     class="attachment-large size-large wp-post-image" alt=""
                                     sizes="(max-width: 1200px) 100vw, 1024px"/>
                         </a>
@@ -156,11 +159,11 @@
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
-<script src="font-blog/js/vue.min.js"></script>
-<script src="font-blog/js/element.js"></script>
-<script src="font-blog/js/tinymce/tinymce.min.js"></script>
-<script type='text/javascript' src='lls/comment-reply.min.js'></script>
-<script type='text/javascript' src='lls/scripts-global.js'></script>
+<!--<script src="font-blog/js/vue.min.js"></script>-->
+<!--<script src="font-blog/js/element.js"></script>-->
+<!--<script src="font-blog/js/tinymce/tinymce.min.js"></script>-->
+<!--<script type='text/javascript' src='lls/comment-reply.min.js'></script>-->
+<!--<script type='text/javascript' src='lls/scripts-global.js'></script>-->
 <script th:src="@{/brand/js/Archive/ArchiveController.js}"></script>
 
 <style>

@@ -44,6 +44,14 @@ spring:
     format:
       #前端接收的字符串日期转换成日期类型
       date: yyyy-MM-dd
+  #elasticsearch配置
+  data:
+    elasticsearch:
+      rest:
+          #ES的集群默认名称
+          username: elasticsearch
+          #ES集群中节点的地址，有多个使用逗号隔开
+          uris: 127.0.0.1:9200
 server:
   #配置别名，扫描实体类
   port: 81

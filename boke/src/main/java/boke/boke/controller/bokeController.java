@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,5 +61,15 @@ public class bokeController {
     public List<ArchiveResult<Blogsarticle>> selectBlogCreationTime(){
         return blogsArticleInfo.BlogsArticleCreationTime();
     }
-
+    @PostMapping("/bloges")
+    @ResponseBody
+    public boolean blogelasticsearch(){
+        try {
+           //临时将mysql数据库内容写入es
+           // blogsArticleInfo.index();
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
 }

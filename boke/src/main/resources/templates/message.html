@@ -4,16 +4,16 @@
 <head th:insert="~{common::header('留言')}">
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="font-blog/css/element.css">
-    <link rel="stylesheet" href="font-blog/css/base.css">
+<!--    <link rel="stylesheet" href="font-blog/css/element.css">-->
+<!--    <link rel="stylesheet" href="font-blog/css/base.css">-->
     <link rel="stylesheet" href="brand/css/message/MessageController.css">
     <!--评论区-->
 </head>
 <body style="background-color: #8d94ba">
 <div id="wrapper" v-cloak>
-<section id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-<!--    <div class="header-inner">-->
-<!--    </div>-->
+    <section id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <!--    <div class="header-inner">-->
+        <!--    </div>-->
         <!--头部栏-->
         <!--                <header class="site-header no-select" role="banner">-->
         <div class="site-header no-select  site-top">
@@ -74,7 +74,10 @@
                     </div>
                 </div>
             </div>
-            <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+            <div class="searchbox">
+                <input id="keyword" v-on:keydown.enter="finByBlogsearch" type="text" style="line-height: 0px" placeholder="站内搜索">
+                <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+            </div>
         </div>
 
         <!--原来头部-->
@@ -86,26 +89,29 @@
                 </picture>
             </div>
         </div>
-    <div  style="height: 76px; width: 100%;">
-    </div>
-</section>
+        <div  style="height: 76px; width: 100%;">
+        </div>
+    </section>
 
     <!-- 主体页面-->
     <div id="content" class="site-content" >
-<!--        <main id="main" class="main" style="background-color:#735C94;">-->
+        <!--        <main id="main" class="main" style="background-color:#735C94;">-->
         <main id="main" class="main site-mainwzxx" style="background-color:#ABBDF4;">
+            <header class="entry-header" >
+                <h1 class="entry-title">留言板</h1>
+            </header>
+            <div style="height: 1px; margin-top: 20px;margin-bottom: 30px;"></div>
             <!--背景图片-->
-            <div  style="text-align: center">
-            <div class="entry-media" style="margin-bottom: 20px;text-align: center">
-                <figure style="text-align: center">
-                    <a  href="/style/images/interlude2.png">
-                        <img
-                                width="1200" height="576" src="/style/images/interlude2.png"
-                                class="attachment-large size-large wp-post-image" alt=""
-                                sizes="(max-width: 1200px) 100vw, 1024px"/></a></figure>
+            <div  style="text-align: center;z-index:2;">
+                <div class="entry-media" style="margin-bottom: 20px;text-align: center">
+                    <figure style="text-align: center">
+                        <a  href="/style/images/interlude2.jpg">
+                            <img
+                                    width="1200" height="576" src="/style/images/interlude2.jpg"
+                                    class="attachment-large size-large wp-post-image" alt=""
+                                    sizes="(max-width: 1200px) 100vw, 1024px"/></a></figure>
+                </div>
             </div>
-            </div>
-
             <div style="height: 1px; margin-top: 20px;margin-bottom: 30px; background-color: #ccc"></div>
             <!--评论-->
             <div id="comments" class="comments-area" style="">
@@ -116,18 +122,26 @@
                             <article v-bind:id="'div-comment-'+item.data.commentId" class="comment-body">
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
+                                        <span v-if="item.data.headPortrait == null">
                                         <img alt=''
-                                         src='/style/images/failure.png'
-                                         srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
-                                         height='240' width='240'/>
+                                             src='/style/images/failure.png'
+                                             srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
+                                             height='240' width='240'/>
+                                        </span>
+                                        <span v-if="item.data.headPortrait != null">
+                                        <img alt=''
+                                             v-bind:src='item.data.headPortrait'
+                                             v-bind:srcset='item.data.headPortrait'                                                                           class='avatar avatar-240 photo'
+                                             height='240' width='240'/>
+                                        </span>
                                         <a  v-bind:href="item.data.directSite">
-                                        <b class="fn">{{item.data.messageName}}</b>
+                                            <b class="fn">{{item.data.messageName}}</b>
                                         </a>
                                         <span class="says">说道：</span>
                                     </div>
                                     <div class="comment-metadata">
                                         <a v-bind:href="'#comment-'+item.data.commentId">
-                                        <time>{{item.data.commentDate}}</time>
+                                            <time>{{item.data.commentDate}}</time>
                                         </a>
                                     </div>
                                 </footer>
@@ -137,36 +151,43 @@
                                 </div>
                             </article>
                             <ol class="children"  v-for="(itemcom,index)  in item.list">
-                                    <li v-bind:id="'comment-'+itemcom.commentId" class="comment odd alt depth-2">
-                                        <article v-bind:id="'div-comment-'+itemcom.commentId" class="comment-body">
-                                            <footer class="comment-meta">
-                                                <div class="comment-author vcard">
+                                <li v-bind:id="'comment-'+itemcom.commentId" class="comment odd alt depth-2">
+                                    <article v-bind:id="'div-comment-'+itemcom.commentId" class="comment-body">
+                                        <footer class="comment-meta">
+                                            <div class="comment-author vcard">
+                                                    <span v-if="itemcom.headPortrait == null">
                                                     <img alt=''
-                                                       src='/style/images/failure.png'
-                                                       srcset='/style/images/failure.png'
-                                                       class='avatar avatar-240 photo'
-                                                       height='240' width='240'/>
-                                                    <a  v-bind:href="itemcom.directSite">
+                                                         src='/style/images/failure.png'
+                                                         srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
+                                                         height='240' width='240'/>
+                                                    </span>
+                                                <span v-if="itemcom.headPortrait != null">
+                                                    <img alt=''
+                                                         v-bind:src='itemcom.headPortrait'
+                                                         v-bind:srcset='itemcom.headPortrait'                                                                           class='avatar avatar-240 photo'
+                                                         height='240' width='240'/>
+                                                    </span>
+                                                <a  v-bind:href="itemcom.directSite">
                                                     <b class="fn">{{itemcom.messageName}}</b>
-                                                    </a>
-                                                    <span class="says">说道：</span>
-                                                </div>
-                                                <div class="comment-metadata">
-                                                    <a v-bind:href="'#comment-'+itemcom.commentId">
-                                                        <time>
-                                                            {{itemcom.commentDate}}
-                                                        </time>
-                                                    </a>
-                                                </div>
-                                            </footer>
-                                            <div class="comment-content"><p>@{{itemcom.messageReplyName}}：{{itemcom.voiceMessage}}</p></div>
-                                            <div class="reply">
-                                                <a class='comment-reply-link'  href="#respond" v-on:click="messageReplyid(itemcom.commentId,itemcom.messageName)">
-                                                    回复
+                                                </a>
+                                                <span class="says">说道：</span>
+                                            </div>
+                                            <div class="comment-metadata">
+                                                <a v-bind:href="'#comment-'+itemcom.commentId">
+                                                    <time>
+                                                        {{itemcom.commentDate}}
+                                                    </time>
                                                 </a>
                                             </div>
-                                        </article>
-                                    </li>
+                                        </footer>
+                                        <div class="comment-content"><p>@{{itemcom.messageReplyName}}：{{itemcom.voiceMessage}}</p></div>
+                                        <div class="reply">
+                                            <a class='comment-reply-link'  href="#respond" v-on:click="messageReplyid(itemcom.commentId,itemcom.messageName)">
+                                                回复
+                                            </a>
+                                        </div>
+                                    </article>
+                                </li>
                                 </span>
                             </ol>
                         </li>
@@ -183,12 +204,12 @@
                         <h3 id="reply-title" class="comment-reply-title">
                             {{messageReyName}}
                             <small>
-                            <a  id="cancel-comment-reply-link"
-                                href="#respond"
-                                v-on:click="cancelReplyid()"
-                                style="display:none;">
-                                取消回复
-                            </a>
+                                <a  id="cancel-comment-reply-link"
+                                    href="#respond"
+                                    v-on:click="cancelReplyid()"
+                                    style="display:none;">
+                                    取消回复
+                                </a>
                             </small>
                         </h3>
                         <form action="/boke/Comment/release" method="post" id="commentform"  onsubmit="return commentrelease()">
@@ -219,16 +240,16 @@
                                 <label for="email"> 电子邮件 <span class="required">*</span>
                                 </label>
                                 <input id="email" name="email" type="email" value="" size="30"
-                                     maxlength="100"
-                                     aria-describedby="email-notes"
-                                     required='required'/>
+                                       maxlength="100"
+                                       aria-describedby="email-notes"
+                                       required='required'/>
                             </p>
                             <p class="comment-form-url">
                                 <label for="url">站点</label>
                                 <input id="url" name="url"
-                                   type="url" value=""
-                                   size="30"
-                                   maxlength="200"/>
+                                       type="url" value=""
+                                       size="30"
+                                       maxlength="200"/>
                             </p>
                             <input id="messageRey" name="messageRey" v-bind:value="messageRey" style="display:none;"/>
                             <input id="blogid" name="blogid" v-bind:value="-1" style="display:none;"/>
@@ -237,9 +258,9 @@
                             <p class="form-submit">
                                 <input name="submit"   type="submit" id="submit" class="submit" value="发表评论"/>
                                 <input type='hidden'
-                                                name='comment_post_ID'
-                                                value='2824'
-                                                id='comment_post_ID'/>
+                                       name='comment_post_ID'
+                                       value='2824'
+                                       id='comment_post_ID'/>
                                 <input type='hidden' name='comment_parent' id='comment_parent' value='0'/></p>
 
 
@@ -248,36 +269,36 @@
                     </div>
                 </div>
             </div>
-    </main>
+        </main>
 
     </div>
-<!-- 底部栏-->
+    <!-- 底部栏-->
     <div style="position: relative;z-index:5">
-    <footer id="footer" class="footer">
-        <div class="footer-image" >
-            <picture>
-                <source srcset="style/images/footer.webp"
-                        type="image/webp">
-                <img loading="lazy" src="style/images/footer.png"></picture>
-        </div>
-        <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
-            <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
-                                                                        rel="nofollow">TheBreezeOverflows</a>
-                制作.</p>
-            <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
-                                                                                              itemprop="copyrightHolder">墨白</span>.
-            </p></div>
-    </footer>
+        <footer id="footer" class="footer">
+            <div class="footer-image" >
+                <picture>
+                    <source srcset="style/images/footer.webp"
+                            type="image/webp">
+                    <img loading="lazy" src="style/images/footer.png"></picture>
+            </div>
+            <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
+                                                                            rel="nofollow">TheBreezeOverflows</a>
+                    制作.</p>
+                <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
+                                                                                                  itemprop="copyrightHolder">墨白</span>.
+                </p></div>
+        </footer>
     </div>
 </div>
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
-<script src="font-blog/js/vue.min.js"></script>
-<script src="font-blog/js/element.js"></script>
-<script src="font-blog/js/tinymce/tinymce.min.js"></script>
-<script type='text/javascript' src='lls/comment-reply.min.js'></script>
-<script type='text/javascript' src='lls/scripts-global.js'></script>
+<!--<script src="font-blog/js/vue.min.js"></script>-->
+<!--<script src="font-blog/js/element.js"></script>-->
+<!--<script src="font-blog/js/tinymce/tinymce.min.js"></script>-->
+<!--<script type='text/javascript' src='lls/comment-reply.min.js'></script>-->
+<!--<script type='text/javascript' src='lls/scripts-global.js'></script>-->
 <script th:src="@{/brand/js/message/MessageController.js}"></script>
 </body>
 </html>

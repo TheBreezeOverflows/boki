@@ -4,8 +4,8 @@
 <head th:insert="~{common::header('文章查看')}">
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="font-blog/css/element.css">
-    <link rel="stylesheet" href="font-blog/css/base.css">
+<!--    <link rel="stylesheet" href="font-blog/css/element.css">-->
+<!--    <link rel="stylesheet" href="font-blog/css/base.css">-->
     <link rel="stylesheet" href="brand/css/message/MessageController.css">
     <!--评论区-->
 </head>
@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#"><span class="faa-parent animated-hover">
+                                <a href="/author"><span class="faa-parent animated-hover">
                                             <i class="menu-item-icon fas fa-heartbeat" aria-hidden="true"></i>关于我
                                         </span></a>
                             </li>
@@ -74,7 +74,10 @@
                     </div>
                 </div>
             </div>
-            <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+            <div class="searchbox">
+                <input id="keyword" v-on:keydown.enter="finByBlogsearch" type="text" style="line-height: 0px" placeholder="站内搜索">
+                <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+            </div>
         </div>
 
         <!--原来头部-->
@@ -146,10 +149,18 @@
                             <article v-bind:id="'div-comment-'+item.data.commentId" class="comment-body">
                                 <footer class="comment-meta">
                                     <div class="comment-author vcard">
+                                        <span v-if="item.data.headPortrait == null">
                                         <img alt=''
-                                         src='/style/images/failure.png'
-                                         srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
-                                         height='240' width='240'/>
+                                             src='/style/images/failure.png'
+                                             srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
+                                             height='240' width='240'/>
+                                        </span>
+                                        <span v-if="item.data.headPortrait != null">
+                                        <img alt=''
+                                             v-bind:src='item.data.headPortrait'
+                                             v-bind:srcset='item.data.headPortrait'                                                                           class='avatar avatar-240 photo'
+                                             height='240' width='240'/>
+                                        </span>
                                         <a  v-bind:href="item.data.directSite">
                                         <b class="fn">{{item.data.messageName}}</b>
                                         </a>
@@ -171,11 +182,18 @@
                                     <article v-bind:id="'div-comment-'+itemcom.commentId" class="comment-body">
                                         <footer class="comment-meta">
                                             <div class="comment-author vcard">
+                                                <span v-if="itemcom.headPortrait == null">
                                                 <img alt=''
-                                                   src='/style/images/failure.png'
-                                                   srcset='/style/images/failure.png'
-                                                   class='avatar avatar-240 photo'
-                                                   height='240' width='240'/>
+                                                     src='/style/images/failure.png'
+                                                     srcset='/style/images/failure.png'                                                                           class='avatar avatar-240 photo'
+                                                     height='240' width='240'/>
+                                                </span>
+                                                        <span v-if="itemcom.headPortrait != null">
+                                                <img alt=''
+                                                     v-bind:src='itemcom.headPortrait'
+                                                     v-bind:srcset='itemcom.headPortrait'                                                                           class='avatar avatar-240 photo'
+                                                     height='240' width='240'/>
+                                                </span>
                                                 <a  v-bind:href="itemcom.directSite">
                                                 <b class="fn">{{itemcom.messageName}}</b>
                                                 </a>
@@ -296,10 +314,10 @@
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
 <!--    js-->
-<script src="font-blog/js/vue.min.js"></script>
-<script src="font-blog/js/tinymce/tinymce.min.js"></script>
-<script type='text/javascript' src='lls/comment-reply.min.js'></script>
-<script type='text/javascript' src='lls/scripts-global.js'></script>
+<!--<script src="font-blog/js/vue.min.js"></script>-->
+<!--<script src="font-blog/js/tinymce/tinymce.min.js"></script>-->
+<!--<script type='text/javascript' src='lls/comment-reply.min.js'></script>-->
+<!--<script type='text/javascript' src='lls/scripts-global.js'></script>-->
 <script th:src="@{/brand/js/detail/CommentController.js}"></script>
 </body>
 </html>

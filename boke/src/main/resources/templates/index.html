@@ -2,12 +2,11 @@
 <html class="theme-next pisces" lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
       xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head th:insert="~{common::header('首页')}">
-
 </head>
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans" class="theme-darling">
+<body lang="zh-Hans" class="theme-darling">
 <div id="brandView">
     <div class="container sidebar-position-right page-home">
-        <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <header id="header" class="header">
             <div class="header-inner">
                 <!--头部栏-->
 <!--                <header class="site-header no-select" role="banner">-->
@@ -51,6 +50,14 @@
                                             <i class="menu-item-icon fas fa-heartbeat" aria-hidden="true"></i>关于我
                                         </span></a>
                                     </li>
+<!--                                    <li class="menu-item search">-->
+<!--                                        <form class="search-form">-->
+<!--                                            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">-->
+<!--                                            <button type="submit" class="search-submit">-->
+<!--                                                <i class="fas fa-search"></i>-->
+<!--                                            </button>-->
+<!--                                        </form>-->
+<!--                                    </li>-->
                                 </ul>
                             </nav>
                         </div>
@@ -83,7 +90,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="searchbox"><i class="iconfont js-toggle-search iconsearch icon-search"></i></div>
+                        <div class="searchbox">
+                            <input id="keyword" v-on:keydown.enter="finByBlogsearch" type="text" style="line-height: 0px" placeholder="站内搜索">
+                            <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+                        </div>
                 </div>
 
                 <!--原来头部-->
@@ -92,7 +102,8 @@
                     <div class="site-brand-bg">
                         <picture>
 <!--                            <img  src="style/images/header-gyx.jpg" data-original="style/images/header-gyx.jpg">-->
-                            <img  src="style/images/header-gyx.jpg">
+                            <img src="style/images/header-gyx.jpg">
+<!--                            <img v-lazy="style/images/header-gyx.jpg" >-->
                         </picture>
 
                     </div>
@@ -131,6 +142,11 @@
         </header>
         <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;"></h1>
         <main id="main" class="main">
+<!--            <div class="search-form" style="max-width: 50%; margin: auto;margin-bottom: 10px ">-->
+<!--                <label>-->
+<!--                    <input name="keyword" v-bind:οnkeydοwn="finByBlogsearch()" type="text" style="line-height: 0px" placeholder="搜索文章：">-->
+<!--                </label>-->
+<!--            </div>-->
             <div class="main-inner">
                 <div class="content-wrap">
                     <div id="content" class="content">
@@ -138,9 +154,11 @@
                             <!--显示内容模块-->
                             <article v-for="brand in searchResult.list" style="background-color:#ffffff"  class=" post post-list-thumb post-list-show">
                                 <!--文章内容图片展示-->
-                                <div class="post-thumb"><a v-bind:href="'detail?id='+brand.blogsarticleId" style="height:200px" >
+                                <div class="post-thumb">
+                                    <a v-bind:href="'detail?id='+brand.blogsarticleId" style="height:200px" >
                                     <img class="lazyload" id="post-th-4491"
-                                         v-bind:src="'compress/'+brand.blogsarticleImage"> </a>
+                                         v-bind:src="'compress/'+brand.blogsarticleImage">
+                                    </a>
                                 </div>
                                 <div class="post-content-wrap">
                                     <div class="post-datelazy">🕓发布于 {{brand.blogsarticleDate}}</div>
@@ -156,9 +174,11 @@
                                         <p>
                                             {{brand.blogsarticleContent}}
                                         </p>
-                                        <div class="post-bottom"><a
-                                                href="#"
-                                                class="button-normal"><i class="iconfont icon-caidan"></i></a></div>
+                                        <div class="post-bottom">
+                                            <a v-bind:href="'detail?id='+brand.blogsarticleId" style="text-decoration:none">
+                                                <i class="iconfont icon-caidan"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </article>
@@ -188,10 +208,10 @@
                                 <div class="site-author motion-element" itemprop="author" itemscope
                                      itemtype="http://schema.org/Person">
                                     <picture>
-                                        <source srcset="style/images/13c71a8d6b4822df.png"
+                                        <source srcset="style/images/mobai.jpg"
                                                 type="image/webp">
                                         <img loading="lazy" class="site-author-image" itemprop="image"
-                                             src="style/images/13c71a8d6b4822df.png"
+                                             src="style/images/mobai.jpg"
                                              alt=""></picture>
                                     <p class="site-description motion-element" style="" itemprop="description">{{userinfodata.userdatanames}}</p>
                                 </div>
@@ -267,8 +287,6 @@
             }))
         })
     })
-
-
 
 </script>
 </body>
