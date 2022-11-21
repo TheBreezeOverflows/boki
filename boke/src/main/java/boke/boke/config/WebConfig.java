@@ -1,6 +1,7 @@
 package boke.boke.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/end/blog").setViewName("end/blog");
         registry.addViewController("/end/blog_edit").setViewName("end/blog_edit");
         registry.addViewController("/end/blog_display").setViewName("end/blog_display");
-        registry.addViewController("/end/message").setViewName("/end/message");
+        registry.addViewController("/end/message").setViewName("end/message");
         registry.addViewController("/end/friend").setViewName("end/friend");
         registry.addViewController("/end/user").setViewName("end/user");
         registry.addViewController("/end/tag").setViewName("end/tag");
@@ -35,6 +36,24 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/end/author").setViewName("end/author");
     }
 
+    //图片的映射
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //博客文章主图的映射
+        String staticMappingzip="/compress/file/**";
+        //idea项目显示时
+        String localDirectoryzip = "file:"+System.getProperty("user.dir")+"/src/main/resources/static/compress/file/";//本地
+        //String localDirectoryzip ="file:"+"/file/";//服务器
+        //映射压缩图片
+        registry.addResourceHandler(staticMappingzip).
+                addResourceLocations(localDirectoryzip);
+        //映射原图
+        String staticMapping="/file/**";
+        String localDirectory="file:"+System.getProperty("user.dir")+"/src/main/resources/static/file/";//本地
+        //String localDirectory="file:"+"/file/";//服务器
+        registry.addResourceHandler(staticMapping).
+                addResourceLocations(localDirectory);
 
+    }
 
 }

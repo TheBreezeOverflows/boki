@@ -10,6 +10,7 @@ import boke.boke.service.BlogsArticleInfo;
 import boke.boke.service.CommentInfo;
 import boke.boke.util.GetHeaderToken;
 import boke.boke.util.JWTUtil;
+import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -77,11 +78,13 @@ public class CommentController {
             com.setCommentAudit(1);
         }
         //判断是否有token
-        String token= GetHeaderToken.getRequestCookie("baitoken");
+        String token= GetHeaderToken.getRequestCookie();
+        if (StrUtil.isNotEmpty(token)){
         String userid = JWTUtil.getUserid(token);
         if (userid.equals("1")){
             com.setHeadPortrait("/style/images/headImg.png");
             com.setCommentAudit(1);
+        }
         }
         //添加评论数据
         boolean b = commentInfo.AddCommentparent(com);
@@ -107,6 +110,9 @@ public class CommentController {
     @GetMapping("/delteComment")
     @ResponseBody
     public SearchResult<?> deleteComment(int id,int blogid) {
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         int i = commentInfo.DelteCommentmessage(id);
         //减少总评论数量
         if (i>0){

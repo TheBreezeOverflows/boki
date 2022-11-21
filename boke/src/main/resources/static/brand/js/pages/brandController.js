@@ -108,6 +108,7 @@ var brandController = new Vue({
         finByBlogsearch(){
             var sear = document.getElementById("keyword").value;
             this.searchParam.keyword=sear;
+            this.basePath="/userPage";
              this.findPage();
         }
     }

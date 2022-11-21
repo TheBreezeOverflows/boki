@@ -7,6 +7,7 @@ import boke.boke.entity.dto.SearchResult;
 import boke.boke.mapper.LinkMapper;
 import boke.boke.service.FriendInfo;
 import boke.boke.service.Linkinfo;
+import boke.boke.util.GetHeaderToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,9 @@ public class LinkController {
     @PostMapping("/LinkOper")
     @ResponseBody
     public SearchResult<?> save(@RequestBody Link link){
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         link.setLinkType(Integer.parseInt(link.getUsername()));
         boolean flg =linkinfo.save(link);
         if (flg){
@@ -50,6 +54,9 @@ public class LinkController {
     @PutMapping("/LinkOper")
     @ResponseBody
     public SearchResult<?> update(@RequestBody Link link){
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         if(StringUtils.isNumeric(link.getUsername())){
             link.setLinkType(Integer.parseInt(link.getUsername()));
         }
@@ -64,7 +71,9 @@ public class LinkController {
     @GetMapping("/delteComment")
     @ResponseBody
     public SearchResult<?> deleteLink(int id) {
-        System.out.print("id="+id);
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         linkinfo.Deltelinkmessage(id);
         if (linkinfo.Deltelinkmessage(id)){
             return SearchResult.success();

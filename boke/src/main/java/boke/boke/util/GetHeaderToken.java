@@ -1,5 +1,7 @@
 package boke.boke.util;
 
+import boke.boke.entity.dto.SearchResult;
+import com.alibaba.druid.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -30,11 +32,23 @@ public class GetHeaderToken {
         return headerMap;
     }
     //获取cookie中的参数
-    public static String getRequestCookie(String tokenname) {
+    public static String getRequestCookie() {
         HttpServletRequest request = getRequest();
         Cookie baitoken = JWTUtil.findCookie("baitoken", request.getCookies());
-        String token= baitoken.getValue();
+        String token=null;
+        if(baitoken!=null){
+            token=  baitoken.getValue();
+        }
         return token;
+    }
+    //获取cookie中的参数
+    public static boolean gettokenEmpty() {
+        boolean fal=false;
+        String token = getRequestCookie();
+        if (!StringUtils.isEmpty(token)) {
+            fal=true;
+        }
+        return fal;
     }
 
 

@@ -201,7 +201,10 @@ public class UserInfoImpl implements UserInfo {
     @Override
     public boolean saveAuthor(Author autor){
         boolean fal =false;
-        String token= GetHeaderToken.getRequestCookie("baitoken");
+        String token= GetHeaderToken.getRequestCookie();
+        if (token.equals(null)) {
+            return fal;
+        }
         String userid = JWTUtil.getUserid(token);
         autor.setAuthorUser(Integer.parseInt(userid));
         int in =  authorMapper.insert(autor);

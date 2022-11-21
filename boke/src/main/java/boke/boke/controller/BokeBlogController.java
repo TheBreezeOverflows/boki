@@ -49,16 +49,20 @@ public class BokeBlogController {
     @PostMapping
     @ResponseBody
     public SearchResult<?> save(@RequestBody Blogsarticle blog) throws ParseException {
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         String transformDate=simpleDateFormat.format(new Date());
         //获取用户名称和编号进行添加
         String username ="不详";
         String userid =null;
-        String token= GetHeaderToken.getRequestCookie("baitoken");
-        if (!token.equals(null)) {
-             username = JWTUtil.getUsername(token, "username");//获取当前用户名
-             userid = JWTUtil.getUserid(token);//获取当前用户编号
+        String token= GetHeaderToken.getRequestCookie();
+        if (StringUtils.isEmpty(token)) {
+            return SearchResult.success2("403");
         }
+        username = JWTUtil.getUsername(token, "username");//获取当前用户名
+        userid = JWTUtil.getUserid(token);//获取当前用户编号
         blog.setBlogsarticleUserId(Integer.parseInt(userid));
         blog.setBloagUserNames(username);
         blog.setBlogsarticleDate(simpleDateFormat.parse(transformDate));
@@ -80,6 +84,9 @@ public class BokeBlogController {
     @PutMapping
     @ResponseBody
     public SearchResult<?> update(@RequestBody Blogsarticle blog) {
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         blog.setBlogsarticleDate(new Date());
         int bloid=blog.getBlogsarticleId();
         String blogtag=blog.getBlogsarticleInformation();
@@ -101,6 +108,9 @@ public class BokeBlogController {
     @GetMapping("/delteblog")
     @ResponseBody
     public SearchResult<?> delete(String  id) {
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         blogsArticleInfo.removeById(Integer.parseInt( id));
         blogsArticleInfo.removeblogIdClass(Integer.parseInt(id));
         return SearchResult.success();

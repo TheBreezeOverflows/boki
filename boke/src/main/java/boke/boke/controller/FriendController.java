@@ -6,6 +6,7 @@ import boke.boke.entity.dto.CommentResult;
 import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.service.FriendInfo;
+import boke.boke.util.GetHeaderToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,9 @@ public class FriendController {
     @PostMapping("/FriendOper")
     @ResponseBody
     public SearchResult<?> save(@RequestBody Friend friend){
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         boolean flg =friendInfo.save(friend);
         if (flg){
             return SearchResult.success();
@@ -59,6 +63,9 @@ public class FriendController {
     @PutMapping("/FriendOper")
     @ResponseBody
     public SearchResult<?> update(@RequestBody Friend friend){
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         boolean flg = friendInfo.updateByFriend(friend);
         if (flg){
             return SearchResult.success();
@@ -70,6 +77,9 @@ public class FriendController {
     @GetMapping("/delteComment")
     @ResponseBody
     public SearchResult<?> deleteFriend(int id) {
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         System.out.print("id="+id);
         friendInfo.DelteFriendmessage(id);
         return SearchResult.success();

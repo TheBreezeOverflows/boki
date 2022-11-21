@@ -7,14 +7,14 @@
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>博客管理</title>
-    <link rel="stylesheet" href="../font-blog/css/element.css">
-    <link rel="stylesheet" href="../font-blog/css/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/css/element.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
     <div style="padding-bottom: 10px">
             <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item @click="">首页</el-breadcrumb-item>
+                <el-breadcrumb-item @click.native="parent.changeIndex('index')">首页</el-breadcrumb-item>
                 <el-breadcrumb-item>博客管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -31,7 +31,7 @@
         <el-table-column prop="blogsarticleHeadline" label="标题"></el-table-column>
         <el-table-column prop="" label="主图" width="120">
             <template slot-scope="scope">
-                <el-image style="width: 100px; height: 50px" :src="'../'+scope.row.blogsarticleImage" >
+                <el-image style="width: 100px; height: 50px" :src="'../compress/'+scope.row.blogsarticleImage" >
                 </el-image>
             </template>
         </el-table-column>
@@ -88,10 +88,10 @@
 </div>
 
 
-<script src="../font-blog/js/jquery.min.js"></script>
-<script src="../font-blog/js/vue.min.js"></script>
-<script src="../font-blog/js/element.js"></script>
-<script th:src="@{/plugins/axios/axios.js}"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/element.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.2/static/plugins/axios/axios.min.js"></script>
 <script>
     let urlBase = "/userPage";
     new Vue({
@@ -201,10 +201,17 @@
                         })
                         this.loadTable();
                     } else {
-                        this.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
+                        if(res.code == '4399'){
+                            this.$message({
+                                message:'请重新登录',
+                                type: "error"
+                            })
+                        }else{
+                            this.$message({
+                                message:res.msg,
+                                type: "error"
+                            })
+                        }
                     }
                 })
 

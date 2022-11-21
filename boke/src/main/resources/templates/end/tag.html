@@ -7,8 +7,8 @@
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>标签管理</title>
-    <link rel="stylesheet" href="../font-blog/css/element.css">
-    <link rel="stylesheet" href="../font-blog/css/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/css/element.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
@@ -81,11 +81,11 @@
     </el-dialog>
 </div>
 
-<script src="../font-blog/js/jquery.min.js"></script>
-<script src="../font-blog/js/vue.min.js"></script>
-<script src="../font-blog/js/element.js"></script>
-<script src="../font-blog/js/tinymce/tinymce.min.js"></script>
-<script th:src="@{/plugins/axios/axios.js}"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/element.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/tinymce/tinymce.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.2/static/plugins/axios/axios.min.js"></script>
 
 <script>
 
@@ -162,11 +162,19 @@
                             message: "保存成功",
                             type: "success"
                         });
+                        location.reload();
                     } else {
-                        self.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
+                        if(res.code == '4399'){
+                            self.$message({
+                                message:'请重新登录',
+                                type: "error"
+                            })
+                        }else{
+                            self.$message({
+                                message:res.msg,
+                                type: "error"
+                            })
+                        }
                     }
                     self.loadTable();
                     self.dialogFormVisible = false;
@@ -192,18 +200,23 @@
                         })
                         this.loadTable();
                     } else {
-                        this.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
+                        if(res.code == '4399'){
+                            this.$message({
+                                message:'请重新登录',
+                                type: "error"
+                            })
+                        }else{
+                            this.$message({
+                                message:res.msg,
+                                type: "error"
+                            })
+                        }
                     }
                 })
             },
             bigClass(){
                 $.get("/classif/base").then(res => {    //获取所有的标签
                     this.options = res;
-                    console.log("标签");
-                    console.log(self.options);
                 })
             }
         }

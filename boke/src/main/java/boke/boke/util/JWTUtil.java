@@ -18,7 +18,7 @@ import java.util.Date;
  * JwtUtil是生成、解析、验证token的工具类
  */
 public class JWTUtil {
-    // 过期时间 6分钟
+    // 过期时间 60分钟
     private static final long EXPIRE_TIME = 60 * 60 * 1000;
     // 密钥
     private static final String SECRET = "SHIRO+JWT";
@@ -148,7 +148,7 @@ public class JWTUtil {
         //判断token是否过期
         if (new Date().getTime()>expiresAt.getTime()){
             return false;
-        }
+        }//没有过期则判断过期时间是否小于10分钟，小于则修改过期时间(因为我使用了es再使用redis做双token两个中间件会产生netty冲突,挺麻烦的就不搞了)
         }
         return true;
     }

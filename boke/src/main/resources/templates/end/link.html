@@ -7,8 +7,8 @@
     <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>资源管理</title>
-    <link rel="stylesheet" href="../font-blog/css/element.css">
-    <link rel="stylesheet" href="../font-blog/css/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/css/element.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/css/base.css">
 </head>
 <body>
 <div id="wrapper" v-cloak>
@@ -80,7 +80,7 @@
             </el-form-item>
             <el-form-item label="资源图片" label-width="100px">
                 <el-input v-model="entity.linkImage" autocomplete="off" style="width: 80%"></el-input>
-                <el-upload action="http://localhost:81/files/Linkupload" :on-success="fileSuccessUpload" :file-list="fileList">
+                <el-upload action="/files/Linkupload" :on-success="fileSuccessUpload" :file-list="fileList">
                     <el-button size="small" type="primary">上传头像</el-button>
                 </el-upload>
             </el-form-item>
@@ -97,10 +97,10 @@
     </el-dialog>
 </div>
 
-<script src="../font-blog/js/jquery.min.js"></script>
-<script src="../font-blog/js/vue.min.js"></script>
-<script src="../font-blog/js/element.js"></script>
-<script th:src="@{/plugins/axios/axios.js}"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.3/static/font-blog/js/element.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TheBreezeOverflows/bokistatic@v1.2/static/plugins/axios/axios.min.js"></script>
 
 <script>
 
@@ -122,6 +122,7 @@
                 search:'',
             },
             search: '',
+            msag:''
         },
         created() {
             this.loadTable();
@@ -182,10 +183,17 @@
                             type: "success"
                         });
                     } else {
-                        self.$message({
-                            message: res.msg,
-                            type: "error"
-                        })
+                        if(res.code == '4399'){
+                            self.$message({
+                                message:'请重新登录',
+                                type: "error"
+                            })
+                        }else{
+                            self.$message({
+                                message:res.msg,
+                                type: "error"
+                            })
+                        }
                     }
                     self.loadTable();
                     self.dialogFormVisible = false;
@@ -213,18 +221,23 @@
                         })
                         this.loadTable();
                     } else {
+                        if(res.code == '4399'){
+                            this.$message({
+                                message:'请重新登录',
+                                type: "error"
+                            })
+                        }else{
                         this.$message({
-                            message: res.msg,
+                            message:res.msg,
                             type: "error"
                         })
+                        }
                     }
                 })
 
             },bigClass(){
-                $.get("/user/AllUser").then(res => {    //获取所有的用户(这里说是有多个用户实际上就只有我一个的，个人用户懒得搞权限划分了，反正网站也不可能扩大开来)
+                $.get("/user/AllUser").then(res => {    //获取所有的用户(这里说是有多个用户实际上就只有我一个的，个人用户懒得搞权限划分了，反正网站暂时也不可能扩大开来)
                     this.options = res;
-                    console.log("标签");
-                    console.log(self.options);
                 })
             }
         }

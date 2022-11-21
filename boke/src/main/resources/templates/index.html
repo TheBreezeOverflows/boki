@@ -11,13 +11,22 @@
                 <!--头部栏-->
 <!--                <header class="site-header no-select" role="banner">-->
                 <div id="toplan" class="site-header no-select  site-top">
-                    <div class="site-branding"><span class="site-title"> <span class="logolink moe-mashiro"> <a
-                            href="#" alt="墨白"> <ruby><span class="sakuraso" style="font-family: 仿宋">墨白</span>
-                        <span class="no" style="font-family: 楷体">沉墨</span>
-                        <span class="shironeko" style="font-family: 楷体">满纸</span>
-                        <rp style="padding-bottom: 100px"></rp>
-                        <rt class="chinese-font">一笑若白</rt>
-                        <rp></rp></ruby> </a> </span> </span></div>
+                    <div class="site-branding">
+                        <span class="site-title">
+                            <span class="logolink moe-mashiro">
+                                <a href="#" alt="墨白">
+                                <ruby>
+                                    <span class="sakuraso" style="font-family: 仿宋">墨白</span>
+                                    <span class="no" style="font-family: 楷体">沉墨</span>
+                                    <span class="shironeko" style="font-family: 楷体">满纸</span>
+                                    <rp style="padding-bottom: 100px"></rp>
+                                    <rt class="chinese-font">一笑若白</rt>
+                                    <rp></rp>
+                                </ruby>
+                                </a>
+                            </span>
+                        </span>
+                    </div>
                     <div class="lower-cantiner">
                         <div class="lower">
                             <!--选择栏-->
@@ -102,8 +111,8 @@
                     <div class="site-brand-bg">
                         <picture>
 <!--                            <img  src="style/images/header-gyx.jpg" data-original="style/images/header-gyx.jpg">-->
-                            <img src="style/images/header-gyx.jpg">
-<!--                            <img v-lazy="style/images/header-gyx.jpg" >-->
+                            <img src="https://pnglog.com/i/2022/11/10/636cb73521ce6.jpg">
+<!--                            <img src="style/images/header-gyx.jpg" >-->
                         </picture>
 
                     </div>
@@ -161,7 +170,7 @@
                                     </a>
                                 </div>
                                 <div class="post-content-wrap">
-                                    <div class="post-datelazy">🕓发布于 {{brand.blogsarticleDate}}</div>
+                                    <div class="post-datelazy">🕓 {{brand.blogsarticleDate}}</div>
                                     <a v-bind:href="'detail?id='+brand.blogsarticleId" class="post-title">
                                         <h3>{{brand.blogsarticleHeadline}}</h3>
                                     </a>
@@ -230,7 +239,7 @@
                                 <details>
                                     <summary class="views-top-name" >🏷️标签</summary>
                                         <ul>
-                                            <li style="margin: 20px" v-for="item in classifybase">
+                                            <li class="links-of-author-item scaleup" style="margin: 20px;margin-left: -20px; color:#191717" v-for="item in classifybase">
                                                 <span v-on:click="finByBlogClassID(item.classifyId,-1)">◆{{item.classifyName}}</span>
                                             </li>
                                         </ul>
@@ -250,11 +259,11 @@
                     <img loading="lazy" src="style/images/footer.png"></picture>
             </div>
             <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
-                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
-                                                                           rel="nofollow">TheBreezeOverflows</a>
+                <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由
+                    <a href="https://github.com/TheBreezeOverflows/boki" target="_blank"  style="color: #555;text-decoration:none;  " rel="nofollow">TheBreezeOverflows</a>
                     制作.</p>
-                <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
-                                                                                               itemprop="copyrightHolder">墨白</span>.
+                <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author" itemprop="copyrightHolder">墨白</span>.
+                    <a  href="http://www.beian.miit.gov.cn/"  target="_blank"  style="color: #555;text-decoration:none;" rel="nofollow">湘ICP备2022023542号</a>
                 </p></div>
         </footer>
 

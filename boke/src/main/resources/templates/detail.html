@@ -117,7 +117,7 @@
                 <footer class="entry-meta entry-meta-top">
                     <div style="color: #040405; font-size: 10px;">
             &nbsp;&nbsp;           ✍ 作者：{{entity.bloagUserNames}}&nbsp;&nbsp;
-                        🕓 发布时间：{{entity.blogsarticleDate}}&nbsp;&nbsp;
+                        🕓 时间：{{entity.blogsarticleDate}}&nbsp;&nbsp;
                         📁 类型：{{entity.blogsarticleInformation}}&nbsp;&nbsp;
                         👁 浏览数：{{entity.accessnumber}}
                     </div>
@@ -289,27 +289,13 @@
                     </div>
                 </div>
             </div>
-    </main>
+            <div style="height: 1px; margin-top: 20px;margin-bottom: 30px; background-color: #ccc;margin-bottom: 150px;margin-top: 50px"></div>
+
+        </main>
 
     </div>
 <!-- 底部栏-->
-    <div style="position: relative;z-index:5">
-    <footer id="footer" class="footer">
-        <div class="footer-image" >
-            <picture>
-                <source srcset="style/images/footer.webp"
-                        type="image/webp">
-                <img loading="lazy" src="style/images/footer.png"></picture>
-        </div>
-        <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
-            <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由 <a href="https://github.com/TheBreezeOverflows/boki" target="_blank" class="external"
-                                                                        rel="nofollow">TheBreezeOverflows</a>
-                制作.</p>
-            <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author"
-                                                                                              itemprop="copyrightHolder">墨白</span>.
-            </p></div>
-    </footer>
-    </div>
+
 </div>
 <!--右侧长条线图片-->
 <div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>
@@ -320,4 +306,21 @@
 <!--<script type='text/javascript' src='lls/scripts-global.js'></script>-->
 <script th:src="@{/brand/js/detail/CommentController.js}"></script>
 </body>
+<div style="position: relative;z-index:5">
+    <footer id="footer" class="footer">
+        <div class="footer-image">
+            <picture>
+                <source srcset="style/images/footer.webp"
+                        type="image/webp">
+                <img loading="lazy" src="style/images/footer.png"></picture>
+        </div>
+        <div class="footer-inner"><p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+            <p>© <span itemprop="copyrightYear">2021</span> Hi, 墨白.由
+                <a href="https://github.com/TheBreezeOverflows/boki" target="_blank"  style="color: #555;text-decoration:none;  " rel="nofollow">TheBreezeOverflows</a>
+                制作.</p>
+            <p>Crafted with <i class="fas fa-heart throb" style="color:#d43f57"></i> by <span class="author" itemprop="copyrightHolder">墨白</span>.
+                <a  href="http://www.beian.miit.gov.cn/"  target="_blank"  style="color: #555;text-decoration:none;" rel="nofollow">湘ICP备2022023542号</a>
+            </p></div>
+    </footer>
+</div>
 </html>

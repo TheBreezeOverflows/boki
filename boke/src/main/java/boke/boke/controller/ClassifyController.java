@@ -5,6 +5,7 @@ import boke.boke.entity.dto.SearchParam;
 import boke.boke.entity.dto.SearchResult;
 import boke.boke.mapper.ClassifyMapper;
 import boke.boke.service.ClassifyInfo;
+import boke.boke.util.GetHeaderToken;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,7 +64,9 @@ public class ClassifyController {
     @PutMapping("/ClassOper")
     @ResponseBody
     public SearchResult<?> updateClass(@RequestBody Classify classify){
-
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         boolean flg =false;
         //判断是否是类型
         if (classify.getSuperclassId()==0){
@@ -80,7 +83,9 @@ public class ClassifyController {
     @PostMapping("/ClassOper")
     @ResponseBody
     public SearchResult<?> PostClass(@RequestBody Classify classify){
-
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         boolean flg =false;
         flg=classifyInfo.saveByClass(classify);
         if (flg){
@@ -92,7 +97,9 @@ public class ClassifyController {
     @GetMapping("/delteComment")
     @ResponseBody
     public SearchResult<?> deleteFriend(int id) {
-        System.out.print("id="+id);
+        if (!GetHeaderToken.gettokenEmpty()){
+            return SearchResult.success2("4399");
+        }
         //查询文章关联如果有则不通过
         boolean b = classifyInfo.DelteByClassMessage(id);
         if (b){
